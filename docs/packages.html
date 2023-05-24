@@ -1,0 +1,2679 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+  <meta name="generator" content="distill" />
+
+  <style type="text/css">
+  /* Hide doc at startup (prevent jankiness while JS renders/transforms) */
+  body {
+    visibility: hidden;
+  }
+  </style>
+
+ <!--radix_placeholder_import_source-->
+ <!--/radix_placeholder_import_source-->
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  { color: #00769e; background-color: #f1f3f5; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span { color: #00769e; } /* Normal */
+code span.al { color: #ad0000; } /* Alert */
+code span.an { color: #5e5e5e; } /* Annotation */
+code span.at { color: #657422; } /* Attribute */
+code span.bn { color: #ad0000; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #00769e; } /* ControlFlow */
+code span.ch { color: #20794d; } /* Char */
+code span.cn { color: #8f5902; } /* Constant */
+code span.co { color: #5e5e5e; } /* Comment */
+code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+code span.dt { color: #ad0000; } /* DataType */
+code span.dv { color: #ad0000; } /* DecVal */
+code span.er { color: #ad0000; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #ad0000; } /* Float */
+code span.fu { color: #4758ab; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #5e5e5e; } /* Information */
+code span.kw { color: #00769e; } /* Keyword */
+code span.op { color: #5e5e5e; } /* Operator */
+code span.ot { color: #00769e; } /* Other */
+code span.pp { color: #ad0000; } /* Preprocessor */
+code span.sc { color: #5e5e5e; } /* SpecialChar */
+code span.ss { color: #20794d; } /* SpecialString */
+code span.st { color: #20794d; } /* String */
+code span.va { color: #111111; } /* Variable */
+code span.vs { color: #20794d; } /* VerbatimString */
+code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+</style>
+
+
+  <!--radix_placeholder_meta_tags-->
+  <title>RAPID training: Project structure, packages and unit testing in R</title>
+
+
+
+
+  <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
+  <meta property="og:title" content="RAPID training: Project structure, packages and unit testing in R"/>
+  <meta property="og:type" content="article"/>
+  <meta property="og:locale" content="en_US"/>
+  <meta property="og:site_name" content="RAPID training"/>
+
+  <!--  https://dev.twitter.com/cards/types/summary -->
+  <meta property="twitter:card" content="summary"/>
+  <meta property="twitter:title" content="RAPID training: Project structure, packages and unit testing in R"/>
+
+  <!--/radix_placeholder_meta_tags-->
+  <!--radix_placeholder_rmarkdown_metadata-->
+
+  <script type="text/json" id="radix-rmarkdown-metadata">
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","output"]}},"value":[{"type":"character","attributes":{},"value":["Project structure, packages and unit testing in R"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["toc","toc_depth","number_sections"]}},"value":[{"type":"logical","attributes":{},"value":[true]},{"type":"integer","attributes":{},"value":[2]},{"type":"logical","attributes":{},"value":[true]}]}]}]}
+  </script>
+  <!--/radix_placeholder_rmarkdown_metadata-->
+  <!--radix_placeholder_navigation_in_header-->
+  <meta name="distill:offset" content=""/>
+
+  <script type="application/javascript">
+
+    window.headroom_prevent_pin = false;
+
+    window.document.addEventListener("DOMContentLoaded", function (event) {
+
+      // initialize headroom for banner
+      var header = $('header').get(0);
+      var headerHeight = header.offsetHeight;
+      var headroom = new Headroom(header, {
+        tolerance: 5,
+        onPin : function() {
+          if (window.headroom_prevent_pin) {
+            window.headroom_prevent_pin = false;
+            headroom.unpin();
+          }
+        }
+      });
+      headroom.init();
+      if(window.location.hash)
+        headroom.unpin();
+      $(header).addClass('headroom--transition');
+
+      // offset scroll location for banner on hash change
+      // (see: https://github.com/WickyNilliams/headroom.js/issues/38)
+      window.addEventListener("hashchange", function(event) {
+        window.scrollTo(0, window.pageYOffset - (headerHeight + 25));
+      });
+
+      // responsive menu
+      $('.distill-site-header').each(function(i, val) {
+        var topnav = $(this);
+        var toggle = topnav.find('.nav-toggle');
+        toggle.on('click', function() {
+          topnav.toggleClass('responsive');
+        });
+      });
+
+      // nav dropdowns
+      $('.nav-dropbtn').click(function(e) {
+        $(this).next('.nav-dropdown-content').toggleClass('nav-dropdown-active');
+        $(this).parent().siblings('.nav-dropdown')
+           .children('.nav-dropdown-content').removeClass('nav-dropdown-active');
+      });
+      $("body").click(function(e){
+        $('.nav-dropdown-content').removeClass('nav-dropdown-active');
+      });
+      $(".nav-dropdown").click(function(e){
+        e.stopPropagation();
+      });
+    });
+  </script>
+
+  <style type="text/css">
+
+  /* Theme (user-documented overrideables for nav appearance) */
+
+  .distill-site-nav {
+    color: rgba(255, 255, 255, 0.8);
+    background-color: #0F2E3D;
+    font-size: 15px;
+    font-weight: 300;
+  }
+
+  .distill-site-nav a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .distill-site-nav a:hover {
+    color: white;
+  }
+
+  @media print {
+    .distill-site-nav {
+      display: none;
+    }
+  }
+
+  .distill-site-header {
+
+  }
+
+  .distill-site-footer {
+
+  }
+
+
+  /* Site Header */
+
+  .distill-site-header {
+    width: 100%;
+    box-sizing: border-box;
+    z-index: 3;
+  }
+
+  .distill-site-header .nav-left {
+    display: inline-block;
+    margin-left: 8px;
+  }
+
+  @media screen and (max-width: 768px) {
+    .distill-site-header .nav-left {
+      margin-left: 0;
+    }
+  }
+
+
+  .distill-site-header .nav-right {
+    float: right;
+    margin-right: 8px;
+  }
+
+  .distill-site-header a,
+  .distill-site-header .title {
+    display: inline-block;
+    text-align: center;
+    padding: 14px 10px 14px 10px;
+  }
+
+  .distill-site-header .title {
+    font-size: 18px;
+    min-width: 150px;
+  }
+
+  .distill-site-header .logo {
+    padding: 0;
+  }
+
+  .distill-site-header .logo img {
+    display: none;
+    max-height: 20px;
+    width: auto;
+    margin-bottom: -4px;
+  }
+
+  .distill-site-header .nav-image img {
+    max-height: 18px;
+    width: auto;
+    display: inline-block;
+    margin-bottom: -3px;
+  }
+
+
+
+  @media screen and (min-width: 1000px) {
+    .distill-site-header .logo img {
+      display: inline-block;
+    }
+    .distill-site-header .nav-left {
+      margin-left: 20px;
+    }
+    .distill-site-header .nav-right {
+      margin-right: 20px;
+    }
+    .distill-site-header .title {
+      padding-left: 12px;
+    }
+  }
+
+
+  .distill-site-header .nav-toggle {
+    display: none;
+  }
+
+  .nav-dropdown {
+    display: inline-block;
+    position: relative;
+  }
+
+  .nav-dropdown .nav-dropbtn {
+    border: none;
+    outline: none;
+    color: rgba(255, 255, 255, 0.8);
+    padding: 16px 10px;
+    background-color: transparent;
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    margin: 0;
+    margin-top: 1px;
+    z-index: 2;
+  }
+
+  .nav-dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: white;
+    min-width: 200px;
+    border: 1px solid rgba(0,0,0,0.15);
+    border-radius: 4px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.1);
+    z-index: 1;
+    margin-top: 2px;
+    white-space: nowrap;
+    padding-top: 4px;
+    padding-bottom: 4px;
+  }
+
+  .nav-dropdown-content hr {
+    margin-top: 4px;
+    margin-bottom: 4px;
+    border: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .nav-dropdown-active {
+    display: block;
+  }
+
+  .nav-dropdown-content a, .nav-dropdown-content .nav-dropdown-header {
+    color: black;
+    padding: 6px 24px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+  }
+
+  .nav-dropdown-content .nav-dropdown-header {
+    display: block;
+    padding: 5px 24px;
+    padding-bottom: 0;
+    text-transform: uppercase;
+    font-size: 14px;
+    color: #999999;
+    white-space: nowrap;
+  }
+
+  .nav-dropdown:hover .nav-dropbtn {
+    color: white;
+  }
+
+  .nav-dropdown-content a:hover {
+    background-color: #ddd;
+    color: black;
+  }
+
+  .nav-right .nav-dropdown-content {
+    margin-left: -45%;
+    right: 0;
+  }
+
+  @media screen and (max-width: 768px) {
+    .distill-site-header a, .distill-site-header .nav-dropdown  {display: none;}
+    .distill-site-header a.nav-toggle {
+      float: right;
+      display: block;
+    }
+    .distill-site-header .title {
+      margin-left: 0;
+    }
+    .distill-site-header .nav-right {
+      margin-right: 0;
+    }
+    .distill-site-header {
+      overflow: hidden;
+    }
+    .nav-right .nav-dropdown-content {
+      margin-left: 0;
+    }
+  }
+
+
+  @media screen and (max-width: 768px) {
+    .distill-site-header.responsive {position: relative; min-height: 500px; }
+    .distill-site-header.responsive a.nav-toggle {
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
+    .distill-site-header.responsive a,
+    .distill-site-header.responsive .nav-dropdown {
+      display: block;
+      text-align: left;
+    }
+    .distill-site-header.responsive .nav-left,
+    .distill-site-header.responsive .nav-right {
+      width: 100%;
+    }
+    .distill-site-header.responsive .nav-dropdown {float: none;}
+    .distill-site-header.responsive .nav-dropdown-content {position: relative;}
+    .distill-site-header.responsive .nav-dropdown .nav-dropbtn {
+      display: block;
+      width: 100%;
+      text-align: left;
+    }
+  }
+
+  /* Site Footer */
+
+  .distill-site-footer {
+    width: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
+    z-index: 3;
+    margin-top: 30px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    text-align: center;
+  }
+
+  /* Headroom */
+
+  d-title {
+    padding-top: 6rem;
+  }
+
+  @media print {
+    d-title {
+      padding-top: 4rem;
+    }
+  }
+
+  .headroom {
+    z-index: 1000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+  }
+
+  .headroom--transition {
+    transition: all .4s ease-in-out;
+  }
+
+  .headroom--unpinned {
+    top: -100px;
+  }
+
+  .headroom--pinned {
+    top: 0;
+  }
+
+  /* adjust viewport for navbar height */
+  /* helps vertically center bootstrap (non-distill) content */
+  .min-vh-100 {
+    min-height: calc(100vh - 100px) !important;
+  }
+
+  </style>
+
+  <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+  <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet"/>
+  <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet"/>
+  <script src="site_libs/headroom-0.9.4/headroom.min.js"></script>
+  <script src="site_libs/autocomplete-0.37.1/autocomplete.min.js"></script>
+  <script src="site_libs/fuse-6.4.1/fuse.min.js"></script>
+
+  <script type="application/javascript">
+
+  function getMeta(metaName) {
+    var metas = document.getElementsByTagName('meta');
+    for (let i = 0; i < metas.length; i++) {
+      if (metas[i].getAttribute('name') === metaName) {
+        return metas[i].getAttribute('content');
+      }
+    }
+    return '';
+  }
+
+  function offsetURL(url) {
+    var offset = getMeta('distill:offset');
+    return offset ? offset + '/' + url : url;
+  }
+
+  function createFuseIndex() {
+
+    // create fuse index
+    var options = {
+      keys: [
+        { name: 'title', weight: 20 },
+        { name: 'categories', weight: 15 },
+        { name: 'description', weight: 10 },
+        { name: 'contents', weight: 5 },
+      ],
+      ignoreLocation: true,
+      threshold: 0
+    };
+    var fuse = new window.Fuse([], options);
+
+    // fetch the main search.json
+    return fetch(offsetURL('search.json'))
+      .then(function(response) {
+        if (response.status == 200) {
+          return response.json().then(function(json) {
+            // index main articles
+            json.articles.forEach(function(article) {
+              fuse.add(article);
+            });
+            // download collections and index their articles
+            return Promise.all(json.collections.map(function(collection) {
+              return fetch(offsetURL(collection)).then(function(response) {
+                if (response.status === 200) {
+                  return response.json().then(function(articles) {
+                    articles.forEach(function(article) {
+                      fuse.add(article);
+                    });
+                  })
+                } else {
+                  return Promise.reject(
+                    new Error('Unexpected status from search index request: ' +
+                              response.status)
+                  );
+                }
+              });
+            })).then(function() {
+              return fuse;
+            });
+          });
+
+        } else {
+          return Promise.reject(
+            new Error('Unexpected status from search index request: ' +
+                        response.status)
+          );
+        }
+      });
+  }
+
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+
+    // get search element (bail if we don't have one)
+    var searchEl = window.document.getElementById('distill-search');
+    if (!searchEl)
+      return;
+
+    createFuseIndex()
+      .then(function(fuse) {
+
+        // make search box visible
+        searchEl.classList.remove('hidden');
+
+        // initialize autocomplete
+        var options = {
+          autoselect: true,
+          hint: false,
+          minLength: 2,
+        };
+        window.autocomplete(searchEl, options, [{
+          source: function(query, callback) {
+            const searchOptions = {
+              isCaseSensitive: false,
+              shouldSort: true,
+              minMatchCharLength: 2,
+              limit: 10,
+            };
+            var results = fuse.search(query, searchOptions);
+            callback(results
+              .map(function(result) { return result.item; })
+            );
+          },
+          templates: {
+            suggestion: function(suggestion) {
+              var img = suggestion.preview && Object.keys(suggestion.preview).length > 0
+                ? `<img src="${offsetURL(suggestion.preview)}"</img>`
+                : '';
+              var html = `
+                <div class="search-item">
+                  <h3>${suggestion.title}</h3>
+                  <div class="search-item-description">
+                    ${suggestion.description || ''}
+                  </div>
+                  <div class="search-item-preview">
+                    ${img}
+                  </div>
+                </div>
+              `;
+              return html;
+            }
+          }
+        }]).on('autocomplete:selected', function(event, suggestion) {
+          window.location.href = offsetURL(suggestion.path);
+        });
+        // remove inline display style on autocompleter (we want to
+        // manage responsive display via css)
+        $('.algolia-autocomplete').css("display", "");
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+
+  });
+
+  </script>
+
+  <style type="text/css">
+
+  .nav-search {
+    font-size: x-small;
+  }
+
+  /* Algolioa Autocomplete */
+
+  .algolia-autocomplete {
+    display: inline-block;
+    margin-left: 10px;
+    vertical-align: sub;
+    background-color: white;
+    color: black;
+    padding: 6px;
+    padding-top: 8px;
+    padding-bottom: 0;
+    border-radius: 6px;
+    border: 1px #0F2E3D solid;
+    width: 180px;
+  }
+
+
+  @media screen and (max-width: 768px) {
+    .distill-site-nav .algolia-autocomplete {
+      display: none;
+      visibility: hidden;
+    }
+    .distill-site-nav.responsive .algolia-autocomplete {
+      display: inline-block;
+      visibility: visible;
+    }
+    .distill-site-nav.responsive .algolia-autocomplete .aa-dropdown-menu {
+      margin-left: 0;
+      width: 400px;
+      max-height: 400px;
+    }
+  }
+
+  .algolia-autocomplete .aa-input, .algolia-autocomplete .aa-hint {
+    width: 90%;
+    outline: none;
+    border: none;
+  }
+
+  .algolia-autocomplete .aa-hint {
+    color: #999;
+  }
+  .algolia-autocomplete .aa-dropdown-menu {
+    width: 550px;
+    max-height: 70vh;
+    overflow-x: visible;
+    overflow-y: scroll;
+    padding: 5px;
+    margin-top: 3px;
+    margin-left: -150px;
+    background-color: #fff;
+    border-radius: 5px;
+    border: 1px solid #999;
+    border-top: none;
+  }
+
+  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion {
+    cursor: pointer;
+    padding: 5px 4px;
+    border-bottom: 1px solid #eee;
+  }
+
+  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion:last-of-type {
+    border-bottom: none;
+    margin-bottom: 2px;
+  }
+
+  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item {
+    overflow: hidden;
+    font-size: 0.8em;
+    line-height: 1.4em;
+  }
+
+  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item h3 {
+    font-size: 1rem;
+    margin-block-start: 0;
+    margin-block-end: 5px;
+  }
+
+  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-description {
+    display: inline-block;
+    overflow: hidden;
+    height: 2.8em;
+    width: 80%;
+    margin-right: 4%;
+  }
+
+  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-preview {
+    display: inline-block;
+    width: 15%;
+  }
+
+  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-preview img {
+    height: 3em;
+    width: auto;
+    display: none;
+  }
+
+  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-preview img[src] {
+    display: initial;
+  }
+
+  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion.aa-cursor {
+    background-color: #eee;
+  }
+  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion em {
+    font-weight: bold;
+    font-style: normal;
+  }
+
+  </style>
+
+
+  <!--/radix_placeholder_navigation_in_header-->
+  <!--radix_placeholder_distill-->
+
+  <style type="text/css">
+
+  body {
+    background-color: white;
+  }
+
+  .pandoc-table {
+    width: 100%;
+  }
+
+  .pandoc-table>caption {
+    margin-bottom: 10px;
+  }
+
+  .pandoc-table th:not([align]) {
+    text-align: left;
+  }
+
+  .pagedtable-footer {
+    font-size: 15px;
+  }
+
+  d-byline .byline {
+    grid-template-columns: 2fr 2fr;
+  }
+
+  d-byline .byline h3 {
+    margin-block-start: 1.5em;
+  }
+
+  d-byline .byline .authors-affiliations h3 {
+    margin-block-start: 0.5em;
+  }
+
+  .authors-affiliations .orcid-id {
+    width: 16px;
+    height:16px;
+    margin-left: 4px;
+    margin-right: 4px;
+    vertical-align: middle;
+    padding-bottom: 2px;
+  }
+
+  d-title .dt-tags {
+    margin-top: 1em;
+    grid-column: text;
+  }
+
+  .dt-tags .dt-tag {
+    text-decoration: none;
+    display: inline-block;
+    color: rgba(0,0,0,0.6);
+    padding: 0em 0.4em;
+    margin-right: 0.5em;
+    margin-bottom: 0.4em;
+    font-size: 70%;
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 3px;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  d-article table.gt_table td,
+  d-article table.gt_table th {
+    border-bottom: none;
+    font-size: 100%;
+  }
+
+  .html-widget {
+    margin-bottom: 2.0em;
+  }
+
+  .l-screen-inset {
+    padding-right: 16px;
+  }
+
+  .l-screen .caption {
+    margin-left: 10px;
+  }
+
+  .shaded {
+    background: rgb(247, 247, 247);
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .shaded .html-widget {
+    margin-bottom: 0;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .shaded .shaded-content {
+    background: white;
+  }
+
+  .text-output {
+    margin-top: 0;
+    line-height: 1.5em;
+  }
+
+  .hidden {
+    display: none !important;
+  }
+
+  d-article {
+    padding-top: 2.5rem;
+    padding-bottom: 30px;
+  }
+
+  d-appendix {
+    padding-top: 30px;
+  }
+
+  d-article>p>img {
+    width: 100%;
+  }
+
+  d-article h2 {
+    margin: 1rem 0 1.5rem 0;
+  }
+
+  d-article h3 {
+    margin-top: 1.5rem;
+  }
+
+  d-article iframe {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    margin-bottom: 2.0em;
+    width: 100%;
+  }
+
+  /* Tweak code blocks */
+
+  d-article div.sourceCode code,
+  d-article pre code {
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  }
+
+  d-article pre,
+  d-article div.sourceCode,
+  d-article div.sourceCode pre {
+    overflow: auto;
+  }
+
+  d-article div.sourceCode {
+    background-color: white;
+  }
+
+  d-article div.sourceCode pre {
+    padding-left: 10px;
+    font-size: 12px;
+    border-left: 2px solid rgba(0,0,0,0.1);
+  }
+
+  d-article pre {
+    font-size: 12px;
+    color: black;
+    background: none;
+    margin-top: 0;
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    word-wrap: normal;
+    line-height: 1.5;
+
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+
+    -webkit-hyphens: none;
+    -moz-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none;
+  }
+
+  d-article pre a {
+    border-bottom: none;
+  }
+
+  d-article pre a:hover {
+    border-bottom: none;
+    text-decoration: underline;
+  }
+
+  d-article details {
+    grid-column: text;
+    margin-bottom: 0.8em;
+  }
+
+  @media(min-width: 768px) {
+
+  d-article pre,
+  d-article div.sourceCode,
+  d-article div.sourceCode pre {
+    overflow: visible !important;
+  }
+
+  d-article div.sourceCode pre {
+    padding-left: 18px;
+    font-size: 14px;
+  }
+
+  d-article pre {
+    font-size: 14px;
+  }
+
+  }
+
+  figure img.external {
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+    padding: 18px;
+    box-sizing: border-box;
+  }
+
+  /* CSS for d-contents */
+
+  .d-contents {
+    grid-column: text;
+    color: rgba(0,0,0,0.8);
+    font-size: 0.9em;
+    padding-bottom: 1em;
+    margin-bottom: 1em;
+    padding-bottom: 0.5em;
+    margin-bottom: 1em;
+    padding-left: 0.25em;
+    justify-self: start;
+  }
+
+  @media(min-width: 1000px) {
+    .d-contents.d-contents-float {
+      height: 0;
+      grid-column-start: 1;
+      grid-column-end: 4;
+      justify-self: center;
+      padding-right: 3em;
+      padding-left: 2em;
+    }
+  }
+
+  .d-contents nav h3 {
+    font-size: 18px;
+    margin-top: 0;
+    margin-bottom: 1em;
+  }
+
+  .d-contents li {
+    list-style-type: none
+  }
+
+  .d-contents nav > ul {
+    padding-left: 0;
+  }
+
+  .d-contents ul {
+    padding-left: 1em
+  }
+
+  .d-contents nav ul li {
+    margin-top: 0.6em;
+    margin-bottom: 0.2em;
+  }
+
+  .d-contents nav a {
+    font-size: 13px;
+    border-bottom: none;
+    text-decoration: none
+    color: rgba(0, 0, 0, 0.8);
+  }
+
+  .d-contents nav a:hover {
+    text-decoration: underline solid rgba(0, 0, 0, 0.6)
+  }
+
+  .d-contents nav > ul > li > a {
+    font-weight: 600;
+  }
+
+  .d-contents nav > ul > li > ul {
+    font-weight: inherit;
+  }
+
+  .d-contents nav > ul > li > ul > li {
+    margin-top: 0.2em;
+  }
+
+
+  .d-contents nav ul {
+    margin-top: 0;
+    margin-bottom: 0.25em;
+  }
+
+  .d-article-with-toc h2:nth-child(2) {
+    margin-top: 0;
+  }
+
+
+  /* Figure */
+
+  .figure {
+    position: relative;
+    margin-bottom: 2.5em;
+    margin-top: 1.5em;
+  }
+
+  .figure .caption {
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 12px;
+    line-height: 1.5em;
+  }
+
+  .figure img.external {
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+    padding: 18px;
+    box-sizing: border-box;
+  }
+
+  .figure .caption a {
+    color: rgba(0, 0, 0, 0.6);
+  }
+
+  .figure .caption b,
+  .figure .caption strong, {
+    font-weight: 600;
+    color: rgba(0, 0, 0, 1.0);
+  }
+
+  /* Citations */
+
+  d-article .citation {
+    color: inherit;
+    cursor: inherit;
+  }
+
+  div.hanging-indent{
+    margin-left: 1em; text-indent: -1em;
+  }
+
+  /* Citation hover box */
+
+  .tippy-box[data-theme~=light-border] {
+    background-color: rgba(250, 250, 250, 0.95);
+  }
+
+  .tippy-content > p {
+    margin-bottom: 0;
+    padding: 2px;
+  }
+
+
+  /* Tweak 1000px media break to show more text */
+
+  @media(min-width: 1000px) {
+    .base-grid,
+    distill-header,
+    d-title,
+    d-abstract,
+    d-article,
+    d-appendix,
+    distill-appendix,
+    d-byline,
+    d-footnote-list,
+    d-citation-list,
+    distill-footer {
+      grid-template-columns: [screen-start] 1fr [page-start kicker-start] 80px [middle-start] 50px [text-start kicker-end] 65px 65px 65px 65px 65px 65px 65px 65px [text-end gutter-start] 65px [middle-end] 65px [page-end gutter-end] 1fr [screen-end];
+      grid-column-gap: 16px;
+    }
+
+    .grid {
+      grid-column-gap: 16px;
+    }
+
+    d-article {
+      font-size: 1.06rem;
+      line-height: 1.7em;
+    }
+    figure .caption, .figure .caption, figure figcaption {
+      font-size: 13px;
+    }
+  }
+
+  @media(min-width: 1180px) {
+    .base-grid,
+    distill-header,
+    d-title,
+    d-abstract,
+    d-article,
+    d-appendix,
+    distill-appendix,
+    d-byline,
+    d-footnote-list,
+    d-citation-list,
+    distill-footer {
+      grid-template-columns: [screen-start] 1fr [page-start kicker-start] 60px [middle-start] 60px [text-start kicker-end] 60px 60px 60px 60px 60px 60px 60px 60px [text-end gutter-start] 60px [middle-end] 60px [page-end gutter-end] 1fr [screen-end];
+      grid-column-gap: 32px;
+    }
+
+    .grid {
+      grid-column-gap: 32px;
+    }
+  }
+
+
+  /* Get the citation styles for the appendix (not auto-injected on render since
+     we do our own rendering of the citation appendix) */
+
+  d-appendix .citation-appendix,
+  .d-appendix .citation-appendix {
+    font-size: 11px;
+    line-height: 15px;
+    border-left: 1px solid rgba(0, 0, 0, 0.1);
+    padding-left: 18px;
+    border: 1px solid rgba(0,0,0,0.1);
+    background: rgba(0, 0, 0, 0.02);
+    padding: 10px 18px;
+    border-radius: 3px;
+    color: rgba(150, 150, 150, 1);
+    overflow: hidden;
+    margin-top: -12px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+
+  /* Include appendix styles here so they can be overridden */
+
+  d-appendix {
+    contain: layout style;
+    font-size: 0.8em;
+    line-height: 1.7em;
+    margin-top: 60px;
+    margin-bottom: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    color: rgba(0,0,0,0.5);
+    padding-top: 60px;
+    padding-bottom: 48px;
+  }
+
+  d-appendix h3 {
+    grid-column: page-start / text-start;
+    font-size: 15px;
+    font-weight: 500;
+    margin-top: 1em;
+    margin-bottom: 0;
+    color: rgba(0,0,0,0.65);
+  }
+
+  d-appendix h3 + * {
+    margin-top: 1em;
+  }
+
+  d-appendix ol {
+    padding: 0 0 0 15px;
+  }
+
+  @media (min-width: 768px) {
+    d-appendix ol {
+      padding: 0 0 0 30px;
+      margin-left: -30px;
+    }
+  }
+
+  d-appendix li {
+    margin-bottom: 1em;
+  }
+
+  d-appendix a {
+    color: rgba(0, 0, 0, 0.6);
+  }
+
+  d-appendix > * {
+    grid-column: text;
+  }
+
+  d-appendix > d-footnote-list,
+  d-appendix > d-citation-list,
+  d-appendix > distill-appendix {
+    grid-column: screen;
+  }
+
+  /* Include footnote styles here so they can be overridden */
+
+  d-footnote-list {
+    contain: layout style;
+  }
+
+  d-footnote-list > * {
+    grid-column: text;
+  }
+
+  d-footnote-list a.footnote-backlink {
+    color: rgba(0,0,0,0.3);
+    padding-left: 0.5em;
+  }
+
+
+
+  /* Anchor.js */
+
+  .anchorjs-link {
+    /*transition: all .25s linear; */
+    text-decoration: none;
+    border-bottom: none;
+  }
+  *:hover > .anchorjs-link {
+    margin-left: -1.125em !important;
+    text-decoration: none;
+    border-bottom: none;
+  }
+
+  /* Social footer */
+
+  .social_footer {
+    margin-top: 30px;
+    margin-bottom: 0;
+    color: rgba(0,0,0,0.67);
+  }
+
+  .disqus-comments {
+    margin-right: 30px;
+  }
+
+  .disqus-comment-count {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+  }
+
+  #disqus_thread {
+    margin-top: 30px;
+  }
+
+  .article-sharing a {
+    border-bottom: none;
+    margin-right: 8px;
+  }
+
+  .article-sharing a:hover {
+    border-bottom: none;
+  }
+
+  .sidebar-section.subscribe {
+    font-size: 12px;
+    line-height: 1.6em;
+  }
+
+  .subscribe p {
+    margin-bottom: 0.5em;
+  }
+
+
+  .article-footer .subscribe {
+    font-size: 15px;
+    margin-top: 45px;
+  }
+
+
+  .sidebar-section.custom {
+    font-size: 12px;
+    line-height: 1.6em;
+  }
+
+  .custom p {
+    margin-bottom: 0.5em;
+  }
+
+  /* Styles for listing layout (hide title) */
+  .layout-listing d-title, .layout-listing .d-title {
+    display: none;
+  }
+
+  /* Styles for posts lists (not auto-injected) */
+
+
+  .posts-with-sidebar {
+    padding-left: 45px;
+    padding-right: 45px;
+  }
+
+  .posts-list .description h2,
+  .posts-list .description p {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+  }
+
+  .posts-list .description h2 {
+    font-weight: 700;
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .posts-list h2.post-tag {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    padding-bottom: 12px;
+  }
+  .posts-list {
+    margin-top: 60px;
+    margin-bottom: 24px;
+  }
+
+  .posts-list .post-preview {
+    text-decoration: none;
+    overflow: hidden;
+    display: block;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 24px 0;
+  }
+
+  .post-preview-last {
+    border-bottom: none !important;
+  }
+
+  .posts-list .posts-list-caption {
+    grid-column: screen;
+    font-weight: 400;
+  }
+
+  .posts-list .post-preview h2 {
+    margin: 0 0 6px 0;
+    line-height: 1.2em;
+    font-style: normal;
+    font-size: 24px;
+  }
+
+  .posts-list .post-preview p {
+    margin: 0 0 12px 0;
+    line-height: 1.4em;
+    font-size: 16px;
+  }
+
+  .posts-list .post-preview .thumbnail {
+    box-sizing: border-box;
+    margin-bottom: 24px;
+    position: relative;
+    max-width: 500px;
+  }
+  .posts-list .post-preview img {
+    width: 100%;
+    display: block;
+  }
+
+  .posts-list .metadata {
+    font-size: 12px;
+    line-height: 1.4em;
+    margin-bottom: 18px;
+  }
+
+  .posts-list .metadata > * {
+    display: inline-block;
+  }
+
+  .posts-list .metadata .publishedDate {
+    margin-right: 2em;
+  }
+
+  .posts-list .metadata .dt-authors {
+    display: block;
+    margin-top: 0.3em;
+    margin-right: 2em;
+  }
+
+  .posts-list .dt-tags {
+    display: block;
+    line-height: 1em;
+  }
+
+  .posts-list .dt-tags .dt-tag {
+    display: inline-block;
+    color: rgba(0,0,0,0.6);
+    padding: 0.3em 0.4em;
+    margin-right: 0.2em;
+    margin-bottom: 0.4em;
+    font-size: 60%;
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 3px;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .posts-list img {
+    opacity: 1;
+  }
+
+  .posts-list img[data-src] {
+    opacity: 0;
+  }
+
+  .posts-more {
+    clear: both;
+  }
+
+
+  .posts-sidebar {
+    font-size: 16px;
+  }
+
+  .posts-sidebar h3 {
+    font-size: 16px;
+    margin-top: 0;
+    margin-bottom: 0.5em;
+    font-weight: 400;
+    text-transform: uppercase;
+  }
+
+  .sidebar-section {
+    margin-bottom: 30px;
+  }
+
+  .categories ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .categories li {
+    color: rgba(0, 0, 0, 0.8);
+    margin-bottom: 0;
+  }
+
+  .categories li>a {
+    border-bottom: none;
+  }
+
+  .categories li>a:hover {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+  }
+
+  .categories .active {
+    font-weight: 600;
+  }
+
+  .categories .category-count {
+    color: rgba(0, 0, 0, 0.4);
+  }
+
+
+  @media(min-width: 768px) {
+    .posts-list .post-preview h2 {
+      font-size: 26px;
+    }
+    .posts-list .post-preview .thumbnail {
+      float: right;
+      width: 30%;
+      margin-bottom: 0;
+    }
+    .posts-list .post-preview .description {
+      float: left;
+      width: 45%;
+    }
+    .posts-list .post-preview .metadata {
+      float: left;
+      width: 20%;
+      margin-top: 8px;
+    }
+    .posts-list .post-preview p {
+      margin: 0 0 12px 0;
+      line-height: 1.5em;
+      font-size: 16px;
+    }
+    .posts-with-sidebar .posts-list {
+      float: left;
+      width: 75%;
+    }
+    .posts-with-sidebar .posts-sidebar {
+      float: right;
+      width: 20%;
+      margin-top: 60px;
+      padding-top: 24px;
+      padding-bottom: 24px;
+    }
+  }
+
+
+  /* Improve display for browsers without grid (IE/Edge <= 15) */
+
+  .downlevel {
+    line-height: 1.6em;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+    margin: 0;
+  }
+
+  .downlevel .d-title {
+    padding-top: 6rem;
+    padding-bottom: 1.5rem;
+  }
+
+  .downlevel .d-title h1 {
+    font-size: 50px;
+    font-weight: 700;
+    line-height: 1.1em;
+    margin: 0 0 0.5rem;
+  }
+
+  .downlevel .d-title p {
+    font-weight: 300;
+    font-size: 1.2rem;
+    line-height: 1.55em;
+    margin-top: 0;
+  }
+
+  .downlevel .d-byline {
+    padding-top: 0.8em;
+    padding-bottom: 0.8em;
+    font-size: 0.8rem;
+    line-height: 1.8em;
+  }
+
+  .downlevel .section-separator {
+    border: none;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .downlevel .d-article {
+    font-size: 1.06rem;
+    line-height: 1.7em;
+    padding-top: 1rem;
+    padding-bottom: 2rem;
+  }
+
+
+  .downlevel .d-appendix {
+    padding-left: 0;
+    padding-right: 0;
+    max-width: none;
+    font-size: 0.8em;
+    line-height: 1.7em;
+    margin-bottom: 0;
+    color: rgba(0,0,0,0.5);
+    padding-top: 40px;
+    padding-bottom: 48px;
+  }
+
+  .downlevel .footnotes ol {
+    padding-left: 13px;
+  }
+
+  .downlevel .base-grid,
+  .downlevel .distill-header,
+  .downlevel .d-title,
+  .downlevel .d-abstract,
+  .downlevel .d-article,
+  .downlevel .d-appendix,
+  .downlevel .distill-appendix,
+  .downlevel .d-byline,
+  .downlevel .d-footnote-list,
+  .downlevel .d-citation-list,
+  .downlevel .distill-footer,
+  .downlevel .appendix-bottom,
+  .downlevel .posts-container {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+
+  @media(min-width: 768px) {
+    .downlevel .base-grid,
+    .downlevel .distill-header,
+    .downlevel .d-title,
+    .downlevel .d-abstract,
+    .downlevel .d-article,
+    .downlevel .d-appendix,
+    .downlevel .distill-appendix,
+    .downlevel .d-byline,
+    .downlevel .d-footnote-list,
+    .downlevel .d-citation-list,
+    .downlevel .distill-footer,
+    .downlevel .appendix-bottom,
+    .downlevel .posts-container {
+    padding-left: 150px;
+    padding-right: 150px;
+    max-width: 900px;
+  }
+  }
+
+  .downlevel pre code {
+    display: block;
+    border-left: 2px solid rgba(0, 0, 0, .1);
+    padding: 0 0 0 20px;
+    font-size: 14px;
+  }
+
+  .downlevel code, .downlevel pre {
+    color: black;
+    background: none;
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    word-wrap: normal;
+    line-height: 1.5;
+
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+
+    -webkit-hyphens: none;
+    -moz-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none;
+  }
+
+  .downlevel .posts-list .post-preview {
+    color: inherit;
+  }
+
+
+
+  </style>
+
+  <script type="application/javascript">
+
+  function is_downlevel_browser() {
+    if (bowser.isUnsupportedBrowser({ msie: "12", msedge: "16"},
+                                   window.navigator.userAgent)) {
+      return true;
+    } else {
+      return window.load_distill_framework === undefined;
+    }
+  }
+
+  // show body when load is complete
+  function on_load_complete() {
+
+    // add anchors
+    if (window.anchors) {
+      window.anchors.options.placement = 'left';
+      window.anchors.add('d-article > h2, d-article > h3, d-article > h4, d-article > h5');
+    }
+
+
+    // set body to visible
+    document.body.style.visibility = 'visible';
+
+    // force redraw for leaflet widgets
+    if (window.HTMLWidgets) {
+      var maps = window.HTMLWidgets.findAll(".leaflet");
+      $.each(maps, function(i, el) {
+        var map = this.getMap();
+        map.invalidateSize();
+        map.eachLayer(function(layer) {
+          if (layer instanceof L.TileLayer)
+            layer.redraw();
+        });
+      });
+    }
+
+    // trigger 'shown' so htmlwidgets resize
+    $('d-article').trigger('shown');
+  }
+
+  function init_distill() {
+
+    init_common();
+
+    // create front matter
+    var front_matter = $('<d-front-matter></d-front-matter>');
+    $('#distill-front-matter').wrap(front_matter);
+
+    // create d-title
+    $('.d-title').changeElementType('d-title');
+
+    // create d-byline
+    var byline = $('<d-byline></d-byline>');
+    $('.d-byline').replaceWith(byline);
+
+    // create d-article
+    var article = $('<d-article></d-article>');
+    $('.d-article').wrap(article).children().unwrap();
+
+    // move posts container into article
+    $('.posts-container').appendTo($('d-article'));
+
+    // create d-appendix
+    $('.d-appendix').changeElementType('d-appendix');
+
+    // flag indicating that we have appendix items
+    var appendix = $('.appendix-bottom').children('h3').length > 0;
+
+    // replace footnotes with <d-footnote>
+    $('.footnote-ref').each(function(i, val) {
+      appendix = true;
+      var href = $(this).attr('href');
+      var id = href.replace('#', '');
+      var fn = $('#' + id);
+      var fn_p = $('#' + id + '>p');
+      fn_p.find('.footnote-back').remove();
+      var text = fn_p.html();
+      var dtfn = $('<d-footnote></d-footnote>');
+      dtfn.html(text);
+      $(this).replaceWith(dtfn);
+    });
+    // remove footnotes
+    $('.footnotes').remove();
+
+    // move refs into #references-listing
+    $('#references-listing').replaceWith($('#refs'));
+
+    $('h1.appendix, h2.appendix').each(function(i, val) {
+      $(this).changeElementType('h3');
+    });
+    $('h3.appendix').each(function(i, val) {
+      var id = $(this).attr('id');
+      $('.d-contents a[href="#' + id + '"]').parent().remove();
+      appendix = true;
+      $(this).nextUntil($('h1, h2, h3')).addBack().appendTo($('d-appendix'));
+    });
+
+    // show d-appendix if we have appendix content
+    $("d-appendix").css('display', appendix ? 'grid' : 'none');
+
+    // localize layout chunks to just output
+    $('.layout-chunk').each(function(i, val) {
+
+      // capture layout
+      var layout = $(this).attr('data-layout');
+
+      // apply layout to markdown level block elements
+      var elements = $(this).children().not('details, div.sourceCode, pre, script');
+      elements.each(function(i, el) {
+        var layout_div = $('<div class="' + layout + '"></div>');
+        if (layout_div.hasClass('shaded')) {
+          var shaded_content = $('<div class="shaded-content"></div>');
+          $(this).wrap(shaded_content);
+          $(this).parent().wrap(layout_div);
+        } else {
+          $(this).wrap(layout_div);
+        }
+      });
+
+
+      // unwrap the layout-chunk div
+      $(this).children().unwrap();
+    });
+
+    // remove code block used to force  highlighting css
+    $('.distill-force-highlighting-css').parent().remove();
+
+    // remove empty line numbers inserted by pandoc when using a
+    // custom syntax highlighting theme
+    $('code.sourceCode a:empty').remove();
+
+    // load distill framework
+    load_distill_framework();
+
+    // wait for window.distillRunlevel == 4 to do post processing
+    function distill_post_process() {
+
+      if (!window.distillRunlevel || window.distillRunlevel < 4)
+        return;
+
+      // hide author/affiliations entirely if we have no authors
+      var front_matter = JSON.parse($("#distill-front-matter").html());
+      var have_authors = front_matter.authors && front_matter.authors.length > 0;
+      if (!have_authors)
+        $('d-byline').addClass('hidden');
+
+      // article with toc class
+      $('.d-contents').parent().addClass('d-article-with-toc');
+
+      // strip links that point to #
+      $('.authors-affiliations').find('a[href="#"]').removeAttr('href');
+
+      // add orcid ids
+      $('.authors-affiliations').find('.author').each(function(i, el) {
+        var orcid_id = front_matter.authors[i].orcidID;
+        if (orcid_id) {
+          var a = $('<a></a>');
+          a.attr('href', 'https://orcid.org/' + orcid_id);
+          var img = $('<img></img>');
+          img.addClass('orcid-id');
+          img.attr('alt', 'ORCID ID');
+          img.attr('src','data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg==');
+          a.append(img);
+          $(this).append(a);
+        }
+      });
+
+      // hide elements of author/affiliations grid that have no value
+      function hide_byline_column(caption) {
+        $('d-byline').find('h3:contains("' + caption + '")').parent().css('visibility', 'hidden');
+      }
+
+      // affiliations
+      var have_affiliations = false;
+      for (var i = 0; i<front_matter.authors.length; ++i) {
+        var author = front_matter.authors[i];
+        if (author.affiliation !== "&nbsp;") {
+          have_affiliations = true;
+          break;
+        }
+      }
+      if (!have_affiliations)
+        $('d-byline').find('h3:contains("Affiliations")').css('visibility', 'hidden');
+
+      // published date
+      if (!front_matter.publishedDate)
+        hide_byline_column("Published");
+
+      // document object identifier
+      var doi = $('d-byline').find('h3:contains("DOI")');
+      var doi_p = doi.next().empty();
+      if (!front_matter.doi) {
+        // if we have a citation and valid citationText then link to that
+        if ($('#citation').length > 0 && front_matter.citationText) {
+          doi.html('Citation');
+          $('<a href="#citation"></a>')
+            .text(front_matter.citationText)
+            .appendTo(doi_p);
+        } else {
+          hide_byline_column("DOI");
+        }
+      } else {
+        $('<a></a>')
+           .attr('href', "https://doi.org/" + front_matter.doi)
+           .html(front_matter.doi)
+           .appendTo(doi_p);
+      }
+
+       // change plural form of authors/affiliations
+      if (front_matter.authors.length === 1) {
+        var grid = $('.authors-affiliations');
+        grid.children('h3:contains("Authors")').text('Author');
+        grid.children('h3:contains("Affiliations")').text('Affiliation');
+      }
+
+      // remove d-appendix and d-footnote-list local styles
+      $('d-appendix > style:first-child').remove();
+      $('d-footnote-list > style:first-child').remove();
+
+      // move appendix-bottom entries to the bottom
+      $('.appendix-bottom').appendTo('d-appendix').children().unwrap();
+      $('.appendix-bottom').remove();
+
+      // hoverable references
+      $('span.citation[data-cites]').each(function() {
+        const citeChild = $(this).children()[0]
+        // Do not process if @xyz has been used without escaping and without bibliography activated
+        // https://github.com/rstudio/distill/issues/466
+        if (citeChild === undefined) return true
+
+        if (citeChild.nodeName == "D-FOOTNOTE") {
+          var fn = citeChild
+          $(this).html(fn.shadowRoot.querySelector("sup"))
+          $(this).id = fn.id
+          fn.remove()
+        }
+        var refs = $(this).attr('data-cites').split(" ");
+        var refHtml = refs.map(function(ref) {
+          // Could use CSS.escape too here, we insure backward compatibility in navigator
+          return "<p>" + $('div[id="ref-' + ref + '"]').html() + "</p>";
+        }).join("\n");
+        window.tippy(this, {
+          allowHTML: true,
+          content: refHtml,
+          maxWidth: 500,
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'light-border',
+          placement: 'bottom-start'
+        });
+      });
+
+      // fix footnotes in tables (#411)
+      // replacing broken distill.pub feature
+      $('table d-footnote').each(function() {
+        // we replace internal showAtNode methode which is triggered when hovering a footnote
+        this.hoverBox.showAtNode = function(node) {
+          // ported from https://github.com/distillpub/template/pull/105/files
+          calcOffset = function(elem) {
+              let x = elem.offsetLeft;
+              let y = elem.offsetTop;
+              // Traverse upwards until an `absolute` element is found or `elem`
+              // becomes null.
+              while (elem = elem.offsetParent && elem.style.position != 'absolute') {
+                  x += elem.offsetLeft;
+                  y += elem.offsetTop;
+              }
+
+              return { left: x, top: y };
+          }
+          // https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/offsetTop
+          const bbox = node.getBoundingClientRect();
+          const offset = calcOffset(node);
+          this.show([offset.left + bbox.width, offset.top + bbox.height]);
+        }
+      })
+
+      // clear polling timer
+      clearInterval(tid);
+
+      // show body now that everything is ready
+      on_load_complete();
+    }
+
+    var tid = setInterval(distill_post_process, 50);
+    distill_post_process();
+
+  }
+
+  function init_downlevel() {
+
+    init_common();
+
+     // insert hr after d-title
+    $('.d-title').after($('<hr class="section-separator"/>'));
+
+    // check if we have authors
+    var front_matter = JSON.parse($("#distill-front-matter").html());
+    var have_authors = front_matter.authors && front_matter.authors.length > 0;
+
+    // manage byline/border
+    if (!have_authors)
+      $('.d-byline').remove();
+    $('.d-byline').after($('<hr class="section-separator"/>'));
+    $('.d-byline a').remove();
+
+    // remove toc
+    $('.d-contents').remove();
+
+    // move appendix elements
+    $('h1.appendix, h2.appendix').each(function(i, val) {
+      $(this).changeElementType('h3');
+    });
+    $('h3.appendix').each(function(i, val) {
+      $(this).nextUntil($('h1, h2, h3')).addBack().appendTo($('.d-appendix'));
+    });
+
+
+    // inject headers into references and footnotes
+    var refs_header = $('<h3></h3>');
+    refs_header.text('References');
+    $('#refs').prepend(refs_header);
+
+    var footnotes_header = $('<h3></h3');
+    footnotes_header.text('Footnotes');
+    $('.footnotes').children('hr').first().replaceWith(footnotes_header);
+
+    // move appendix-bottom entries to the bottom
+    $('.appendix-bottom').appendTo('.d-appendix').children().unwrap();
+    $('.appendix-bottom').remove();
+
+    // remove appendix if it's empty
+    if ($('.d-appendix').children().length === 0)
+      $('.d-appendix').remove();
+
+    // prepend separator above appendix
+    $('.d-appendix').before($('<hr class="section-separator" style="clear: both"/>'));
+
+    // trim code
+    $('pre>code').each(function(i, val) {
+      $(this).html($.trim($(this).html()));
+    });
+
+    // move posts-container right before article
+    $('.posts-container').insertBefore($('.d-article'));
+
+    $('body').addClass('downlevel');
+
+    on_load_complete();
+  }
+
+
+  function init_common() {
+
+    // jquery plugin to change element types
+    (function($) {
+      $.fn.changeElementType = function(newType) {
+        var attrs = {};
+
+        $.each(this[0].attributes, function(idx, attr) {
+          attrs[attr.nodeName] = attr.nodeValue;
+        });
+
+        this.replaceWith(function() {
+          return $("<" + newType + "/>", attrs).append($(this).contents());
+        });
+      };
+    })(jQuery);
+
+    // prevent underline for linked images
+    $('a > img').parent().css({'border-bottom' : 'none'});
+
+    // mark non-body figures created by knitr chunks as 100% width
+    $('.layout-chunk').each(function(i, val) {
+      var figures = $(this).find('img, .html-widget');
+      // ignore leaflet img layers (#106)
+      figures = figures.filter(':not(img[class*="leaflet"])')
+      if ($(this).attr('data-layout') !== "l-body") {
+        figures.css('width', '100%');
+      } else {
+        figures.css('max-width', '100%');
+        figures.filter("[width]").each(function(i, val) {
+          var fig = $(this);
+          fig.css('width', fig.attr('width') + 'px');
+        });
+
+      }
+    });
+
+    // auto-append index.html to post-preview links in file: protocol
+    // and in rstudio ide preview
+    $('.post-preview').each(function(i, val) {
+      if (window.location.protocol === "file:")
+        $(this).attr('href', $(this).attr('href') + "index.html");
+    });
+
+    // get rid of index.html references in header
+    if (window.location.protocol !== "file:") {
+      $('.distill-site-header a[href]').each(function(i,val) {
+        $(this).attr('href', $(this).attr('href').replace(/^index[.]html/, "./"));
+      });
+    }
+
+    // add class to pandoc style tables
+    $('tr.header').parent('thead').parent('table').addClass('pandoc-table');
+    $('.kable-table').children('table').addClass('pandoc-table');
+
+    // add figcaption style to table captions
+    $('caption').parent('table').addClass("figcaption");
+
+    // initialize posts list
+    if (window.init_posts_list)
+      window.init_posts_list();
+
+    // implmement disqus comment link
+    $('.disqus-comment-count').click(function() {
+      window.headroom_prevent_pin = true;
+      $('#disqus_thread').toggleClass('hidden');
+      if (!$('#disqus_thread').hasClass('hidden')) {
+        var offset = $(this).offset();
+        $(window).resize();
+        $('html, body').animate({
+          scrollTop: offset.top - 35
+        });
+      }
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    if (is_downlevel_browser())
+      init_downlevel();
+    else
+      window.addEventListener('WebComponentsReady', init_distill);
+  });
+
+  </script>
+
+  <!--/radix_placeholder_distill-->
+  <script src="site_libs/header-attrs-2.13/header-attrs.js"></script>
+  <script src="site_libs/popper-2.6.0/popper.min.js"></script>
+  <link href="site_libs/tippy-6.2.7/tippy.css" rel="stylesheet" />
+  <link href="site_libs/tippy-6.2.7/tippy-light-border.css" rel="stylesheet" />
+  <script src="site_libs/tippy-6.2.7/tippy.umd.min.js"></script>
+  <script src="site_libs/anchor-4.2.2/anchor.min.js"></script>
+  <script src="site_libs/bowser-1.9.3/bowser.min.js"></script>
+  <script src="site_libs/webcomponents-2.0.0/webcomponents.js"></script>
+  <script src="site_libs/distill-2.2.21/template.v2.js"></script>
+  <!--radix_placeholder_site_in_header-->
+  <!--/radix_placeholder_site_in_header-->
+
+
+</head>
+
+<body>
+
+<!--radix_placeholder_front_matter-->
+
+<script id="distill-front-matter" type="text/json">
+{"title":"Project structure, packages and unit testing in R","authors":[]}
+</script>
+
+<!--/radix_placeholder_front_matter-->
+<!--radix_placeholder_navigation_before_body-->
+<header class="header header--fixed" role="banner">
+<nav class="distill-site-nav distill-site-header">
+<div class="nav-left">
+<a class="logo" href="https://www.ons.gov.uk/">
+<img src="images/ONS_Logo_Digital_White_Landscape_English_RGB.png" alt="Logo"/>
+</a>
+<a href="index.html" class="title">RAPID training</a>
+</div>
+<div class="nav-right">
+<div class="nav-dropdown">
+<button class="nav-dropbtn">
+RAP training in R
+ 
+<span class="down-arrow">&#x25BE;</span>
+</button>
+<div class="nav-dropdown-content">
+<a href="control_flow.html">Control Flow</a>
+<a href="functions.html">Functions</a>
+<a href="packages.html">Packages and unit tests</a>
+</div>
+</div>
+<a href="javascript:void(0);" class="nav-toggle">&#9776;</a>
+</div>
+</nav>
+</header>
+<!--/radix_placeholder_navigation_before_body-->
+<!--radix_placeholder_site_before_body-->
+<!--/radix_placeholder_site_before_body-->
+
+<div class="d-title">
+<h1>Project structure, packages and unit testing in R</h1>
+<!--radix_placeholder_categories-->
+<!--/radix_placeholder_categories-->
+
+</div>
+
+
+<div class="d-article">
+<div class="d-contents d-contents-float">
+<nav class="l-text toc figcaption" id="TOC">
+<h3>Contents</h3>
+<ul>
+<li><a href="#what-is-a-package-and-when-do-we-need-one">What is a package and when do we need one?</a></li>
+<li><a href="#code-structure">Code structure</a>
+<ul>
+<li><a href="#small-project">Small project</a></li>
+<li><a href="#medium-project">Medium project</a></li>
+<li><a href="#big-project">Big project</a></li>
+</ul></li>
+<li><a href="#building-r-packages">Building R packages</a>
+<ul>
+<li><a href="#package-structure-and-setup">Package structure and setup</a></li>
+<li><a href="#functions-and-installingtesting-your-package">Functions and installing/testing your package</a></li>
+<li><a href="#roxygen-documentation">Roxygen documentation</a></li>
+<li><a href="#unit-testing-and-quality-assurance">Unit testing and Quality Assurance</a></li>
+<li><a href="#additional-resources">Additional resources</a></li>
+</ul></li>
+</ul>
+</nav>
+</div>
+<h1 id="what-is-a-package-and-when-do-we-need-one">What is a package and when do we need one?</h1>
+<p>To put simply a package is a collection of functions that we can load into our workspace and use. Base R contains many functions already, but loading packages extends R functionality. Some of the most popular packages in HAPI include dplyr for data manipulation and ggplot2 for creating charts.</p>
+<p>Is a package only way to store and load your functions? No. Depending on the size and complexity of your project you should select one of the following options to store your functions.</p>
+<ol type="1">
+<li>Simplest option is to have functions stored in the body of your scipt, load them into the global environment (you’ll see them in the top right corner in R Studio) and use. This will only be good solution for a very small project.</li>
+<li>You can save all of your functions in a single .R script (e.g. “functions.R”) and load them in into analytical script using source() function e.g.:</li>
+</ol>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='kw'><a href='https://rdrr.io/r/base/source.html'>source</a></span><span class='op'>(</span><span class='st'>"functions.R"</span><span class='op'>)</span></span></code></pre>
+</div>
+</div>
+<ol start="3" type="1">
+<li>You can create a package that will contain all your functions. Benefits of that solution include good dependency management (using other packages, requiring specific versions etc.), simple implementation of unit tests and good documentation solutions that make it easier for other people to use your functions. Package is often the best solution for more complex analyses.</li>
+</ol>
+<h4 id="q1">Q1</h4>
+<h1 id="code-structure">Code structure</h1>
+<p>Optimal code structure will depend on volume and complexity of analysis. We’ll cover small, medium and big projects.</p>
+<h2 id="small-project">Small project</h2>
+<h3 id="structure">Structure</h3>
+<p>For a small project it might be sufficient to have a single script that does all the work. In this case, the code should be structured as follows:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'># Config ----</span></span>
+<span><span class='co'># specify all the variables that require user input at the top. All variables that might change from</span></span>
+<span><span class='co'># run to run should be here: e.g. locations where to load data from, where to save the outputs, analytical parameters etc.</span></span>
+<span></span>
+<span><span class='co'># Load packages ----</span></span>
+<span><span class='co'># library in all the required packages</span></span>
+<span></span>
+<span><span class='co'># Body of the script ----</span></span>
+<span><span class='co'># Whatever the code actually does - you can have multiple sections here to make it easy to read.</span></span></code></pre>
+</div>
+</div>
+<p>Even for small projects, contained within one script we should have a README file that contains the necessary documentation/instructions. README should ensure that another person can easily run the project.</p>
+<h3 id="quality-assurance">Quality assurance</h3>
+<p>For a small project any tests should be implemented in the body of the script - this can be simple sanity checks i.e. if statements printing a message or can use testthat “expect” functions. Some sanity checks might be useful, but for small projects most important part of QA will be for another analyst to quality assurance your code to check if it works as expected.</p>
+<h5 id="q2">Q2</h5>
+<h2 id="medium-project">Medium project</h2>
+<h3 id="structure-1">Structure</h3>
+<p>In a medium size project you will likely need to have multiple scripts. First, you’ll need a README file that will explain to any future users how to run the code, which parameters need to be updated and where. If there is no other documentation this is also the place to specify any dependencies, versions, authors etc. README should generally be in .txt format.</p>
+<p>You should have a separate config file with all the variables that require user input. Config file can be e.g. in yaml or R script format. This way you are less likely to introduce errors into the analytical part of the project and it is easy to modify parameters.</p>
+<p>For medium size projects, you should make your code modular and avoid repetition. This means employing functions to do the heavy lifting for you. Therefore, you’ll need another R script where all the functions are stored.</p>
+<p>Finally, you’ll have a “main” script (it doesn’t have to be called main, but it should be clear which one to run), that does all the work. To take advantage of the config and functions you created you can simply use the source() function to call these into your environment.</p>
+<pre><code>project/
+  README.txt
+  config.yaml OR config.R
+  functions.R
+  main.R</code></pre>
+<h3 id="quality-assurance-1">Quality assurance</h3>
+<p>For a medium project you should consider creating unit tests for your functions. This can be done in a simple fashion e.g. by creating another R script that will source all the functions and run tests for them. You should still have another analyst QA your code.</p>
+<h2 id="big-project">Big project</h2>
+<h3 id="structure-2">Structure</h3>
+<p>Usually, best way to structure large or complex projects is going to be putting it in a package (see next section). Alternatively you could adopt a structure similar to a package, that will help you manage the abundance of code and tests you’ll need to produce.</p>
+<pre><code>project/
+
+  functions/
+    analytical_functions.R
+    data_processing_functions.R
+    super_complex_modelling_functions.R
+    
+  tests/
+    test_function_F.R
+    ...
+  
+  README.txt
+  config.yaml OR config.R
+  main.R</code></pre>
+<h3 id="quality-assurance-2">Quality assurance</h3>
+<p>For a big project, you should really unit test your functions. As always code should be quality assured by another analyst. Ideally you should produce logs each time your code is run with outcomes of your sanity checks and any parameters specified in the config.</p>
+<h4 id="q34">Q3,4</h4>
+<h1 id="building-r-packages">Building R packages</h1>
+<p>You will need devtools and roxygen packages installed to run these functions.</p>
+<h2 id="package-structure-and-setup">Package structure and setup</h2>
+<h3 id="package-name">Package name</h3>
+<p>Package name should consist of letters and numbers and be informative. You can’t use underscores in a package name, but . are allowed. Make sure that your name is unique to avoid conflicts with existing packages.</p>
+<h3 id="creating-basic-structure">Creating basic structure</h3>
+<p>Devtools create() function creates package folders in current directory.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'>devtools</span><span class='fu'>::</span><span class='fu'><a href='https://devtools.r-lib.org/reference/create.html'>create</a></span><span class='op'>(</span><span class='st'>"pckgname"</span><span class='op'>)</span></span></code></pre>
+</div>
+</div>
+<p>The structure created this way includes folder called R (for all your functions) and DESCRIPTION and NAMESPACE files.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/base/list.files.html'>dir</a></span><span class='op'>(</span><span class='st'>"pckgname"</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>[1] &quot;DESCRIPTION&quot; &quot;NAMESPACE&quot;   &quot;R&quot;          </code></pre>
+</div>
+<p>DESCRIPTION file can be edited manually (e.g. using notepad) and should contain:</p>
+<ul>
+<li>Title of the package</li>
+<li>Any dependencies, including versions (if needed)</li>
+<li>License</li>
+<li><a href="mailto:Authors@R" class="email">Authors@R</a> field should include details of authors, contributors, and copyright holders</li>
+</ul>
+<p>NAMESPACE file should not be edited manually, it will be updated automatically when you document your package.</p>
+<p>This a basic structure of a package. In analytical pipeline, your package is something that stores all the functions (can store few more things as you will see later), but does not include the main pipeline itself. Your overall project structure will look as follows:</p>
+<pre><code>project/
+  pckgname/
+    DESCRIPTION
+    NAMESPACE
+    R/
+      analytical_functions.R
+      data_processing_functions.R
+      super_complex_modelling_functions.R
+
+  README.txt
+  config.yaml OR config.R
+  main.R</code></pre>
+<p>This is the basic package structure, there will be few more things in the package that you’ll learn about in the further sections.</p>
+<h4 id="q5">Q5</h4>
+<h2 id="functions-and-installingtesting-your-package">Functions and installing/testing your package</h2>
+<h3 id="adding-functions-to-your-package">Adding functions to your package</h3>
+<p>Functions need to be stored in R/ folder inside the package. You can have individual files for each function or store multiple functions in a single file. Files containing a single function should have the same name as that function. When you store couple of functions together they should be grouped with similar functions (e.g. import functions) and files should have informative names (e.g. data_import.R). The easiest way to add functions to a package is to create an R script and save it in the project/pckgname/R folder.</p>
+<p>You can simply open a new R script, name it cool_functions.R and save in your /R subfolder inside the package folder. You can also create new R script using:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>setwd</a></span><span class='op'>(</span><span class='st'>"pckgname"</span><span class='op'>)</span> <span class='co'># you need to be in the package folder -&gt; so first we move into the package</span></span>
+<span><span class='fu'>usethis</span><span class='fu'>::</span><span class='fu'><a href='https://usethis.r-lib.org/reference/use_r.html'>use_r</a></span><span class='op'>(</span><span class='st'>"cool_functions"</span><span class='op'>)</span>    <span class='co'># creates and opens R/cool_functions.R</span></span></code></pre>
+</div>
+</div>
+<p>*Note that using setwd() in a chunk only works within that chunk. So your wd outside the chunk stays the same - and other chunks are going to use the global working directory instead.</p>
+<p>You can paste in the following function or create your own.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>add_3</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span>  <span class='va'>x</span> <span class='op'>+</span> <span class='fl'>3</span></span>
+<span><span class='op'>}</span></span></code></pre>
+</div>
+</div>
+<h3 id="trying-out-functions-from-your-package">Trying out functions from your package</h3>
+<p>Now that we have something in our package, let’s try installing it. To do so you need to be in your project directory (e.g. “D:/project/”) if you aren’t use setwd(“D:/project/”) in R console to change your working directory.</p>
+<p>To install your package:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'>devtools</span><span class='fu'>::</span><span class='fu'><a href='https://devtools.r-lib.org/reference/install.html'>install</a></span><span class='op'>(</span><span class='st'>"pckgname"</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>* checking for file &#39;D:\github\web_raptraining\pckgname/DESCRIPTION&#39; ... OK
+* preparing &#39;pckgname&#39;:
+* checking DESCRIPTION meta-information ... OK
+* checking for LF line-endings in source and make files and shell scripts
+* checking for empty or unneeded directories
+* building &#39;pckgname_0.0.0.9000.tar.gz&#39;
+
+Running &quot;C:/MY_RST~1/R-41~1.3/bin/x64/Rcmd.exe&quot; INSTALL \
+  &quot;C:\Users\delonp\AppData\Local\Temp\RtmpakSjI6/pckgname_0.0.0.9000.tar.gz&quot; \
+  --install-tests 
+* installing to library &#39;C:/My_RStudio/pckgs&#39;
+* installing *source* package &#39;pckgname&#39; ...
+** using staged installation
+** R
+** byte-compile and prepare package for lazy loading
+** help
+No man pages found in package  &#39;pckgname&#39; 
+*** installing help indices
+** building package indices
+** testing if installed package can be loaded from temporary location
+*** arch - i386
+*** arch - x64
+** testing if installed package can be loaded from final location
+*** arch - i386
+*** arch - x64
+** testing if installed package keeps a record of temporary installation path
+* DONE (pckgname)</code></pre>
+</div>
+<p>Once the package is installed, library it in to use its functions (as with any package!).</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'>pckgname</span><span class='op'>)</span></span>
+<span><span class='fu'>add_3</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>Error in add_3(1): could not find function &quot;add_3&quot;</code></pre>
+</div>
+<p>Annoyingly this does not work!</p>
+<p>We will need to add few more steps for it to work, but in the meantime we can use a different function to allow us try out our functions at the development stage.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'>devtools</span><span class='fu'>::</span><span class='fu'><a href='https://devtools.r-lib.org/reference/load_all.html'>load_all</a></span><span class='op'>(</span><span class='st'>"pckgname"</span><span class='op'>)</span></span>
+<span><span class='fu'>add_3</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>[1] 4</code></pre>
+</div>
+<p>Worked as a charm! Using load_all is the fastest way to try out the functionality of your new functions, so you’re likely to be using it often while building your package.</p>
+<p>Ok, but what do you need to do for it to work properly? You’ll have to add proper documentation to your functions.
+## Breakout rooms</p>
+<h2 id="roxygen-documentation">Roxygen documentation</h2>
+<p>Individual functions in a package need their own documentation. You should also include some documentation for functions even for smaller projects, but for packages they need to follow a specific format. For R packages roxygen allows us to build clean documentation. For functions these “comments” are called docstrings.</p>
+<p>The roxygen headers are included in the same script as the function code. You use roxygen comments #’ to identify a line as part of the roxygen header.</p>
+<h3 id="minimum-functionality-and-installing-your-package">Minimum functionality and installing your package</h3>
+<p>As a bare minimum your functions need an <span class="citation" data-cites="export">@export</span> tag to work. Try adding the following line above your function in the “test_functions.R” script:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'>#' @export</span></span></code></pre>
+</div>
+</div>
+<p>For the package to work you need to create documentation with devtools::document() and then install your package using devtools::install. Note that without the export tag devtools::document() the package would not export any functions, so you still wouldn’t be able to use them.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'>devtools</span><span class='fu'>::</span><span class='fu'><a href='https://devtools.r-lib.org/reference/document.html'>document</a></span><span class='op'>(</span><span class='st'>"pckgname"</span><span class='op'>)</span></span></code></pre>
+</div>
+</div>
+<p>You should see the message “Writing NAMESPACE”. Open the NAMESPACE file and see what changed.</p>
+<p>First line has not changed, but now there is a new line telling the package to export add_3 function. All the functions you want users to get from your package need to be exported and appear in the NAMESPACE.</p>
+<p>Now, when you install your package you can library it in and use it’s functions.</p>
+<h3 id="functions-docstrings">Functions’ docstrings</h3>
+<p>The first three lines of the header have special meaning and you don’t need to use tags to identify them. The first three lines are title, description and details. Since you don’t use any tags to identify the first three lines, it is necessary that you separate them by a new line. For example:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'>#' Title of the function</span></span>
+<span><span class='co'>#'</span></span>
+<span><span class='co'>#' Description of what function does</span></span>
+<span><span class='co'>#'</span></span>
+<span><span class='co'>#' Details</span></span></code></pre>
+</div>
+</div>
+<p>One of the most important aspects of a function to document are the arguments. With roxygen you specify them with the <span class="citation" data-cites="param">@param</span> tag. You follow the tag with the argument name and then any details the user needs to know. If there is a lot of information that you need to provide about an argument you might want to consider putting this in the details section instead.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'>#' @param x Description of the x argument</span></span></code></pre>
+</div>
+</div>
+<p>Return header will the users what to expect as an output of the function.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'>#' @return Description of the output</span></span></code></pre>
+</div>
+</div>
+<p>Only exported functions will be loaded and directly accessible to users when they load a package, so make sure to add the export tags.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'>#' @export</span></span></code></pre>
+</div>
+</div>
+<h3 id="example-roxygen-docstrings">Example roxygen docstrings</h3>
+<p>This is minimal documentation that each function should have:
+* title
+* description
+* params
+* return
+* export tag (if exported)</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'>#' Add three</span></span>
+<span><span class='co'>#' </span></span>
+<span><span class='co'>#' Computes sum of given number and 3</span></span>
+<span><span class='co'>#' </span></span>
+<span><span class='co'>#' @param x Numeric vector</span></span>
+<span><span class='co'>#' </span></span>
+<span><span class='co'>#' @return Numeric vector with values increased by 3</span></span></code></pre>
+</div>
+</div>
+<p>Another tag that you’ll likely use often is <span class="citation" data-cites="import">@import</span> tag, which will attach other packages that your functions use and make sure they are installed when your package is installed.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'>#' @import purrr</span></span>
+<span><span class='co'>#' @import dplyr</span></span></code></pre>
+</div>
+</div>
+<h3 id="optional-roxygen-tags-optional-content">Optional roxygen tags (optional content)</h3>
+<p>You can also include examples in roxygen header</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'>#' @example</span></span>
+<span><span class='co'>#' \dontrun{</span></span>
+<span><span class='co'>#'   mean(5)</span></span>
+<span><span class='co'>#'}</span></span></code></pre>
+</div>
+</div>
+<p>When you write documentation you may want to format the text to look like code, link to other functions or, particularly for return objects, format as a bulleted list. You can do this using special formatting:</p>
+<p>For code you use:</p>
+<p>To link to other functions you use:</p>
+<p>Note the package name is only required if the function is not in your package.</p>
+<p>To include an unordered list you use:</p>
+<p>Inside the brackets you mark new items with</p>
+<p>followed by the item text.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'>#' @return This function returns a \code{data.frame} including columns:</span></span>
+<span><span class='co'>#' \itemize{</span></span>
+<span><span class='co'>#'  \item colname</span></span>
+<span><span class='co'>#'  \item colname2</span></span>
+<span><span class='co'>#' }</span></span></code></pre>
+</div>
+</div>
+<p>add author</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'>#' @author My Name &lt;myemail@example.com&gt;</span></span></code></pre>
+</div>
+</div>
+<p>if you want to link to other functions</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'>#' @seealso \code{\link[packagename]{functioname}}</span></span></code></pre>
+</div>
+</div>
+<p>In addition to the individual functions you can also document the whole package.</p>
+<p>When you document a package you can use all of the same tags as for functions but the problem that you have is that there is no R code to document. Instead you put the keyword “_PACKAGE” underneath your package header.</p>
+<p>The script should be saved in R directory in file with package name, e.g. pckgname.R</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'>#' Title</span></span>
+<span><span class='co'>#'</span></span>
+<span><span class='co'>#' Description</span></span>
+<span><span class='co'>#'</span></span>
+<span><span class='co'>#' @docType package</span></span>
+<span><span class='co'>#' @name pckgname</span></span>
+<span><span class='st'>"_PACKAGE"</span></span></code></pre>
+</div>
+<pre><code>[1] &quot;_PACKAGE&quot;</code></pre>
+</div>
+<h3 id="produce-documentation">Produce documentation</h3>
+<p>Once you created roxygen headers you can create documentation for your package.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'># Generate package documentation</span></span>
+<span><span class='fu'>devtools</span><span class='fu'>::</span><span class='fu'><a href='https://devtools.r-lib.org/reference/document.html'>document</a></span><span class='op'>(</span><span class='st'>"pckgname"</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='co'># Examine the contents of the man directory</span></span>
+<span><span class='fu'><a href='https://rdrr.io/r/base/list.files.html'>dir</a></span><span class='op'>(</span><span class='st'>"pckgname/man"</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='co'># View the documentation for the package and it's function</span></span>
+<span><span class='fu'><a href='https://rdrr.io/r/utils/help.html'>help</a></span><span class='op'>(</span><span class='st'>"pckgname"</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='co'># Update the package loaded in your workspace</span></span>
+<span><span class='fu'>devtools</span><span class='fu'>::</span><span class='fu'><a href='https://devtools.r-lib.org/reference/load_all.html'>load_all</a></span><span class='op'>(</span><span class='st'>"pckgnmme"</span><span class='op'>)</span></span></code></pre>
+</div>
+</div>
+<p>Using roxygen comments will help you build code documentation when you run
+devtools::document function and will update NAMESPACE file, but not the
+DESCRIPTION file. You can update the description file manually. For instance, roxygen won’t update the Dependencies or Imports in the DESCRIPTION file.</p>
+<h2 id="unit-testing-and-quality-assurance">Unit testing and Quality Assurance</h2>
+<h3 id="what-are-unit-tests">What are unit tests?</h3>
+<p>Unit tests check whether functions do what is expected of them. No more no less. Ideally, you would like a 100% of test coverage, which means that every functions has tests that check for every eventuality. More realistically 60-70% test coverage is very good.</p>
+<p>To create unit tests, you’ll produce dummy data and run your function using this data to check if it produces expected output. Not as difficult as it sounds is it?</p>
+<h3 id="where-to-put-unit-tests-in-a-package">Where to put unit tests in a package?</h3>
+<p>Setting up folder for unit tests</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'>usethis</span><span class='fu'>::</span><span class='fu'><a href='https://usethis.r-lib.org/reference/use_testthat.html'>use_testthat</a></span><span class='op'>(</span><span class='op'>)</span> <span class='co'># your wd should be in the package</span></span></code></pre>
+</div>
+</div>
+<p>You could also create these folders manually - let’s have a look how it should look like.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/base/list.files.html'>dir</a></span><span class='op'>(</span><span class='st'>"pckgname"</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>[1] &quot;DESCRIPTION&quot; &quot;NAMESPACE&quot;   &quot;R&quot;          </code></pre>
+</div>
+<p>You can see a folder called tests - let’s see what’s inside.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/base/list.files.html'>dir</a></span><span class='op'>(</span><span class='st'>"pckgname/tests"</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>character(0)</code></pre>
+</div>
+<h3 id="how-to-write-unit-tests-with-testthat">How to write unit tests with testthat?</h3>
+<p>For each function you’ll need a separate .R file named test-function_name.R. Inside you create test data and output that function should produce for the test data you create within the test script. Then you compare the expected output (that is hardcoded) with output of the function.</p>
+<p>You can create testing scripts manually - just as describe above or for function called “function_name” you can use:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'>usethis</span><span class='fu'>::</span><span class='fu'><a href='https://usethis.r-lib.org/reference/use_r.html'>use_test</a></span><span class='op'>(</span><span class='st'>"function_name"</span><span class='op'>)</span> <span class='co'># creates and opens tests/testthat/test-function_name.R</span></span></code></pre>
+</div>
+</div>
+<p>If your functions are grouped in an R script together e.g. pckgname/R/data_processing.R your test files should be named the same as the function files, e.g.:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'>usethis</span><span class='fu'>::</span><span class='fu'><a href='https://usethis.r-lib.org/reference/use_r.html'>use_test</a></span><span class='op'>(</span><span class='st'>"data_processing"</span><span class='op'>)</span> <span class='co'># creates and opens tests/testthat/test-data_processing.R</span></span></code></pre>
+</div>
+</div>
+<p>You can use expect_equal(), expect_equivalent() and expect_identical() in order to test whether the output of a function is as expected. These three functions all have slightly different functionality:</p>
+<ul>
+<li>testthat::expect_identical() checks that the values, attributes, and type of both objects are the same.</li>
+<li>testthat::expect_equal() checks that the values, and attributes of both objects are the same. You can adjust how testthat::strict expect_equal() is by adjusting the tolerance parameter.</li>
+<li>testthat::expect_equivalent() checks that the values, of both objects are the same.</li>
+</ul>
+<p>See example of what test script should contain:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>test_data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>3</span><span class='op'>)</span></span>
+<span><span class='va'>expected_output</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>5</span>, <span class='fl'>6</span><span class='op'>)</span></span>
+<span><span class='va'>function_output</span> <span class='op'>&lt;-</span> <span class='fu'>add_3</span><span class='op'>(</span><span class='va'>test_data</span><span class='op'>)</span></span>
+<span></span>
+<span></span>
+<span><span class='fu'>testthat</span><span class='fu'>::</span><span class='fu'><a href='https://testthat.r-lib.org/reference/test_that.html'>test_that</a></span><span class='op'>(</span><span class='st'>"Checking expected outcome matches outcome for add_3 function"</span>, <span class='op'>{</span></span>
+<span>  <span class='fu'>testthat</span><span class='fu'>::</span><span class='fu'><a href='https://testthat.r-lib.org/reference/equality-expectations.html'>expect_identical</a></span><span class='op'>(</span><span class='va'>function_output</span>, <span class='va'>expected_output</span><span class='op'>)</span></span>
+<span><span class='op'>}</span><span class='op'>)</span></span></code></pre>
+</div>
+</div>
+<h3 id="what-should-you-be-testing">What should you be testing?</h3>
+<p>Everything that is crucial for the function to work. It is not possible to test for every possibility, but checking how function will handle various combination of arguments, extra columns or different types of values (e.g. 0, NaNs, empty cells) can be useful. You can also check if function will throw an error or a warning when it shoud:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'>testthat</span><span class='fu'>::</span><span class='fu'><a href='https://testthat.r-lib.org/reference/expect_error.html'>expect_error</a></span><span class='op'>(</span><span class='fl'>1</span> <span class='op'>/</span> <span class='st'>"a"</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='fu'>testthat</span><span class='fu'>::</span><span class='fu'><a href='https://testthat.r-lib.org/reference/expect_error.html'>expect_warning</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
+</div>
+</div>
+<p>Other tests can involve testing whether output is of specific size or class. Functions that will check for these aspects are:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'>testthat</span><span class='fu'>::</span><span class='fu'><a href='https://testthat.r-lib.org/reference/expect_length.html'>expect_length</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span><span class='fu'>testthat</span><span class='fu'>::</span><span class='fu'><a href='https://testthat.r-lib.org/reference/inheritance-expectations.html'>expect_s3_class</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span><span class='fu'>testthat</span><span class='fu'>::</span><span class='fu'><a href='https://testthat.r-lib.org/reference/inheritance-expectations.html'>expect_s4_class</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span><span class='fu'>testthat</span><span class='fu'>::</span><span class='fu'><a href='https://testthat.r-lib.org/reference/inheritance-expectations.html'>expect_type</a></span><span class='op'>(</span><span class='op'>)</span></span></code></pre>
+</div>
+</div>
+<h3 id="how-many-tests-for-a-function-optional">How many tests for a function? (optional)</h3>
+<p>Each function needs to have a single file for unit tests, but there can be multiple unit tests inside. For instance, if your function includes conditional statements, you should tests all of the conditions (e.g. TRUE/FALSE).</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>set_y_if_x</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>y</span>, <span class='va'>x</span> <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>{</span></span>
+<span>  <span class='kw'>if</span> <span class='op'>(</span><span class='va'>x</span> <span class='op'>==</span> <span class='cn'>TRUE</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span>    <span class='va'>y</span> <span class='op'>&lt;-</span> <span class='va'>y</span> <span class='op'>+</span> <span class='fl'>1</span></span>
+<span>  <span class='op'>}</span></span>
+<span>  <span class='va'>y</span></span>
+<span><span class='op'>}</span></span>
+<span></span>
+<span></span>
+<span><span class='fu'>testthat</span><span class='fu'>::</span><span class='fu'><a href='https://testthat.r-lib.org/reference/test_that.html'>test_that</a></span><span class='op'>(</span><span class='st'>"Checking expected outcome when x is TRUE"</span>, <span class='op'>{</span></span>
+<span>  <span class='va'>test_y</span> <span class='op'>&lt;-</span> <span class='fl'>1</span></span>
+<span>  <span class='va'>expected_output</span> <span class='op'>&lt;-</span> <span class='fl'>2</span></span>
+<span>  <span class='va'>function_output</span> <span class='op'>&lt;-</span> <span class='fu'>set_y_if_x</span><span class='op'>(</span><span class='va'>test_y</span>, x <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></span>
+<span>  <span class='fu'>testthat</span><span class='fu'>::</span><span class='fu'><a href='https://testthat.r-lib.org/reference/equality-expectations.html'>expect_identical</a></span><span class='op'>(</span><span class='va'>function_output</span>, <span class='va'>expected_output</span><span class='op'>)</span></span>
+<span><span class='op'>}</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>Test passed </code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'>testthat</span><span class='fu'>::</span><span class='fu'><a href='https://testthat.r-lib.org/reference/test_that.html'>test_that</a></span><span class='op'>(</span><span class='st'>"Checking expected outcome when x is FALSE"</span>, <span class='op'>{</span></span>
+<span>  <span class='va'>test_y</span> <span class='op'>&lt;-</span> <span class='fl'>1</span></span>
+<span>  <span class='va'>expected_output</span> <span class='op'>&lt;-</span> <span class='fl'>1</span></span>
+<span>  <span class='va'>function_output</span> <span class='op'>&lt;-</span> <span class='fu'>set_y_if_x</span><span class='op'>(</span><span class='va'>test_y</span>, x <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></span>
+<span>  <span class='fu'>testthat</span><span class='fu'>::</span><span class='fu'><a href='https://testthat.r-lib.org/reference/equality-expectations.html'>expect_identical</a></span><span class='op'>(</span><span class='va'>function_output</span>, <span class='va'>expected_output</span><span class='op'>)</span></span>
+<span><span class='op'>}</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>Test passed </code></pre>
+</div>
+<p>You can also have multiple “expect” functions inside one “test_that” statement. This could be useful when checking multiple properties of the output. For instance:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>change_col_to_factor</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>df</span>, <span class='va'>col_name</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span>  <span class='va'>df</span><span class='op'>[</span>, <span class='va'>col_name</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>as.factor</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>[</span>, <span class='va'>col_name</span><span class='op'>]</span><span class='op'>)</span></span>
+<span>  <span class='va'>df</span></span>
+<span><span class='op'>}</span></span>
+<span></span>
+<span><span class='fu'>testthat</span><span class='fu'>::</span><span class='fu'><a href='https://testthat.r-lib.org/reference/test_that.html'>test_that</a></span><span class='op'>(</span><span class='st'>"Checking data frame column types are as expected"</span>, <span class='op'>{</span></span>
+<span>  <span class='va'>test_df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span></span>
+<span>    a <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span>, </span>
+<span>    b <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"a"</span>, <span class='st'>"b"</span>, <span class='st'>"c"</span><span class='op'>)</span>, </span>
+<span>    c <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"A"</span>, <span class='st'>"A"</span>, <span class='st'>"B"</span><span class='op'>)</span></span>
+<span>  <span class='op'>)</span></span>
+<span>  <span class='va'>function_output</span> <span class='op'>&lt;-</span> <span class='fu'>change_col_to_factor</span><span class='op'>(</span><span class='va'>test_df</span>, col_name <span class='op'>=</span> <span class='st'>"c"</span><span class='op'>)</span></span>
+<span>  </span>
+<span>  <span class='fu'>testthat</span><span class='fu'>::</span><span class='fu'><a href='https://testthat.r-lib.org/reference/inheritance-expectations.html'>expect_type</a></span><span class='op'>(</span><span class='va'>function_output</span><span class='op'>[</span>, <span class='st'>"a"</span><span class='op'>]</span>, <span class='st'>"integer"</span><span class='op'>)</span></span>
+<span>  <span class='fu'>testthat</span><span class='fu'>::</span><span class='fu'><a href='https://testthat.r-lib.org/reference/inheritance-expectations.html'>expect_type</a></span><span class='op'>(</span><span class='va'>function_output</span><span class='op'>[</span>, <span class='st'>"b"</span><span class='op'>]</span>, <span class='st'>"character"</span><span class='op'>)</span></span>
+<span>  <span class='fu'>testthat</span><span class='fu'>::</span><span class='fu'><a href='https://testthat.r-lib.org/reference/inheritance-expectations.html'>expect_s3_class</a></span><span class='op'>(</span><span class='va'>function_output</span><span class='op'>[</span>, <span class='st'>"c"</span><span class='op'>]</span>, <span class='st'>"factor"</span><span class='op'>)</span></span>
+<span><span class='op'>}</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>Test passed </code></pre>
+</div>
+<h3 id="testing-your-package">Testing your package</h3>
+<p>It is good to run unit tests on the package whenever you change functionality. There is a simple way to do it:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'>devtools</span><span class='fu'>::</span><span class='fu'><a href='https://devtools.r-lib.org/reference/test.html'>test</a></span><span class='op'>(</span><span class='st'>"pckgname"</span><span class='op'>)</span></span></code></pre>
+</div>
+</div>
+<h3 id="unexported-functions-optional">UnExported functions (optional)</h3>
+<p>Testing non exported functions:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'>testthat</span><span class='fu'>::</span><span class='fu'><a href='https://testthat.r-lib.org/reference/equality-expectations.html'>expect_equal</a></span><span class='op'>(</span><span class='fu'>pkgname</span><span class='fu'>:::</span><span class='fu'>function_name</span><span class='op'>(</span><span class='va'>input</span><span class='op'>)</span>, <span class='va'>expected_output</span><span class='op'>)</span></span></code></pre>
+</div>
+</div>
+<p>Only exported functions will be loaded and directly accessible to users when they load a package.</p>
+<p>However it is possible to access non exported functions of a package:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'>pckgname</span><span class='fu'>:::</span><span class='fu'>nonExpfun</span><span class='op'>(</span><span class='va'>arg1</span><span class='op'>)</span></span></code></pre>
+</div>
+</div>
+<h3 id="quality-assurance-3">Quality Assurance</h3>
+<p>Complex pipelines should contain unit tests that cover most functions. However, you still should have your code peer reviewed and quality assured by another analyst.</p>
+<h3 id="testing-excercises">Testing excercises</h3>
+<h3 id="how-to-share-your-package">How to share your package?</h3>
+<p>Upload the package folder on git, then people can clone 0it and run devtools::install :D You can also ask for your package to be added to ONS artifactory.</p>
+<p>You can also add on cran, but we won’t cover that here - see more advanced resources below.</p>
+<h2 id="additional-resources">Additional resources</h2>
+<p>For more information see:</p>
+<ul>
+<li><a href="https://learninghub.ons.gov.uk/course/view.php?id=1165">Packages in R and Python</a> - course on LearningHub</li>
+<li><a href="https://r-pkgs.org/">Packaging your code in R</a> - book</li>
+<li><a href="https://learninghub.ons.gov.uk/enrol/index.php?id=796">Packaging your code in R in DAP</a> - screencast by DAPCATS</li>
+<li><a href="https://learninghub.ons.gov.uk/course/view.php?id=539">Introduction to Unit Testing</a> - course on LearningHub</li>
+</ul>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<!--radix_placeholder_article_footer-->
+<!--/radix_placeholder_article_footer-->
+</div>
+
+<div class="d-appendix">
+</div>
+
+
+<!--radix_placeholder_site_after_body-->
+<!--/radix_placeholder_site_after_body-->
+<!--radix_placeholder_appendices-->
+<div class="appendix-bottom"></div>
+<!--/radix_placeholder_appendices-->
+<!--radix_placeholder_navigation_after_body-->
+<div class="distill-site-nav distill-site-footer">
+<p>© Crown Copyright 2023</p>
+</div>
+<!--/radix_placeholder_navigation_after_body-->
+
+
+</body>
+
+</html>

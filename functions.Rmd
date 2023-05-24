@@ -1,0 +1,1173 @@
+---
+title: "Functions in R"
+output:
+  distill::distill_article:
+    toc: true
+    toc_depth: 2
+    number_sections: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
+library(tidyverse)
+```
+
+**Prerequisites:**
+
+- RStudio and R installed on laptop  
+    * Packages required: `tidyverse`  
+- Basic R coding  
+- Required for Advanced section: Coding in `dplyr`  
+
+
+Click here to skip to the [Advanced Section](#advanced).
+
+
+**Glossary**
+
+Here is a glossary of some terms I may use in this presentation and some links to learn more:
+
+```{r include = T, eval = T, echo = F}
+glossary <- read.csv("data/glossary_of_jargon.csv", header = T, check.names = F,
+                     fileEncoding="UTF-8-BOM") %>%
+  dplyr::arrange(Jargon)
+
+links_glossary <- glossary$`Tutorials for further explanation (many exist)`
+
+glossary %>%
+  dplyr::select(-`Tutorials for further explanation (many exist)`) %>%
+  dplyr::mutate(`Links to further info` = 
+                  kableExtra::cell_spec(
+                    Jargon, "html", link = links_glossary)) %>%
+  kableExtra::kable("html", escape = FALSE) %>%
+  kableExtra::kable_styling(bootstrap_options = c("hover", "condensed"))
+
+```
+  
+  
+***Poll:** What words come to mind when I say "Functions"?*
+
+# What are Functions? {#intro}
+
+Collection of statements orchestrated together to perform a specific operation.  
+A function takes input (arguments), applies a method (code) to those arguments and returns the output.  
+Hopefully everyone in this session has experience of using functions when they code in R.  
+E.g. `sum()` or `mean()`.  
+_Note:_ Functions are objects, just as vectors are objects.  
+
+## Benefit of Functions
+
+* Reduce repetition
+* Reproducibility
+* Shorten code
+* Editability
+* Time-saving
+* Quality
+
+```{r include = T, eval = T}
+##### We want the average Petal Length/Petal Width ratio for the Sepal Lengths
+  # of less than 5
+  ##### For each species separately (setosa, versicolor, virginica)
+
+### Example of repetitive code
+
+setosa <- iris[iris$Species == "setosa", ]
+setosa <- setosa[setosa$Sepal.Length < 7, ]
+setosa$petal_length_width_ratio <- setosa$Petal.Length / setosa$Petal.Width
+mean(setosa$petal_length_width_ratio)
+
+versicolor <- iris[iris$Species == "versicolor", ]
+versicolor <- versicolor[versicolor$Sepal.Length < 7, ]
+versicolor$petal_length_width_ratio <-
+  versicolor$Petal.Length / versicolor$Petal.Width
+mean(versicolor$petal_length_width_ratio)
+
+virginica <- iris[iris$Species == "virginica", ]
+virginica <- virginica[virginica$Sepal.Length < 7, ]
+virginica$petal_length_width_ratio <-
+  virginica$Petal.Length / virginica$Petal.Width
+mean(virginica$petal_length_width_ratio)
+
+### Example of functionalised code
+
+iris_function <- function(data, species) {
+  data <- data[(data$Species == species) & (data$Sepal.Length < 7), ]
+  data$petal_length_width_ratio <- data$Petal.Length / data$Petal.Width
+  mean(data$petal_length_width_ratio)
+}
+
+iris_function(iris, "setosa")
+iris_function(iris, "versicolor")
+iris_function(iris, "virginica")
+```
+
+
+## Three Elements of a Function
+
+**Arguments**
+
+Controls how you call the function.  
+Can check it with: `formals(function_name)`  
+
+**Body**
+
+The code inside a function.  
+Can check it with: `body(function_name)`  
+
+**Environment (Advanced)**
+
+The data structure that determines how the function finds the values associated with the names.  
+Can check it with: `environment(function_name)`  
+
+## Analogy: Baking a Cake
+
+A *pipeline* consists of multiple steps (involving functions) to achieve a desired output, just like how a cake recipe has steps/instructions to make a cake.  
+
+Let's simplify that and say that each step of a pipeline can a function a.k.a. a step of the recipe.  
+
+### **For Example** - Cream together the butter and sugar in a mixing bowl with a wooden spoon until light and fluffy :
+
+- The **ingredients** (butter and sugar) are the **arguments**.
+- The bowl and spoon are your **cooking tools**, similar to **existing functions** that you want to use in your custom function. These may not be needed for all functions but can make what you are doing much easier!  
+- The **method** of creaming the ingredients using the tools you need is the **code body**.
+- The **output** is **creamed butter and sugar**. This might not be the final product/exactly what you want if you are baking a cake but it is what you need for the next stage in the process.  
+
+
+## Two main types of function:
+
+1.  Sub-functions
+    +  Single, modular units of code (collection of statements) that do a single isolated process.
+2.  Wrapper functions
+    +  Functions that call other sub-functions/processes to perform multiple linked processes together.  
+
+# How to write and call a function
+
+```{r include = T}
+##### Standard syntax
+function_name <- function(argument) {
+  code
+}
+
+# If you don't want to assign the output of the function to a variable:
+function_name(argument = "value")
+function_name("value")
+
+# If you want to assign the output of the function to a variable:
+function_output <- function_name(argument = "value")
+function_output <- function_name("value")
+
+```
+
+### `return()`
+
+In the syntax above, I have just used `code` as a stand in for the body of the function.  
+
+When running a function, the code chunk will run, but only  the last line will be output into the environment/saved when assigned to a variable. Some like to explicitly use `return()` to show what is being returned at the end of the function, but it is not necessary.  
+
+Also, `print()` statements will be output into the console.  
+
+It is worth being aware that any variables that are assigned inside a function, don't automatically exist in the outside environment (can't be retrieved after the function has run).  
+
+Would recommend playing around with assignment with your functions.  
+
+There is a way to save more to the environment but that hasn't been covered here.  
+
+```{r include = T, eval = T, error = T}
+
+alphabet <- function() {
+  var_1 <- "a" # var_1 doesn't exist
+  var_2 <- "b" # is not output because it is
+  print(var_1) # because paste is used, var_1/a is output
+                  # but not saved when the variable is assigned 
+  "c" # This is what is saved and assigned to the variable
+}
+```
+
+``` {r error = T, eval = T}
+alphabet()
+
+# The print is still printed to console, but what is the last line is not
+out <- alphabet()
+
+# The last line is saved into the environment in the "out" variable
+out
+
+# This doesn't exist outside the function, only within the function
+  # So cannot be retrieved
+var_1
+
+```
+
+
+### Calling functions from packages
+
+Before you can use a function that doesn't exist in `base r`, you need to either:
+
+- `library()` the package that contains the function which loads the function into your environment  
+- or explicitly call the function from the package it is in using `package_name::function_name()`  
+
+We recommend using `package_name::function_name()` because it keeps your environment clearer and there is no potential confusion if there are multiple functions with the same name.  
+
+Plus, it makes it easier for someone reading the code and to look into the correct documentation if necessary.  
+
+This works for existing/published packages or your own custom packages. However, for this training, as the functions aren't packaged, we will rarely use that notation.  
+
+## Simple/Sub-Functions
+
+```{r include = T, eval = T}
+## Example 1: Addition
+sum_two_numbers <- function(number_1, number_2) {
+  number_1 + number_2
+}
+
+sum_two_numbers(10, 3)
+sum_two_numbers(number_1 = 11, number_2 = 22)
+
+
+## Example 2: Temperature Conversions
+# Fahrenheit to Celsius
+degree_F_to_C <- function(temp_F) {
+  (temp_F - 32) * 5 / 9
+}
+
+# Freezing point of water
+degree_F_to_C(32)
+# Boiling point of water
+degree_F_to_C(212)
+
+# Celsius to Kelvin
+degree_C_to_K <- function(temp_C) {
+  temp_C + 273.15
+}
+
+# Freezing point of water in Kelvin
+degree_C_to_K(0)
+```
+
+## Wrapper Functions
+
+Most functions will be wrapper functions of some sort. They will use existing published functions and/or custom functions to do more complex operations.  
+```{r include = T, eval = T}
+## Example 1: Addition
+
+double_sum_two_numbers <- function(number_1, number_2) {
+  sum_two_numbers(number_1, number_2) * 2
+}
+
+double_sum_two_numbers(6, 5)
+
+
+## Example 2: Temperature Conversions
+
+# Can nest related functions to run one after another
+# Freezing point of water in Kelvin
+degree_C_to_K(degree_F_to_C(32))
+
+# Or combine the functions/processes into a single wrapper function
+# This looks like more effort/code lines, but calling it is easier,
+  # it reads easier and you can add more processes to the function,
+    # not just nest the two function
+degree_F_to_K <- function(temp_F) {
+  temp_C <- degree_F_to_C(temp_F)
+  degree_C_to_K(temp_C)
+}
+
+# And you can nest it within the function, so it is short, clear, easy to call
+degree_F_to_K_nested <- function(temp_F) {
+  degree_C_to_K(degree_F_to_C(temp_F))
+}
+
+# Freezing point of water in Kelvin
+degree_F_to_K(32)
+degree_F_to_K_nested(32)
+```
+
+# Arguments
+
+By default, R will match arguments in the order they are used to the order they are in the function syntax.  
+
+```{r eval = T}
+simple_function <- function(arg_1, arg_2) {
+  print(paste(arg_1, arg_2, sep = " - "))
+}
+
+# Note the first argument relates to arg_1 as the argument name was not specified
+  # And vice versa
+simple_function("this will be first", "this will be second")
+
+# Note the first argument relates to arg_2 as it is specified and vice versa
+simple_function(arg_2 = "this will not be first", 
+                arg_1 = "this will not be second")
+
+
+# Another example
+minus_number <- function(starting_value, take_away) {
+  starting_value - take_away
+}
+
+minus_number(10, 5)
+
+minus_number(5, 10)
+
+# This is the same because you are specifying the arguments
+minus_number(take_away = 10, starting_value = 5)
+
+
+```
+## Required arguments
+If an argument that is used in the function is missing, it will error.
+
+However, R executes functions in a _lazy fashion_. If arguments not required in the function are missing, the function will still be executed. Even though it doesn't error, best practice is to make sure only arguments used in the code body are included.  
+
+```{r eval = T}
+## Example 1: Addition
+
+# Function has 3 arguments, even though only 2 are used
+double_sum_two_numbers_three <- function(number_1, number_2, number_3) {
+  sum_two_numbers(number_1, number_2) * 2
+}
+
+# All three arguments are provided, even though number3 isn't used, but no error
+double_sum_two_numbers_three(6, 94, 20)
+
+# This takes these two arguments as the first two arguments and
+  # as number3 isn't used, it doesn't matter that it is missing
+    # Still no error
+double_sum_two_numbers_three(88, -4)
+```
+
+``` {r eval = T, error = T}
+# Number_1 is missing and there is no default
+double_sum_two_numbers_three(number_2 = -5, number3 = 12)
+```
+
+## Default arguments
+
+In all the examples above, we have only used arguments that require _user inputs_.  
+  
+However, there will be some arguments which have a **default** value so they do **not** need to be user defined every time when calling the function.  
+
+**Defaults** can be set when the argument rarely need changing when running the function.  
+
+For very bespoke functions, these defaults can be very specific to their use-case.   
+
+### Common default arguments are:
+
+* `NA`
+* `NULL`
+* ""
+* "generic title"
+* `TRUE`/`FALSE`
+
+```{r eval = T, error = T}
+## Example 1: Addition
+
+double_sum_two_numbers_default <- function(number_1, number_2 = 0) {
+  sum_two_numbers(number_1, number_2)*2
+}
+
+# Just doubles the given argument (takes it as number_1)
+  # as number_2 is 0 by default
+double_sum_two_numbers_default(33)
+```
+
+``` {r error = T, eval = T}
+# This is still missing number_1 as only number_2 had a default so errors
+double_sum_two_numbers_default(number_2 = 33)
+```
+
+``` {r eval = T}
+## Example 2: Temperature Conversions
+
+# Here the default is 32 degree F aka 0 degree C
+degree_F_to_K_default <- function(temp_F = 32) {
+  degree_C_to_K(degree_F_to_C(temp_F))
+}
+
+# So to use the default, can leave arguments blank
+degree_F_to_K_default()
+```
+
+***Poll:** Which of these function toplines has a default argument?*
+
+- `function(first_name, surname) {`
+- `function(age) {`
+- `function(film_name, year = NA) {`
+- `function(first_arg, default) {`
+
+[Answer](#answers)
+
+## Assignment
+
+When assigning something inside a function, the object will not be saved to the external environment, so you cannot access it after the function has finished running.  
+Only the final printout of the function (or `return()`) or anything that is run in `print()` is run.  
+
+```{r include = T, eval = T}
+##### Example 1: Addition
+
+sum_two_numbers_assign <- function(number_1, number_2) {
+  sum <- number_1 + number_2
+}
+
+# Nothing printed out
+sum_two_numbers_assign(number_1 = 1, number_2 = 6)
+
+##### Example 2: Temperature Conversions
+
+degree_F_to_K <- function(temp_F) {
+  temp_C <- degree_F_to_C(temp_F)
+  degree_C_to_K(temp_C)
+}
+
+# Freezing water in Kelvin returns the output
+degree_F_to_K(temp_F = 32)
+
+degree_F_to_K_assign <- function(temp_F) {
+  temp_C <- degree_F_to_C(temp_F)
+  temp_K <- degree_C_to_K(temp_C)
+}
+
+# Freezing water in Kelvin will now not print the output
+degree_F_to_K_assign(temp_F = 32)
+```
+
+
+## Order of arguments for existing and own functions
+As seen in previous examples, if no argument names are given, the function takes arguments in the order they are given.  
+When writing your own (and is seen in most published functions), first should always be data.  
+
+This is especially important when using in `dplyr` pipes.  
+Unfortunately, there are some older cases where that may not be the case, so it may be worth checking before you use them.  
+
+More information about this can be found in the [piping section](#piping).
+
+# INTRO BREAKOUT ROOMS
+
+We will now go into breakout rooms to try some exercises.  
+
+- Function syntax (how its written)  
+- Default arguments  
+
+# Best Practice **Style** of Function
+
+There are many ways that you could write a function that technically would work.
+Code within a function should follow standard best practice style (see [Tidyverse Style Guide](https://style.tidyverse.org/)).  
+
+However, there are some best practice guidance to follow.  
+Key point regardless of style you choose to follow: **Consistency**.  
+
+
+*Note:* Packages exist to help you adhere to best style.  
+We recommend [`lintr`](https://lintr.r-lib.org/articles/lintr.html). It doesn't edit your code directly (as some others do, e.g.     [`styler`](https://www.tidyverse.org/blog/2017/12/styler-1.0.0/)) but makes a descriptive list of where it recommends style improvements.  
+This package may not be perfect and is not a replacement for writing good code in the first place, or being critical about style in general. 
+
+```{r include = T, eval = F}
+install.packages("lintr")
+# This is the main function to check style in R scripts. Others exist too.
+lintr::lint("filename_filepath.R")
+```
+
+
+## Function name
+
+-   snake_case
+    * Lower case, numbers and underscores only (no full stops or hyphens)
+    * Words separated with `_`
+-   Very descriptive/meaningful
+-   Ideally contain a verb
+-   Doesn't overwrite a commonly used/base function
+-   Do not start with a number or underscore
+
+## Lines
+
+If the lines get too long (\>79 characters), you can put the arguments on separate lines.  
+Curly brackets: `{` should be the last thing on its line, `}` should be the first thing on its line.  
+Code should be between the `{` and `}`, not on the same line.  
+
+## Spacing
+
+-   Spaces around the assignment (`=`, `<-`)
+-   Space after comma in list of arguments
+-   No space between function and `(`
+-   No space between `(` and first argument
+-   No space between final argument and `)`
+-   Space between `)` and `{`
+
+## Indentation
+
+Code should be indented 2 spaces (plus any further indents depending on the code).
+`Ctrl+i` in RStudio manages this indentation for you.  
+
+## Returns
+
+R doesn't need an explicit `return()`.
+The last line (idea/phrase) of a function is automatically returned.  
+Tidyverse style guide suggests not including the `return()`, but it has been used in some examples for clarity.  
+
+Consistency is key.  
+
+Furthermore, anything that is inside `print()` and warnings/errors will be returned to the console, but not saved as an output of the function.  
+
+## Assignment
+
+Use `=` inside a functions arguments (i.e. defining a default argument and specifying an argument when calling it).  
+Use `<-` as normal best-practice inside the function code.  
+
+## Arguments
+
+Argument names should follow similar rules to function names:
+
+-   Descriptive
+-   snake_case
+-   Consistent argument names across functions can be helpful (e.g. `df` for a dataframe argument, `x` for an integer)
+-   Lower case, numbers and underscores only (no full stops or hyphens)
+-   Do not start with a number or underscore
+
+If the argument requires a string, use "string", rather than 'string'.
+Unless there is quote within a string: 'this is a "quote" string'.  
+
+For general arguments, you don't have to explicitly name the most obvious arguments (e.g. `data`) but it is recommended for custom functions and especially optional arguments. It can be very helpful for clarity in complex pipelines.  
+
+
+## Comments
+
+If using [docstrings](#docstrings), minimal comments should be necessary for sub-functions.  
+Only comments explaining why things are being done should be included, instead of what is being done (same as general commenting style).  
+If docstrings are not used, should still add general comments on the function. At least for a title, description, any parameters and what is returned.
+
+## Piping `%>%` style/`dplyr` (Advanced)
+
+This relates to pipes (`%>%`) in code within and outside of functions.  
+
+```{r eval = T}
+# If there is only one dplyr function, no pipes
+dplyr::filter(iris, Petal.Length > 6.5)
+
+# If there are pipes, only one pipe per line and it is the last thing on the line
+iris %>%
+  dplyr::filter(Petal.Length > 6.5) %>%
+  dplyr::select(Species, Petal.Length, Petal.Width)
+```
+
+
+***Poll:** R best practice function and argument names?*
+
+- `DoctorHouse(Patient1, Patient2)`
+- `doctorHouse(1stpatient, 2ndpatient)`
+- `doctorhouse(patientone, patienttwo)`
+- `doctor_house(first_patient, second_patient)`
+
+[Answer](#answers)
+
+# Documentation (docstrings) {#docstrings}
+Even if you don't do technical **Roxygen** headers, you should still have correct level of comments describing what the function does: a title, description, any parameters and what is returned.  
+However, we recommend giving any custom function the below **Roxygen** structure as it adds consistency, readability and can save time if you decide to package in the future.  
+
+## Function documentation: `roxygen2`
+
+Standard format of headers to add to functions that automate creation of the function documentation.
+In RStudio, put the cursor inside the function and either:
+
+- `Ctrl+Shift+Alt+R`
+- On toolbar, Code &rarr; Insert Roxygen skeleton
+
+Some parts are required, some are optional.
+
+### Required:
+
+- Title
+     * Like a short description
+- Description
+    * Full sentence structure explanation of what the function does and any important contextual information
+- Parameters
+    * Should have a descriptive name
+    * Include what type/class of object is needed
+    * Include any default values
+- Return
+    * What is the expected output (inc type/class)
+
+
+### Optional:
+
+- Examples
+    * Can add code for full, workable examples of the function to the header to help people use it
+- Author
+    * Add the authors name to the function
+- Export
+    * Allows the function to be called one the function is packaged
+- Import
+    * Any packages that need to be imported to the function to allow sub-functions to work
+
+There are many other optional tags. 
+
+_Note:_ Best practice is to put sub-functions below the wrapper where it is used.  
+
+
+```{r include = T, eval = T}
+##### Example 1 - Addition #####
+
+#' Sums two numbers
+#' 
+#' @description Adds two numbers together and returns the sum.
+#' The numeric vectors need to be a multiple of each other (or the same).
+#'
+#' @param number_1 numeric vector
+#' @param number_2 numeric vector
+#'
+#' @return integer
+sum_two_numbers <- function(number_1, number_2) {
+  number_1 + number_2
+}
+
+##### Example 2 - Temperature Conversions #####
+
+#' Converts degrees Fahrenheit to degrees Celsius
+#'
+#' @description Converts degrees Fahrenheit to degrees Celsius,
+#' can be used on single number or numeric vector
+#' 
+#' @param temp_F numeric vector of temperature in Fahrenheit
+#'
+#' @return numeric vector of temperature in Celsius
+degree_F_to_C <- function(temp_F) {
+  (temp_F - 32) * 5 / 9
+}
+
+#' Converts degrees Fahrenheit to Kelvin
+#'
+#' @description Converts degrees Fahrenheit to Kelvin,
+#' can be used on single number or numeric vector
+#'
+#' @param temp_F numeric vector of temperature in Fahrenheit
+#'
+#' @return numeric vector of temperature in Kelvin
+degree_F_to_K <- function(temp_F) {
+  temp_C <- degree_F_to_C(temp_F)
+  degree_C_to_K(temp_C)
+}
+
+#' Converts degrees Celsius to Kelvin
+#'
+#' @description Converts degrees Fahrenheit to Kelvin, 
+#' can be used on single number or numeric vector
+#'
+#' @param temp_C numeric vector of temperature in Celsius
+#'
+#' @return numeric vector of temperature in Kelvin
+degree_C_to_K <- function(temp_C) {
+  temp_C + 273.15
+}
+```
+
+![**Roxygen creates the standard help documentation**](Screenshots/pic_help.PNG)
+
+***Poll:** Which are the required parts of Roxygen header?*
+
+- Title, description, parameters, return
+- Title, example, return
+- Title, parameters, return, example
+- Description, parameters, example
+
+[Answer](#answers)
+
+
+# Piping `%>%` {#piping}
+
+The pipe operator `%>%` (originally found in package `magrittr`) can be used as "and then" to call functions sequentially. It is most commonly found connecting `dplyr` functions together.  
+
+This replaces the need to save out intermediate results or nest functions.  
+
+These all do the same thing: 
+
+```{r include = T, eval = T}
+# Make random vector
+x <- runif(100)
+
+# Intermediate saving - Should be avoided as much as possible
+out <- sd(x)
+out <- mean(out)
+sqrt(out)
+
+# Nesting - Can get complicated when there are multiple arguments and brackets
+sqrt(mean(sd(x)))
+
+# Piping - Best Practice
+x %>%
+  sd() %>%
+  mean() %>%
+  sqrt()
+```
+
+As mentioned in a previous section, the order of arguments for `dplyr` piping is quite important. Data should be the first.  
+
+When the functions are called in a pipe, it is assumed that the data from the previous level of the pipe is the default first argument, so it doesn't need to be specified in each function.
+
+```{r eval = T}
+# Using a pre-loaded example dataset called iris
+head(iris)
+
+select_species_petal_width <- function(data, species_interest, petal_width) {
+
+  data %>%
+    dplyr::filter(Species == species_interest) %>%
+    dplyr::filter(Petal.Width < petal_width)
+  # These two filters do not have to be on separate lines 
+    # but here they are split to demonstrate multiple pipes
+}
+
+
+head(select_species_petal_width(iris, "versicolor", 1.5), 10)
+```
+
+You can combine custom functions with existing functions, but you must be aware of the data argument. You may need to explicitly define that the data is to be used, using: `.`, followed by a comma to separate it from the next argument.
+
+```{r eval = T}
+iris %>%
+  select_species_petal_width("versicolor", 1.5) %>%
+  dplyr::mutate(sepal_width_to_length = Sepal.Width / Sepal.Length) %>%
+  utils::head(.)
+```
+# Warnings and Errors
+
+It can often be useful to add warnings and errors into your functions to help usability. Combine conditionals (`if`, `else`, `ifelse` or `dplyr::case_when` e.t.c.) with warnings/errors to only show in certain cases.  
+
+Using `paste` (or `paste0`) allows crafting of bespoke warning/error messages, such as what case you are testing.   
+
+## Warnings
+
+Doesn't stop the code from running, but prints the warning to the console. 
+
+```{r included = T, eval = T, error = TRUE}
+degree_F_to_C <- function(temp_F) {
+  if (temp_F < -460) {
+    warning(paste("Provided temperature (",
+                  temp_F,
+                  ") is below absolute zero and thus, is impossible."))
+  }
+  (temp_F - 32) * 5 / 9
+}
+
+degree_F_to_C(-666)
+```
+
+## Errors
+
+Will stop the code running at that point and print the error to the console.
+
+```{r include = T, eval = T, error = TRUE}
+degree_F_to_C <- function(temp_F) {
+  if (class(temp_F) != "numeric") {
+    stop(paste("Provided temperature in fahrenheit is not numeric. It is a",
+               class(temp_F), 
+               "object."))
+  }
+  (temp_F - 32) * 5 / 9
+}
+
+degree_F_to_C("200")
+```
+
+***Poll:** What are the correct functions to create a warning and an error? (click 2 answers)*
+
+- `error()`
+- `stop()`
+- `warnings()`
+- `SOMETHING_IS_VERY_WRONG()`
+- `halt()`
+- `warning()`
+
+[Answer](#answers)
+
+# INTRO BREAKOUT ROOMS
+
+We will now go into breakout rooms to try some exercises.
+
+- Good style and naming-conventions
+- `Roxygen` documentation
+
+# ADVANCED BREAKOUT ROOMS
+
+- Style
+- Default arguments
+- Roxygen doc
+
+Exercises 1 and 2 from part 2.
+
+# Intermediate/Advanced Functions {#advanced}
+
+Click here to return to [Intro](#intro).
+
+
+# Lists of functions
+
+The best way to group functions together is using  packages.  
+
+If you are not going to build a package for your functions, a simple way to group similar/related functions together is to combine them into a list (remember, functions are objects).  
+You then call them the same way that you would call a list element.  
+
+This is **not** generally recommended.  
+
+```{r eval = T}
+function_list <- list(
+  half_num = function(x) x / 2,
+  double_num = function(x) x * 2
+)
+
+function_list$double_num(10)
+```
+
+# Functionals
+
+The `apply` family of functions (`lapply()`, `sapply()`, `vapply()`) can be used within bespoke functions or used to apply bespoke functions, not just regular functions.  
+
+
+```{r eval = T}
+vector <- c(1, NA, 3, 4, 5)
+dataframe <- data.frame(col1 = c(NA, NA, 6, 8),
+                        col2 = c(2, 4, NA, 9))
+
+data_list <- list(vector, dataframe)
+
+## lapply for a bespoke function
+
+cut_in_half <- function(data) {
+  data / 2
+}
+
+cut_in_half(vector)
+cut_in_half(dataframe)
+
+lapply(data_list, cut_in_half)
+```
+
+```{r eval = T}
+## lapply inside function
+
+cut_list_in_half <- function(list) {
+  lapply(list, cut_in_half)
+}
+
+cut_list_in_half(data_list)
+```
+
+# Anonymous functions
+
+Not all functions need to be named. Small (one-line) functions that are not worth naming are called anonymous functions.  
+
+A good rule of thumb is that an anonymous function should fit on one line and shouldn’t need to use `{}`.
+
+```{r, echo = TRUE, include = TRUE, eval = T}
+sapply(starwars, function(x) length(unique(x)))
+
+# Keeps only non-numeric columns
+head(Filter(function(x) !is.numeric(x), starwars))
+
+# Integrates x to the power of 2 using limits of 0 and 10
+integrate(function(x) x ^ 2, 0, 10)
+```
+
+
+# Functions with Dynamic Arguments
+
+**Using `base r` and `dplyr` Function Tidy Evaluation**
+
+Some variables, commonly column names, can be dependent on some external factor (e.g. user input, data values) and you may want to manipulate them in a generic way in using function arguments. This can commonly happen when you want to choose the column of interest manually in a function or when iterating/looping through.  
+
+This can be done with `base r`, using variable selection such as square brackets `[]` and double square brackets `[[]]`.
+
+**For example, using `base r`:**
+```{r eval = T}
+
+colour_data <- data.frame(red = c(1, 2, 3),
+                          blue = c(5, 7, 3),
+                          green = c(9, 8, 7))
+
+# I want to get the mean of one column of my choice.
+
+col_mean <- function(data, col) {
+  print(paste0(col, ": ", mean(data[[col]])))
+}
+
+col_mean(colour_data, "blue")
+
+# I want to iterate through the columns using a vector
+
+col_vector <- c("green", "blue", "red")
+
+for (colour in col_vector) {
+  col_mean(colour_data, colour)
+}
+
+```
+
+Some people prefer to structure their code following `tidyverse` styling.  
+`dplyr` provides a way to dynamically manipulate columns, but it makes writing functions containing `dplyr` functions a bit more complicated.  
+
+
+### Environmental variables vs data variables
+
+To determine the syntax to use, you need to remember the distinction between data and environmental variables and which `dplyr` function uses which.  
+
+- **Env-variables** are “programming” variables that live in an environment, usually created with `<-`, can be seen in the RStudio Environment window.  
+- **Data-variables** are “statistical” variables that live in a data frame (generally columns).  
+
+Use `?dplyr::function()` to see which type of formatting the variable uses: data masking or tidy selection.  
+
+
+### Quoted vs unquoted variables
+
+The syntax for dynamic arguments in `dplyr` are dependent on if the variable (column name) is quoted (a string) or unquoted (not a string).  
+
+It is possible to convert between the two but that gets even more complicated.  
+
+```{r include = T, eval = T, error = T}
+df <- data.frame(column_one = c(seq(1, 5, 1)),
+                 column_two = c(seq(6, 10, 1)))
+colname <- "column_one"
+
+## Base using the known column name unquoted and quoted
+df$column_one
+df$"column_one"
+df[, "column_one"]
+
+
+## Base with a variable column name
+df[[colname]]
+df[, colname]
+
+# Doesn't work
+df$colname
+df$"colname"
+df[["colname"]]
+
+
+## dplyr can use unquoted and quoted column names
+dplyr::pull(df, column_one)
+dplyr::pull(df, colname)
+
+
+## But when you use dplyr functions inside bespoke functions
+  # It works like normal if you statically define the column name
+pull_col_one <- function(data) {
+  dplyr::pull(data, column_one)
+}
+pull_col_one(df)
+
+pull_col_one <- function(data) {
+  dplyr::pull(data, "column_one")
+}
+pull_col_one(df)
+
+
+# It becomes more complicated when you want to chose the column with an argument
+  # This doesn't work
+pull_colname <- function(data, column_name) {
+  dplyr::pull(data, column_name)
+}
+pull_colname(df, column_one)
+
+
+```
+
+
+**Unquoted**  
+The variable is generally unquoted when you know what the column name is (i.e. you aren't pulling it from somewhere else or creating it somehow). This requires external knowledge of the data.  
+
+This is how we use `dplyr` functions to access column names.  
+
+
+**Quoted**  
+Quoted/string variables are generally useful for when the column name is derived from something else in an automated way (e.g. using `paste()`, `colnames()` e.t.c.). Column names as strings are much easier to work with than unquoted, but the syntax for creating dynamic arguments is a bit more complicated. These string column names are more flexible as they can be manipulated with normal string manipulation.  
+
+
+
+
+### Arguments
+
+When creating `dplyr` tidy evaluation functions, the first argument should be data.  
+
+Then when you are piping with your custom functions, you do not need to give the data argument.
+
+Further information can be found in [`dplyr` documentation](https://dplyr.tidyverse.org/articles/programming.html).  
+
+
+## Data Masking
+
+Applies to:
+
+- `filter()`
+- `group_by()`
+- `mutate()`
+- `summarise()`
+- `arrange()`
+- `count()`
+
+Can use column names (i.e. data variables) as if they were variables in the environment, similar to how `dplyr` variables are called.  
+
+i.e. you write `column_name`, not `df$column_name` or `df[[column_name]]`  
+
+### If the variable is unquoted/not a string:
+
+Need to double-embrace it with curly brackets `{{variable}}` where it is used in the body of the function.  
+Also, can use glue syntax with `:=` to name the resulting variables after the unquoted argument variable contained in double curly brackets `{{}}`.
+
+```{r, include = TRUE, eval = T}
+
+group_count_min_max <- function(df, group_var, summ_var) {
+  df %>%
+    dplyr::group_by({{group_var}}) %>%
+    dplyr::summarise("n_{{summ_var}}" := n(),
+                     "min_{{summ_var}}" := min({{summ_var}}),
+                     "max_{{summ_var}}" := max({{summ_var}}))
+}
+
+group_count_min_max(df = mtcars, group_var = cyl, summ_var = mpg)
+
+# If piping, so long as your first argument of your custom function is the data,
+  # you don't need to specify the data using a full-stop
+# Can pipe the custom function along with other dplyr functions
+mtcars %>%
+  dplyr::select(-gear) %>%
+  group_count_min_max(group_var = cyl, summ_var = mpg)
+
+
+## This is much more complicated to do in base
+
+```
+
+
+### If the variable is quoted/a string:
+
+If a variable exists as a character string (i.e. as an env-variable), need to indirectly select it from `.data` in the body of the function where it is used using `[[]]`.  
+
+The `.data` bit does not vary with different argument names, it is always the `.data` as it refers to the data within the pipe level above.  
+
+Can also use glue syntax with `:=` to name the resulting variables after the quoted argument variable (embraced by single curly brackets `{}`). 
+
+```{r, include = TRUE, eval = TRUE}
+
+group_count_min_max <- function(df, group_var, summ_var) {
+  df %>%
+    dplyr::group_by(.data[[group_var]]) %>%
+    dplyr::summarise("n_{summ_var}" := n(),
+                     "min_{summ_var}" := min(.data[[summ_var]]),
+                     "max_{summ_var}" := max(.data[[summ_var]]))
+}
+
+mtcars %>%
+  group_count_min_max(group_var = "cyl", summ_var = "mpg")
+```
+
+
+## Tidy Selection
+
+Applies to:
+
+- `select()`
+- `across()`
+- `rename()`
+- `relocate()`
+- `pull()`
+
+Can easily choose variables based on their position, name or type. 
+e.g. `starts_with("x")` or `is.numeric()`  
+
+### If the variable is unquoted:
+
+Similar to data masking, you can use embracing with double curly brackets `{{}}`.
+
+```{r, eval = T}
+drop_rename_iris <- function(data, drop_var, chosen_var) {
+  data %>%
+    dplyr::select(-{{drop_var}}) %>%
+    dplyr::rename(var_of_interest = {{chosen_var}})
+}
+
+iris %>%
+  drop_rename_iris(drop_var = Sepal.Length,
+                   chosen_var = Species) %>%
+  head()
+
+```
+
+### If the variable is quoted:
+
+Similar to data masking, can use indirect selection from `.data` using `[[]]`.
+
+```{r, include = TRUE, eval = TRUE}
+
+drop_rename_iris <- function(data, drop_var, chosen_var) {
+  data %>%
+    dplyr::select(-.data[[drop_var]]) %>%
+    dplyr::rename(var_of_interest = .data[[chosen_var]])
+}
+
+iris %>%
+  drop_rename_iris(drop_var = "Sepal.Length",
+                   chosen_var = "Species") %>%
+  head()
+
+
+# As seen in the warning above, it appears that .data[[var]] 
+  # has now been depreciated
+
+drop_rename_iris <- function(data, drop_var, chosen_var) {
+  data %>%
+    dplyr::select(-all_of(drop_var)) %>%
+    dplyr::rename(var_of_interest = .data[[chosen_var]])
+}
+
+iris %>%
+  drop_rename_iris(drop_var = "Sepal.Length",
+                   chosen_var = "Species") %>%
+  head()
+
+## More advanced example
+
+df <- data.frame(index_partial = sample(0:1, size = 100, replace = TRUE),
+                 index_all = sample(0:1, size = 100, replace = TRUE),
+                 days_partial = sample(x = 0:100, size = 100),
+                 days_all = sample(x = 0:100, size = 100))
+
+mean_day <- function(var_name) {
+  df %>%
+    dplyr::filter(.data[[paste0("index_", var_name)]] == 1) %>%
+    dplyr::summarise("mean_days_{ var_name }" := 
+                       mean(.data[[paste0("days_", var_name)]], na.rm = TRUE))
+}
+
+mean_day("partial")
+
+```
+
+***Poll:** How do you select a variable in a function with data masking?*
+
+- unquoted: `{var}` quoted: `[var]`
+- quoted: `{var}` unquoted: `[var]`
+- unquoted: `{{var}}` quoted: `.data[[var]]`
+- quoted: `{{var}}` unquoted: `.data[[var]]`
+
+# ADVANCED BREAKOUT ROOMS
+
+Base vs dplyr dynamic data selection.  
+Exercises 3 and 4.  
+
+# Poll Answers {#answers}
+
+**Which of these function top lines has a default argument?**  
+`function(film_name, year = NA) {`
+
+**R best practice function and argument names?**  
+`doctor_house(first_patient, second_patient)`
+
+**Which are the required parts of Roxygen header?**  
+Title, description, parameters, return
+
+**What are the correct functions to create a warning and an error?**
+`stop()`
+`warning()`
+
+**How do you select a variable in a function with data masking?**
+
+unquoted: `{{var}}` quoted: `.data[[var]]`
+

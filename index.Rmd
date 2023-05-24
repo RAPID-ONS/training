@@ -1,0 +1,23 @@
+---
+title: "RAPID training"
+description: |
+  Training materials for building Reproducible Analytical Pipelines
+site: distill::distill_website
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+
+# Learn more about creating websites with Distill at:
+# https://rstudio.github.io/distill/website.html
+
+# Learn more about publishing to GitHub Pages at:
+# https://rstudio.github.io/distill/publish_website.html#github-pages
+
+```
+
+What is RAP and why should it be implemented.
+
+See RAP in R for training resources for R and R Studio. 
+
+Add links to other useful sites: ASAP, analysis function, NHSD Python repo.

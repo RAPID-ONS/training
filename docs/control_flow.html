@@ -1,0 +1,3077 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+  <meta name="generator" content="distill" />
+
+  <style type="text/css">
+  /* Hide doc at startup (prevent jankiness while JS renders/transforms) */
+  body {
+    visibility: hidden;
+  }
+  </style>
+
+ <!--radix_placeholder_import_source-->
+ <!--/radix_placeholder_import_source-->
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  { color: #00769e; background-color: #f1f3f5; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span { color: #00769e; } /* Normal */
+code span.al { color: #ad0000; } /* Alert */
+code span.an { color: #5e5e5e; } /* Annotation */
+code span.at { color: #657422; } /* Attribute */
+code span.bn { color: #ad0000; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #00769e; } /* ControlFlow */
+code span.ch { color: #20794d; } /* Char */
+code span.cn { color: #8f5902; } /* Constant */
+code span.co { color: #5e5e5e; } /* Comment */
+code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+code span.dt { color: #ad0000; } /* DataType */
+code span.dv { color: #ad0000; } /* DecVal */
+code span.er { color: #ad0000; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #ad0000; } /* Float */
+code span.fu { color: #4758ab; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #5e5e5e; } /* Information */
+code span.kw { color: #00769e; } /* Keyword */
+code span.op { color: #5e5e5e; } /* Operator */
+code span.ot { color: #00769e; } /* Other */
+code span.pp { color: #ad0000; } /* Preprocessor */
+code span.sc { color: #5e5e5e; } /* SpecialChar */
+code span.ss { color: #20794d; } /* SpecialString */
+code span.st { color: #20794d; } /* String */
+code span.va { color: #111111; } /* Variable */
+code span.vs { color: #20794d; } /* VerbatimString */
+code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+</style>
+
+
+  <!--radix_placeholder_meta_tags-->
+  <title>RAPID training: Control Flow and Loops in R</title>
+
+
+
+
+  <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
+  <meta property="og:title" content="RAPID training: Control Flow and Loops in R"/>
+  <meta property="og:type" content="article"/>
+  <meta property="og:locale" content="en_US"/>
+  <meta property="og:site_name" content="RAPID training"/>
+
+  <!--  https://dev.twitter.com/cards/types/summary -->
+  <meta property="twitter:card" content="summary"/>
+  <meta property="twitter:title" content="RAPID training: Control Flow and Loops in R"/>
+
+  <!--/radix_placeholder_meta_tags-->
+  <!--radix_placeholder_rmarkdown_metadata-->
+
+  <script type="text/json" id="radix-rmarkdown-metadata">
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","output"]}},"value":[{"type":"character","attributes":{},"value":["Control Flow and Loops in R"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["toc","toc_depth","number_sections"]}},"value":[{"type":"logical","attributes":{},"value":[true]},{"type":"integer","attributes":{},"value":[2]},{"type":"logical","attributes":{},"value":[true]}]}]}]}
+  </script>
+  <!--/radix_placeholder_rmarkdown_metadata-->
+  <!--radix_placeholder_navigation_in_header-->
+  <meta name="distill:offset" content=""/>
+
+  <script type="application/javascript">
+
+    window.headroom_prevent_pin = false;
+
+    window.document.addEventListener("DOMContentLoaded", function (event) {
+
+      // initialize headroom for banner
+      var header = $('header').get(0);
+      var headerHeight = header.offsetHeight;
+      var headroom = new Headroom(header, {
+        tolerance: 5,
+        onPin : function() {
+          if (window.headroom_prevent_pin) {
+            window.headroom_prevent_pin = false;
+            headroom.unpin();
+          }
+        }
+      });
+      headroom.init();
+      if(window.location.hash)
+        headroom.unpin();
+      $(header).addClass('headroom--transition');
+
+      // offset scroll location for banner on hash change
+      // (see: https://github.com/WickyNilliams/headroom.js/issues/38)
+      window.addEventListener("hashchange", function(event) {
+        window.scrollTo(0, window.pageYOffset - (headerHeight + 25));
+      });
+
+      // responsive menu
+      $('.distill-site-header').each(function(i, val) {
+        var topnav = $(this);
+        var toggle = topnav.find('.nav-toggle');
+        toggle.on('click', function() {
+          topnav.toggleClass('responsive');
+        });
+      });
+
+      // nav dropdowns
+      $('.nav-dropbtn').click(function(e) {
+        $(this).next('.nav-dropdown-content').toggleClass('nav-dropdown-active');
+        $(this).parent().siblings('.nav-dropdown')
+           .children('.nav-dropdown-content').removeClass('nav-dropdown-active');
+      });
+      $("body").click(function(e){
+        $('.nav-dropdown-content').removeClass('nav-dropdown-active');
+      });
+      $(".nav-dropdown").click(function(e){
+        e.stopPropagation();
+      });
+    });
+  </script>
+
+  <style type="text/css">
+
+  /* Theme (user-documented overrideables for nav appearance) */
+
+  .distill-site-nav {
+    color: rgba(255, 255, 255, 0.8);
+    background-color: #0F2E3D;
+    font-size: 15px;
+    font-weight: 300;
+  }
+
+  .distill-site-nav a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .distill-site-nav a:hover {
+    color: white;
+  }
+
+  @media print {
+    .distill-site-nav {
+      display: none;
+    }
+  }
+
+  .distill-site-header {
+
+  }
+
+  .distill-site-footer {
+
+  }
+
+
+  /* Site Header */
+
+  .distill-site-header {
+    width: 100%;
+    box-sizing: border-box;
+    z-index: 3;
+  }
+
+  .distill-site-header .nav-left {
+    display: inline-block;
+    margin-left: 8px;
+  }
+
+  @media screen and (max-width: 768px) {
+    .distill-site-header .nav-left {
+      margin-left: 0;
+    }
+  }
+
+
+  .distill-site-header .nav-right {
+    float: right;
+    margin-right: 8px;
+  }
+
+  .distill-site-header a,
+  .distill-site-header .title {
+    display: inline-block;
+    text-align: center;
+    padding: 14px 10px 14px 10px;
+  }
+
+  .distill-site-header .title {
+    font-size: 18px;
+    min-width: 150px;
+  }
+
+  .distill-site-header .logo {
+    padding: 0;
+  }
+
+  .distill-site-header .logo img {
+    display: none;
+    max-height: 20px;
+    width: auto;
+    margin-bottom: -4px;
+  }
+
+  .distill-site-header .nav-image img {
+    max-height: 18px;
+    width: auto;
+    display: inline-block;
+    margin-bottom: -3px;
+  }
+
+
+
+  @media screen and (min-width: 1000px) {
+    .distill-site-header .logo img {
+      display: inline-block;
+    }
+    .distill-site-header .nav-left {
+      margin-left: 20px;
+    }
+    .distill-site-header .nav-right {
+      margin-right: 20px;
+    }
+    .distill-site-header .title {
+      padding-left: 12px;
+    }
+  }
+
+
+  .distill-site-header .nav-toggle {
+    display: none;
+  }
+
+  .nav-dropdown {
+    display: inline-block;
+    position: relative;
+  }
+
+  .nav-dropdown .nav-dropbtn {
+    border: none;
+    outline: none;
+    color: rgba(255, 255, 255, 0.8);
+    padding: 16px 10px;
+    background-color: transparent;
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    margin: 0;
+    margin-top: 1px;
+    z-index: 2;
+  }
+
+  .nav-dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: white;
+    min-width: 200px;
+    border: 1px solid rgba(0,0,0,0.15);
+    border-radius: 4px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.1);
+    z-index: 1;
+    margin-top: 2px;
+    white-space: nowrap;
+    padding-top: 4px;
+    padding-bottom: 4px;
+  }
+
+  .nav-dropdown-content hr {
+    margin-top: 4px;
+    margin-bottom: 4px;
+    border: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .nav-dropdown-active {
+    display: block;
+  }
+
+  .nav-dropdown-content a, .nav-dropdown-content .nav-dropdown-header {
+    color: black;
+    padding: 6px 24px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+  }
+
+  .nav-dropdown-content .nav-dropdown-header {
+    display: block;
+    padding: 5px 24px;
+    padding-bottom: 0;
+    text-transform: uppercase;
+    font-size: 14px;
+    color: #999999;
+    white-space: nowrap;
+  }
+
+  .nav-dropdown:hover .nav-dropbtn {
+    color: white;
+  }
+
+  .nav-dropdown-content a:hover {
+    background-color: #ddd;
+    color: black;
+  }
+
+  .nav-right .nav-dropdown-content {
+    margin-left: -45%;
+    right: 0;
+  }
+
+  @media screen and (max-width: 768px) {
+    .distill-site-header a, .distill-site-header .nav-dropdown  {display: none;}
+    .distill-site-header a.nav-toggle {
+      float: right;
+      display: block;
+    }
+    .distill-site-header .title {
+      margin-left: 0;
+    }
+    .distill-site-header .nav-right {
+      margin-right: 0;
+    }
+    .distill-site-header {
+      overflow: hidden;
+    }
+    .nav-right .nav-dropdown-content {
+      margin-left: 0;
+    }
+  }
+
+
+  @media screen and (max-width: 768px) {
+    .distill-site-header.responsive {position: relative; min-height: 500px; }
+    .distill-site-header.responsive a.nav-toggle {
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
+    .distill-site-header.responsive a,
+    .distill-site-header.responsive .nav-dropdown {
+      display: block;
+      text-align: left;
+    }
+    .distill-site-header.responsive .nav-left,
+    .distill-site-header.responsive .nav-right {
+      width: 100%;
+    }
+    .distill-site-header.responsive .nav-dropdown {float: none;}
+    .distill-site-header.responsive .nav-dropdown-content {position: relative;}
+    .distill-site-header.responsive .nav-dropdown .nav-dropbtn {
+      display: block;
+      width: 100%;
+      text-align: left;
+    }
+  }
+
+  /* Site Footer */
+
+  .distill-site-footer {
+    width: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
+    z-index: 3;
+    margin-top: 30px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    text-align: center;
+  }
+
+  /* Headroom */
+
+  d-title {
+    padding-top: 6rem;
+  }
+
+  @media print {
+    d-title {
+      padding-top: 4rem;
+    }
+  }
+
+  .headroom {
+    z-index: 1000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+  }
+
+  .headroom--transition {
+    transition: all .4s ease-in-out;
+  }
+
+  .headroom--unpinned {
+    top: -100px;
+  }
+
+  .headroom--pinned {
+    top: 0;
+  }
+
+  /* adjust viewport for navbar height */
+  /* helps vertically center bootstrap (non-distill) content */
+  .min-vh-100 {
+    min-height: calc(100vh - 100px) !important;
+  }
+
+  </style>
+
+  <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+  <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet"/>
+  <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet"/>
+  <script src="site_libs/headroom-0.9.4/headroom.min.js"></script>
+  <script src="site_libs/autocomplete-0.37.1/autocomplete.min.js"></script>
+  <script src="site_libs/fuse-6.4.1/fuse.min.js"></script>
+
+  <script type="application/javascript">
+
+  function getMeta(metaName) {
+    var metas = document.getElementsByTagName('meta');
+    for (let i = 0; i < metas.length; i++) {
+      if (metas[i].getAttribute('name') === metaName) {
+        return metas[i].getAttribute('content');
+      }
+    }
+    return '';
+  }
+
+  function offsetURL(url) {
+    var offset = getMeta('distill:offset');
+    return offset ? offset + '/' + url : url;
+  }
+
+  function createFuseIndex() {
+
+    // create fuse index
+    var options = {
+      keys: [
+        { name: 'title', weight: 20 },
+        { name: 'categories', weight: 15 },
+        { name: 'description', weight: 10 },
+        { name: 'contents', weight: 5 },
+      ],
+      ignoreLocation: true,
+      threshold: 0
+    };
+    var fuse = new window.Fuse([], options);
+
+    // fetch the main search.json
+    return fetch(offsetURL('search.json'))
+      .then(function(response) {
+        if (response.status == 200) {
+          return response.json().then(function(json) {
+            // index main articles
+            json.articles.forEach(function(article) {
+              fuse.add(article);
+            });
+            // download collections and index their articles
+            return Promise.all(json.collections.map(function(collection) {
+              return fetch(offsetURL(collection)).then(function(response) {
+                if (response.status === 200) {
+                  return response.json().then(function(articles) {
+                    articles.forEach(function(article) {
+                      fuse.add(article);
+                    });
+                  })
+                } else {
+                  return Promise.reject(
+                    new Error('Unexpected status from search index request: ' +
+                              response.status)
+                  );
+                }
+              });
+            })).then(function() {
+              return fuse;
+            });
+          });
+
+        } else {
+          return Promise.reject(
+            new Error('Unexpected status from search index request: ' +
+                        response.status)
+          );
+        }
+      });
+  }
+
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+
+    // get search element (bail if we don't have one)
+    var searchEl = window.document.getElementById('distill-search');
+    if (!searchEl)
+      return;
+
+    createFuseIndex()
+      .then(function(fuse) {
+
+        // make search box visible
+        searchEl.classList.remove('hidden');
+
+        // initialize autocomplete
+        var options = {
+          autoselect: true,
+          hint: false,
+          minLength: 2,
+        };
+        window.autocomplete(searchEl, options, [{
+          source: function(query, callback) {
+            const searchOptions = {
+              isCaseSensitive: false,
+              shouldSort: true,
+              minMatchCharLength: 2,
+              limit: 10,
+            };
+            var results = fuse.search(query, searchOptions);
+            callback(results
+              .map(function(result) { return result.item; })
+            );
+          },
+          templates: {
+            suggestion: function(suggestion) {
+              var img = suggestion.preview && Object.keys(suggestion.preview).length > 0
+                ? `<img src="${offsetURL(suggestion.preview)}"</img>`
+                : '';
+              var html = `
+                <div class="search-item">
+                  <h3>${suggestion.title}</h3>
+                  <div class="search-item-description">
+                    ${suggestion.description || ''}
+                  </div>
+                  <div class="search-item-preview">
+                    ${img}
+                  </div>
+                </div>
+              `;
+              return html;
+            }
+          }
+        }]).on('autocomplete:selected', function(event, suggestion) {
+          window.location.href = offsetURL(suggestion.path);
+        });
+        // remove inline display style on autocompleter (we want to
+        // manage responsive display via css)
+        $('.algolia-autocomplete').css("display", "");
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+
+  });
+
+  </script>
+
+  <style type="text/css">
+
+  .nav-search {
+    font-size: x-small;
+  }
+
+  /* Algolioa Autocomplete */
+
+  .algolia-autocomplete {
+    display: inline-block;
+    margin-left: 10px;
+    vertical-align: sub;
+    background-color: white;
+    color: black;
+    padding: 6px;
+    padding-top: 8px;
+    padding-bottom: 0;
+    border-radius: 6px;
+    border: 1px #0F2E3D solid;
+    width: 180px;
+  }
+
+
+  @media screen and (max-width: 768px) {
+    .distill-site-nav .algolia-autocomplete {
+      display: none;
+      visibility: hidden;
+    }
+    .distill-site-nav.responsive .algolia-autocomplete {
+      display: inline-block;
+      visibility: visible;
+    }
+    .distill-site-nav.responsive .algolia-autocomplete .aa-dropdown-menu {
+      margin-left: 0;
+      width: 400px;
+      max-height: 400px;
+    }
+  }
+
+  .algolia-autocomplete .aa-input, .algolia-autocomplete .aa-hint {
+    width: 90%;
+    outline: none;
+    border: none;
+  }
+
+  .algolia-autocomplete .aa-hint {
+    color: #999;
+  }
+  .algolia-autocomplete .aa-dropdown-menu {
+    width: 550px;
+    max-height: 70vh;
+    overflow-x: visible;
+    overflow-y: scroll;
+    padding: 5px;
+    margin-top: 3px;
+    margin-left: -150px;
+    background-color: #fff;
+    border-radius: 5px;
+    border: 1px solid #999;
+    border-top: none;
+  }
+
+  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion {
+    cursor: pointer;
+    padding: 5px 4px;
+    border-bottom: 1px solid #eee;
+  }
+
+  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion:last-of-type {
+    border-bottom: none;
+    margin-bottom: 2px;
+  }
+
+  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item {
+    overflow: hidden;
+    font-size: 0.8em;
+    line-height: 1.4em;
+  }
+
+  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item h3 {
+    font-size: 1rem;
+    margin-block-start: 0;
+    margin-block-end: 5px;
+  }
+
+  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-description {
+    display: inline-block;
+    overflow: hidden;
+    height: 2.8em;
+    width: 80%;
+    margin-right: 4%;
+  }
+
+  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-preview {
+    display: inline-block;
+    width: 15%;
+  }
+
+  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-preview img {
+    height: 3em;
+    width: auto;
+    display: none;
+  }
+
+  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-preview img[src] {
+    display: initial;
+  }
+
+  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion.aa-cursor {
+    background-color: #eee;
+  }
+  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion em {
+    font-weight: bold;
+    font-style: normal;
+  }
+
+  </style>
+
+
+  <!--/radix_placeholder_navigation_in_header-->
+  <!--radix_placeholder_distill-->
+
+  <style type="text/css">
+
+  body {
+    background-color: white;
+  }
+
+  .pandoc-table {
+    width: 100%;
+  }
+
+  .pandoc-table>caption {
+    margin-bottom: 10px;
+  }
+
+  .pandoc-table th:not([align]) {
+    text-align: left;
+  }
+
+  .pagedtable-footer {
+    font-size: 15px;
+  }
+
+  d-byline .byline {
+    grid-template-columns: 2fr 2fr;
+  }
+
+  d-byline .byline h3 {
+    margin-block-start: 1.5em;
+  }
+
+  d-byline .byline .authors-affiliations h3 {
+    margin-block-start: 0.5em;
+  }
+
+  .authors-affiliations .orcid-id {
+    width: 16px;
+    height:16px;
+    margin-left: 4px;
+    margin-right: 4px;
+    vertical-align: middle;
+    padding-bottom: 2px;
+  }
+
+  d-title .dt-tags {
+    margin-top: 1em;
+    grid-column: text;
+  }
+
+  .dt-tags .dt-tag {
+    text-decoration: none;
+    display: inline-block;
+    color: rgba(0,0,0,0.6);
+    padding: 0em 0.4em;
+    margin-right: 0.5em;
+    margin-bottom: 0.4em;
+    font-size: 70%;
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 3px;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  d-article table.gt_table td,
+  d-article table.gt_table th {
+    border-bottom: none;
+    font-size: 100%;
+  }
+
+  .html-widget {
+    margin-bottom: 2.0em;
+  }
+
+  .l-screen-inset {
+    padding-right: 16px;
+  }
+
+  .l-screen .caption {
+    margin-left: 10px;
+  }
+
+  .shaded {
+    background: rgb(247, 247, 247);
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .shaded .html-widget {
+    margin-bottom: 0;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .shaded .shaded-content {
+    background: white;
+  }
+
+  .text-output {
+    margin-top: 0;
+    line-height: 1.5em;
+  }
+
+  .hidden {
+    display: none !important;
+  }
+
+  d-article {
+    padding-top: 2.5rem;
+    padding-bottom: 30px;
+  }
+
+  d-appendix {
+    padding-top: 30px;
+  }
+
+  d-article>p>img {
+    width: 100%;
+  }
+
+  d-article h2 {
+    margin: 1rem 0 1.5rem 0;
+  }
+
+  d-article h3 {
+    margin-top: 1.5rem;
+  }
+
+  d-article iframe {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    margin-bottom: 2.0em;
+    width: 100%;
+  }
+
+  /* Tweak code blocks */
+
+  d-article div.sourceCode code,
+  d-article pre code {
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  }
+
+  d-article pre,
+  d-article div.sourceCode,
+  d-article div.sourceCode pre {
+    overflow: auto;
+  }
+
+  d-article div.sourceCode {
+    background-color: white;
+  }
+
+  d-article div.sourceCode pre {
+    padding-left: 10px;
+    font-size: 12px;
+    border-left: 2px solid rgba(0,0,0,0.1);
+  }
+
+  d-article pre {
+    font-size: 12px;
+    color: black;
+    background: none;
+    margin-top: 0;
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    word-wrap: normal;
+    line-height: 1.5;
+
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+
+    -webkit-hyphens: none;
+    -moz-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none;
+  }
+
+  d-article pre a {
+    border-bottom: none;
+  }
+
+  d-article pre a:hover {
+    border-bottom: none;
+    text-decoration: underline;
+  }
+
+  d-article details {
+    grid-column: text;
+    margin-bottom: 0.8em;
+  }
+
+  @media(min-width: 768px) {
+
+  d-article pre,
+  d-article div.sourceCode,
+  d-article div.sourceCode pre {
+    overflow: visible !important;
+  }
+
+  d-article div.sourceCode pre {
+    padding-left: 18px;
+    font-size: 14px;
+  }
+
+  d-article pre {
+    font-size: 14px;
+  }
+
+  }
+
+  figure img.external {
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+    padding: 18px;
+    box-sizing: border-box;
+  }
+
+  /* CSS for d-contents */
+
+  .d-contents {
+    grid-column: text;
+    color: rgba(0,0,0,0.8);
+    font-size: 0.9em;
+    padding-bottom: 1em;
+    margin-bottom: 1em;
+    padding-bottom: 0.5em;
+    margin-bottom: 1em;
+    padding-left: 0.25em;
+    justify-self: start;
+  }
+
+  @media(min-width: 1000px) {
+    .d-contents.d-contents-float {
+      height: 0;
+      grid-column-start: 1;
+      grid-column-end: 4;
+      justify-self: center;
+      padding-right: 3em;
+      padding-left: 2em;
+    }
+  }
+
+  .d-contents nav h3 {
+    font-size: 18px;
+    margin-top: 0;
+    margin-bottom: 1em;
+  }
+
+  .d-contents li {
+    list-style-type: none
+  }
+
+  .d-contents nav > ul {
+    padding-left: 0;
+  }
+
+  .d-contents ul {
+    padding-left: 1em
+  }
+
+  .d-contents nav ul li {
+    margin-top: 0.6em;
+    margin-bottom: 0.2em;
+  }
+
+  .d-contents nav a {
+    font-size: 13px;
+    border-bottom: none;
+    text-decoration: none
+    color: rgba(0, 0, 0, 0.8);
+  }
+
+  .d-contents nav a:hover {
+    text-decoration: underline solid rgba(0, 0, 0, 0.6)
+  }
+
+  .d-contents nav > ul > li > a {
+    font-weight: 600;
+  }
+
+  .d-contents nav > ul > li > ul {
+    font-weight: inherit;
+  }
+
+  .d-contents nav > ul > li > ul > li {
+    margin-top: 0.2em;
+  }
+
+
+  .d-contents nav ul {
+    margin-top: 0;
+    margin-bottom: 0.25em;
+  }
+
+  .d-article-with-toc h2:nth-child(2) {
+    margin-top: 0;
+  }
+
+
+  /* Figure */
+
+  .figure {
+    position: relative;
+    margin-bottom: 2.5em;
+    margin-top: 1.5em;
+  }
+
+  .figure .caption {
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 12px;
+    line-height: 1.5em;
+  }
+
+  .figure img.external {
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+    padding: 18px;
+    box-sizing: border-box;
+  }
+
+  .figure .caption a {
+    color: rgba(0, 0, 0, 0.6);
+  }
+
+  .figure .caption b,
+  .figure .caption strong, {
+    font-weight: 600;
+    color: rgba(0, 0, 0, 1.0);
+  }
+
+  /* Citations */
+
+  d-article .citation {
+    color: inherit;
+    cursor: inherit;
+  }
+
+  div.hanging-indent{
+    margin-left: 1em; text-indent: -1em;
+  }
+
+  /* Citation hover box */
+
+  .tippy-box[data-theme~=light-border] {
+    background-color: rgba(250, 250, 250, 0.95);
+  }
+
+  .tippy-content > p {
+    margin-bottom: 0;
+    padding: 2px;
+  }
+
+
+  /* Tweak 1000px media break to show more text */
+
+  @media(min-width: 1000px) {
+    .base-grid,
+    distill-header,
+    d-title,
+    d-abstract,
+    d-article,
+    d-appendix,
+    distill-appendix,
+    d-byline,
+    d-footnote-list,
+    d-citation-list,
+    distill-footer {
+      grid-template-columns: [screen-start] 1fr [page-start kicker-start] 80px [middle-start] 50px [text-start kicker-end] 65px 65px 65px 65px 65px 65px 65px 65px [text-end gutter-start] 65px [middle-end] 65px [page-end gutter-end] 1fr [screen-end];
+      grid-column-gap: 16px;
+    }
+
+    .grid {
+      grid-column-gap: 16px;
+    }
+
+    d-article {
+      font-size: 1.06rem;
+      line-height: 1.7em;
+    }
+    figure .caption, .figure .caption, figure figcaption {
+      font-size: 13px;
+    }
+  }
+
+  @media(min-width: 1180px) {
+    .base-grid,
+    distill-header,
+    d-title,
+    d-abstract,
+    d-article,
+    d-appendix,
+    distill-appendix,
+    d-byline,
+    d-footnote-list,
+    d-citation-list,
+    distill-footer {
+      grid-template-columns: [screen-start] 1fr [page-start kicker-start] 60px [middle-start] 60px [text-start kicker-end] 60px 60px 60px 60px 60px 60px 60px 60px [text-end gutter-start] 60px [middle-end] 60px [page-end gutter-end] 1fr [screen-end];
+      grid-column-gap: 32px;
+    }
+
+    .grid {
+      grid-column-gap: 32px;
+    }
+  }
+
+
+  /* Get the citation styles for the appendix (not auto-injected on render since
+     we do our own rendering of the citation appendix) */
+
+  d-appendix .citation-appendix,
+  .d-appendix .citation-appendix {
+    font-size: 11px;
+    line-height: 15px;
+    border-left: 1px solid rgba(0, 0, 0, 0.1);
+    padding-left: 18px;
+    border: 1px solid rgba(0,0,0,0.1);
+    background: rgba(0, 0, 0, 0.02);
+    padding: 10px 18px;
+    border-radius: 3px;
+    color: rgba(150, 150, 150, 1);
+    overflow: hidden;
+    margin-top: -12px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+
+  /* Include appendix styles here so they can be overridden */
+
+  d-appendix {
+    contain: layout style;
+    font-size: 0.8em;
+    line-height: 1.7em;
+    margin-top: 60px;
+    margin-bottom: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    color: rgba(0,0,0,0.5);
+    padding-top: 60px;
+    padding-bottom: 48px;
+  }
+
+  d-appendix h3 {
+    grid-column: page-start / text-start;
+    font-size: 15px;
+    font-weight: 500;
+    margin-top: 1em;
+    margin-bottom: 0;
+    color: rgba(0,0,0,0.65);
+  }
+
+  d-appendix h3 + * {
+    margin-top: 1em;
+  }
+
+  d-appendix ol {
+    padding: 0 0 0 15px;
+  }
+
+  @media (min-width: 768px) {
+    d-appendix ol {
+      padding: 0 0 0 30px;
+      margin-left: -30px;
+    }
+  }
+
+  d-appendix li {
+    margin-bottom: 1em;
+  }
+
+  d-appendix a {
+    color: rgba(0, 0, 0, 0.6);
+  }
+
+  d-appendix > * {
+    grid-column: text;
+  }
+
+  d-appendix > d-footnote-list,
+  d-appendix > d-citation-list,
+  d-appendix > distill-appendix {
+    grid-column: screen;
+  }
+
+  /* Include footnote styles here so they can be overridden */
+
+  d-footnote-list {
+    contain: layout style;
+  }
+
+  d-footnote-list > * {
+    grid-column: text;
+  }
+
+  d-footnote-list a.footnote-backlink {
+    color: rgba(0,0,0,0.3);
+    padding-left: 0.5em;
+  }
+
+
+
+  /* Anchor.js */
+
+  .anchorjs-link {
+    /*transition: all .25s linear; */
+    text-decoration: none;
+    border-bottom: none;
+  }
+  *:hover > .anchorjs-link {
+    margin-left: -1.125em !important;
+    text-decoration: none;
+    border-bottom: none;
+  }
+
+  /* Social footer */
+
+  .social_footer {
+    margin-top: 30px;
+    margin-bottom: 0;
+    color: rgba(0,0,0,0.67);
+  }
+
+  .disqus-comments {
+    margin-right: 30px;
+  }
+
+  .disqus-comment-count {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+  }
+
+  #disqus_thread {
+    margin-top: 30px;
+  }
+
+  .article-sharing a {
+    border-bottom: none;
+    margin-right: 8px;
+  }
+
+  .article-sharing a:hover {
+    border-bottom: none;
+  }
+
+  .sidebar-section.subscribe {
+    font-size: 12px;
+    line-height: 1.6em;
+  }
+
+  .subscribe p {
+    margin-bottom: 0.5em;
+  }
+
+
+  .article-footer .subscribe {
+    font-size: 15px;
+    margin-top: 45px;
+  }
+
+
+  .sidebar-section.custom {
+    font-size: 12px;
+    line-height: 1.6em;
+  }
+
+  .custom p {
+    margin-bottom: 0.5em;
+  }
+
+  /* Styles for listing layout (hide title) */
+  .layout-listing d-title, .layout-listing .d-title {
+    display: none;
+  }
+
+  /* Styles for posts lists (not auto-injected) */
+
+
+  .posts-with-sidebar {
+    padding-left: 45px;
+    padding-right: 45px;
+  }
+
+  .posts-list .description h2,
+  .posts-list .description p {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+  }
+
+  .posts-list .description h2 {
+    font-weight: 700;
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .posts-list h2.post-tag {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    padding-bottom: 12px;
+  }
+  .posts-list {
+    margin-top: 60px;
+    margin-bottom: 24px;
+  }
+
+  .posts-list .post-preview {
+    text-decoration: none;
+    overflow: hidden;
+    display: block;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 24px 0;
+  }
+
+  .post-preview-last {
+    border-bottom: none !important;
+  }
+
+  .posts-list .posts-list-caption {
+    grid-column: screen;
+    font-weight: 400;
+  }
+
+  .posts-list .post-preview h2 {
+    margin: 0 0 6px 0;
+    line-height: 1.2em;
+    font-style: normal;
+    font-size: 24px;
+  }
+
+  .posts-list .post-preview p {
+    margin: 0 0 12px 0;
+    line-height: 1.4em;
+    font-size: 16px;
+  }
+
+  .posts-list .post-preview .thumbnail {
+    box-sizing: border-box;
+    margin-bottom: 24px;
+    position: relative;
+    max-width: 500px;
+  }
+  .posts-list .post-preview img {
+    width: 100%;
+    display: block;
+  }
+
+  .posts-list .metadata {
+    font-size: 12px;
+    line-height: 1.4em;
+    margin-bottom: 18px;
+  }
+
+  .posts-list .metadata > * {
+    display: inline-block;
+  }
+
+  .posts-list .metadata .publishedDate {
+    margin-right: 2em;
+  }
+
+  .posts-list .metadata .dt-authors {
+    display: block;
+    margin-top: 0.3em;
+    margin-right: 2em;
+  }
+
+  .posts-list .dt-tags {
+    display: block;
+    line-height: 1em;
+  }
+
+  .posts-list .dt-tags .dt-tag {
+    display: inline-block;
+    color: rgba(0,0,0,0.6);
+    padding: 0.3em 0.4em;
+    margin-right: 0.2em;
+    margin-bottom: 0.4em;
+    font-size: 60%;
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 3px;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .posts-list img {
+    opacity: 1;
+  }
+
+  .posts-list img[data-src] {
+    opacity: 0;
+  }
+
+  .posts-more {
+    clear: both;
+  }
+
+
+  .posts-sidebar {
+    font-size: 16px;
+  }
+
+  .posts-sidebar h3 {
+    font-size: 16px;
+    margin-top: 0;
+    margin-bottom: 0.5em;
+    font-weight: 400;
+    text-transform: uppercase;
+  }
+
+  .sidebar-section {
+    margin-bottom: 30px;
+  }
+
+  .categories ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .categories li {
+    color: rgba(0, 0, 0, 0.8);
+    margin-bottom: 0;
+  }
+
+  .categories li>a {
+    border-bottom: none;
+  }
+
+  .categories li>a:hover {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+  }
+
+  .categories .active {
+    font-weight: 600;
+  }
+
+  .categories .category-count {
+    color: rgba(0, 0, 0, 0.4);
+  }
+
+
+  @media(min-width: 768px) {
+    .posts-list .post-preview h2 {
+      font-size: 26px;
+    }
+    .posts-list .post-preview .thumbnail {
+      float: right;
+      width: 30%;
+      margin-bottom: 0;
+    }
+    .posts-list .post-preview .description {
+      float: left;
+      width: 45%;
+    }
+    .posts-list .post-preview .metadata {
+      float: left;
+      width: 20%;
+      margin-top: 8px;
+    }
+    .posts-list .post-preview p {
+      margin: 0 0 12px 0;
+      line-height: 1.5em;
+      font-size: 16px;
+    }
+    .posts-with-sidebar .posts-list {
+      float: left;
+      width: 75%;
+    }
+    .posts-with-sidebar .posts-sidebar {
+      float: right;
+      width: 20%;
+      margin-top: 60px;
+      padding-top: 24px;
+      padding-bottom: 24px;
+    }
+  }
+
+
+  /* Improve display for browsers without grid (IE/Edge <= 15) */
+
+  .downlevel {
+    line-height: 1.6em;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+    margin: 0;
+  }
+
+  .downlevel .d-title {
+    padding-top: 6rem;
+    padding-bottom: 1.5rem;
+  }
+
+  .downlevel .d-title h1 {
+    font-size: 50px;
+    font-weight: 700;
+    line-height: 1.1em;
+    margin: 0 0 0.5rem;
+  }
+
+  .downlevel .d-title p {
+    font-weight: 300;
+    font-size: 1.2rem;
+    line-height: 1.55em;
+    margin-top: 0;
+  }
+
+  .downlevel .d-byline {
+    padding-top: 0.8em;
+    padding-bottom: 0.8em;
+    font-size: 0.8rem;
+    line-height: 1.8em;
+  }
+
+  .downlevel .section-separator {
+    border: none;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .downlevel .d-article {
+    font-size: 1.06rem;
+    line-height: 1.7em;
+    padding-top: 1rem;
+    padding-bottom: 2rem;
+  }
+
+
+  .downlevel .d-appendix {
+    padding-left: 0;
+    padding-right: 0;
+    max-width: none;
+    font-size: 0.8em;
+    line-height: 1.7em;
+    margin-bottom: 0;
+    color: rgba(0,0,0,0.5);
+    padding-top: 40px;
+    padding-bottom: 48px;
+  }
+
+  .downlevel .footnotes ol {
+    padding-left: 13px;
+  }
+
+  .downlevel .base-grid,
+  .downlevel .distill-header,
+  .downlevel .d-title,
+  .downlevel .d-abstract,
+  .downlevel .d-article,
+  .downlevel .d-appendix,
+  .downlevel .distill-appendix,
+  .downlevel .d-byline,
+  .downlevel .d-footnote-list,
+  .downlevel .d-citation-list,
+  .downlevel .distill-footer,
+  .downlevel .appendix-bottom,
+  .downlevel .posts-container {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+
+  @media(min-width: 768px) {
+    .downlevel .base-grid,
+    .downlevel .distill-header,
+    .downlevel .d-title,
+    .downlevel .d-abstract,
+    .downlevel .d-article,
+    .downlevel .d-appendix,
+    .downlevel .distill-appendix,
+    .downlevel .d-byline,
+    .downlevel .d-footnote-list,
+    .downlevel .d-citation-list,
+    .downlevel .distill-footer,
+    .downlevel .appendix-bottom,
+    .downlevel .posts-container {
+    padding-left: 150px;
+    padding-right: 150px;
+    max-width: 900px;
+  }
+  }
+
+  .downlevel pre code {
+    display: block;
+    border-left: 2px solid rgba(0, 0, 0, .1);
+    padding: 0 0 0 20px;
+    font-size: 14px;
+  }
+
+  .downlevel code, .downlevel pre {
+    color: black;
+    background: none;
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    word-wrap: normal;
+    line-height: 1.5;
+
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+
+    -webkit-hyphens: none;
+    -moz-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none;
+  }
+
+  .downlevel .posts-list .post-preview {
+    color: inherit;
+  }
+
+
+
+  </style>
+
+  <script type="application/javascript">
+
+  function is_downlevel_browser() {
+    if (bowser.isUnsupportedBrowser({ msie: "12", msedge: "16"},
+                                   window.navigator.userAgent)) {
+      return true;
+    } else {
+      return window.load_distill_framework === undefined;
+    }
+  }
+
+  // show body when load is complete
+  function on_load_complete() {
+
+    // add anchors
+    if (window.anchors) {
+      window.anchors.options.placement = 'left';
+      window.anchors.add('d-article > h2, d-article > h3, d-article > h4, d-article > h5');
+    }
+
+
+    // set body to visible
+    document.body.style.visibility = 'visible';
+
+    // force redraw for leaflet widgets
+    if (window.HTMLWidgets) {
+      var maps = window.HTMLWidgets.findAll(".leaflet");
+      $.each(maps, function(i, el) {
+        var map = this.getMap();
+        map.invalidateSize();
+        map.eachLayer(function(layer) {
+          if (layer instanceof L.TileLayer)
+            layer.redraw();
+        });
+      });
+    }
+
+    // trigger 'shown' so htmlwidgets resize
+    $('d-article').trigger('shown');
+  }
+
+  function init_distill() {
+
+    init_common();
+
+    // create front matter
+    var front_matter = $('<d-front-matter></d-front-matter>');
+    $('#distill-front-matter').wrap(front_matter);
+
+    // create d-title
+    $('.d-title').changeElementType('d-title');
+
+    // create d-byline
+    var byline = $('<d-byline></d-byline>');
+    $('.d-byline').replaceWith(byline);
+
+    // create d-article
+    var article = $('<d-article></d-article>');
+    $('.d-article').wrap(article).children().unwrap();
+
+    // move posts container into article
+    $('.posts-container').appendTo($('d-article'));
+
+    // create d-appendix
+    $('.d-appendix').changeElementType('d-appendix');
+
+    // flag indicating that we have appendix items
+    var appendix = $('.appendix-bottom').children('h3').length > 0;
+
+    // replace footnotes with <d-footnote>
+    $('.footnote-ref').each(function(i, val) {
+      appendix = true;
+      var href = $(this).attr('href');
+      var id = href.replace('#', '');
+      var fn = $('#' + id);
+      var fn_p = $('#' + id + '>p');
+      fn_p.find('.footnote-back').remove();
+      var text = fn_p.html();
+      var dtfn = $('<d-footnote></d-footnote>');
+      dtfn.html(text);
+      $(this).replaceWith(dtfn);
+    });
+    // remove footnotes
+    $('.footnotes').remove();
+
+    // move refs into #references-listing
+    $('#references-listing').replaceWith($('#refs'));
+
+    $('h1.appendix, h2.appendix').each(function(i, val) {
+      $(this).changeElementType('h3');
+    });
+    $('h3.appendix').each(function(i, val) {
+      var id = $(this).attr('id');
+      $('.d-contents a[href="#' + id + '"]').parent().remove();
+      appendix = true;
+      $(this).nextUntil($('h1, h2, h3')).addBack().appendTo($('d-appendix'));
+    });
+
+    // show d-appendix if we have appendix content
+    $("d-appendix").css('display', appendix ? 'grid' : 'none');
+
+    // localize layout chunks to just output
+    $('.layout-chunk').each(function(i, val) {
+
+      // capture layout
+      var layout = $(this).attr('data-layout');
+
+      // apply layout to markdown level block elements
+      var elements = $(this).children().not('details, div.sourceCode, pre, script');
+      elements.each(function(i, el) {
+        var layout_div = $('<div class="' + layout + '"></div>');
+        if (layout_div.hasClass('shaded')) {
+          var shaded_content = $('<div class="shaded-content"></div>');
+          $(this).wrap(shaded_content);
+          $(this).parent().wrap(layout_div);
+        } else {
+          $(this).wrap(layout_div);
+        }
+      });
+
+
+      // unwrap the layout-chunk div
+      $(this).children().unwrap();
+    });
+
+    // remove code block used to force  highlighting css
+    $('.distill-force-highlighting-css').parent().remove();
+
+    // remove empty line numbers inserted by pandoc when using a
+    // custom syntax highlighting theme
+    $('code.sourceCode a:empty').remove();
+
+    // load distill framework
+    load_distill_framework();
+
+    // wait for window.distillRunlevel == 4 to do post processing
+    function distill_post_process() {
+
+      if (!window.distillRunlevel || window.distillRunlevel < 4)
+        return;
+
+      // hide author/affiliations entirely if we have no authors
+      var front_matter = JSON.parse($("#distill-front-matter").html());
+      var have_authors = front_matter.authors && front_matter.authors.length > 0;
+      if (!have_authors)
+        $('d-byline').addClass('hidden');
+
+      // article with toc class
+      $('.d-contents').parent().addClass('d-article-with-toc');
+
+      // strip links that point to #
+      $('.authors-affiliations').find('a[href="#"]').removeAttr('href');
+
+      // add orcid ids
+      $('.authors-affiliations').find('.author').each(function(i, el) {
+        var orcid_id = front_matter.authors[i].orcidID;
+        if (orcid_id) {
+          var a = $('<a></a>');
+          a.attr('href', 'https://orcid.org/' + orcid_id);
+          var img = $('<img></img>');
+          img.addClass('orcid-id');
+          img.attr('alt', 'ORCID ID');
+          img.attr('src','data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg==');
+          a.append(img);
+          $(this).append(a);
+        }
+      });
+
+      // hide elements of author/affiliations grid that have no value
+      function hide_byline_column(caption) {
+        $('d-byline').find('h3:contains("' + caption + '")').parent().css('visibility', 'hidden');
+      }
+
+      // affiliations
+      var have_affiliations = false;
+      for (var i = 0; i<front_matter.authors.length; ++i) {
+        var author = front_matter.authors[i];
+        if (author.affiliation !== "&nbsp;") {
+          have_affiliations = true;
+          break;
+        }
+      }
+      if (!have_affiliations)
+        $('d-byline').find('h3:contains("Affiliations")').css('visibility', 'hidden');
+
+      // published date
+      if (!front_matter.publishedDate)
+        hide_byline_column("Published");
+
+      // document object identifier
+      var doi = $('d-byline').find('h3:contains("DOI")');
+      var doi_p = doi.next().empty();
+      if (!front_matter.doi) {
+        // if we have a citation and valid citationText then link to that
+        if ($('#citation').length > 0 && front_matter.citationText) {
+          doi.html('Citation');
+          $('<a href="#citation"></a>')
+            .text(front_matter.citationText)
+            .appendTo(doi_p);
+        } else {
+          hide_byline_column("DOI");
+        }
+      } else {
+        $('<a></a>')
+           .attr('href', "https://doi.org/" + front_matter.doi)
+           .html(front_matter.doi)
+           .appendTo(doi_p);
+      }
+
+       // change plural form of authors/affiliations
+      if (front_matter.authors.length === 1) {
+        var grid = $('.authors-affiliations');
+        grid.children('h3:contains("Authors")').text('Author');
+        grid.children('h3:contains("Affiliations")').text('Affiliation');
+      }
+
+      // remove d-appendix and d-footnote-list local styles
+      $('d-appendix > style:first-child').remove();
+      $('d-footnote-list > style:first-child').remove();
+
+      // move appendix-bottom entries to the bottom
+      $('.appendix-bottom').appendTo('d-appendix').children().unwrap();
+      $('.appendix-bottom').remove();
+
+      // hoverable references
+      $('span.citation[data-cites]').each(function() {
+        const citeChild = $(this).children()[0]
+        // Do not process if @xyz has been used without escaping and without bibliography activated
+        // https://github.com/rstudio/distill/issues/466
+        if (citeChild === undefined) return true
+
+        if (citeChild.nodeName == "D-FOOTNOTE") {
+          var fn = citeChild
+          $(this).html(fn.shadowRoot.querySelector("sup"))
+          $(this).id = fn.id
+          fn.remove()
+        }
+        var refs = $(this).attr('data-cites').split(" ");
+        var refHtml = refs.map(function(ref) {
+          // Could use CSS.escape too here, we insure backward compatibility in navigator
+          return "<p>" + $('div[id="ref-' + ref + '"]').html() + "</p>";
+        }).join("\n");
+        window.tippy(this, {
+          allowHTML: true,
+          content: refHtml,
+          maxWidth: 500,
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'light-border',
+          placement: 'bottom-start'
+        });
+      });
+
+      // fix footnotes in tables (#411)
+      // replacing broken distill.pub feature
+      $('table d-footnote').each(function() {
+        // we replace internal showAtNode methode which is triggered when hovering a footnote
+        this.hoverBox.showAtNode = function(node) {
+          // ported from https://github.com/distillpub/template/pull/105/files
+          calcOffset = function(elem) {
+              let x = elem.offsetLeft;
+              let y = elem.offsetTop;
+              // Traverse upwards until an `absolute` element is found or `elem`
+              // becomes null.
+              while (elem = elem.offsetParent && elem.style.position != 'absolute') {
+                  x += elem.offsetLeft;
+                  y += elem.offsetTop;
+              }
+
+              return { left: x, top: y };
+          }
+          // https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/offsetTop
+          const bbox = node.getBoundingClientRect();
+          const offset = calcOffset(node);
+          this.show([offset.left + bbox.width, offset.top + bbox.height]);
+        }
+      })
+
+      // clear polling timer
+      clearInterval(tid);
+
+      // show body now that everything is ready
+      on_load_complete();
+    }
+
+    var tid = setInterval(distill_post_process, 50);
+    distill_post_process();
+
+  }
+
+  function init_downlevel() {
+
+    init_common();
+
+     // insert hr after d-title
+    $('.d-title').after($('<hr class="section-separator"/>'));
+
+    // check if we have authors
+    var front_matter = JSON.parse($("#distill-front-matter").html());
+    var have_authors = front_matter.authors && front_matter.authors.length > 0;
+
+    // manage byline/border
+    if (!have_authors)
+      $('.d-byline').remove();
+    $('.d-byline').after($('<hr class="section-separator"/>'));
+    $('.d-byline a').remove();
+
+    // remove toc
+    $('.d-contents').remove();
+
+    // move appendix elements
+    $('h1.appendix, h2.appendix').each(function(i, val) {
+      $(this).changeElementType('h3');
+    });
+    $('h3.appendix').each(function(i, val) {
+      $(this).nextUntil($('h1, h2, h3')).addBack().appendTo($('.d-appendix'));
+    });
+
+
+    // inject headers into references and footnotes
+    var refs_header = $('<h3></h3>');
+    refs_header.text('References');
+    $('#refs').prepend(refs_header);
+
+    var footnotes_header = $('<h3></h3');
+    footnotes_header.text('Footnotes');
+    $('.footnotes').children('hr').first().replaceWith(footnotes_header);
+
+    // move appendix-bottom entries to the bottom
+    $('.appendix-bottom').appendTo('.d-appendix').children().unwrap();
+    $('.appendix-bottom').remove();
+
+    // remove appendix if it's empty
+    if ($('.d-appendix').children().length === 0)
+      $('.d-appendix').remove();
+
+    // prepend separator above appendix
+    $('.d-appendix').before($('<hr class="section-separator" style="clear: both"/>'));
+
+    // trim code
+    $('pre>code').each(function(i, val) {
+      $(this).html($.trim($(this).html()));
+    });
+
+    // move posts-container right before article
+    $('.posts-container').insertBefore($('.d-article'));
+
+    $('body').addClass('downlevel');
+
+    on_load_complete();
+  }
+
+
+  function init_common() {
+
+    // jquery plugin to change element types
+    (function($) {
+      $.fn.changeElementType = function(newType) {
+        var attrs = {};
+
+        $.each(this[0].attributes, function(idx, attr) {
+          attrs[attr.nodeName] = attr.nodeValue;
+        });
+
+        this.replaceWith(function() {
+          return $("<" + newType + "/>", attrs).append($(this).contents());
+        });
+      };
+    })(jQuery);
+
+    // prevent underline for linked images
+    $('a > img').parent().css({'border-bottom' : 'none'});
+
+    // mark non-body figures created by knitr chunks as 100% width
+    $('.layout-chunk').each(function(i, val) {
+      var figures = $(this).find('img, .html-widget');
+      // ignore leaflet img layers (#106)
+      figures = figures.filter(':not(img[class*="leaflet"])')
+      if ($(this).attr('data-layout') !== "l-body") {
+        figures.css('width', '100%');
+      } else {
+        figures.css('max-width', '100%');
+        figures.filter("[width]").each(function(i, val) {
+          var fig = $(this);
+          fig.css('width', fig.attr('width') + 'px');
+        });
+
+      }
+    });
+
+    // auto-append index.html to post-preview links in file: protocol
+    // and in rstudio ide preview
+    $('.post-preview').each(function(i, val) {
+      if (window.location.protocol === "file:")
+        $(this).attr('href', $(this).attr('href') + "index.html");
+    });
+
+    // get rid of index.html references in header
+    if (window.location.protocol !== "file:") {
+      $('.distill-site-header a[href]').each(function(i,val) {
+        $(this).attr('href', $(this).attr('href').replace(/^index[.]html/, "./"));
+      });
+    }
+
+    // add class to pandoc style tables
+    $('tr.header').parent('thead').parent('table').addClass('pandoc-table');
+    $('.kable-table').children('table').addClass('pandoc-table');
+
+    // add figcaption style to table captions
+    $('caption').parent('table').addClass("figcaption");
+
+    // initialize posts list
+    if (window.init_posts_list)
+      window.init_posts_list();
+
+    // implmement disqus comment link
+    $('.disqus-comment-count').click(function() {
+      window.headroom_prevent_pin = true;
+      $('#disqus_thread').toggleClass('hidden');
+      if (!$('#disqus_thread').hasClass('hidden')) {
+        var offset = $(this).offset();
+        $(window).resize();
+        $('html, body').animate({
+          scrollTop: offset.top - 35
+        });
+      }
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    if (is_downlevel_browser())
+      init_downlevel();
+    else
+      window.addEventListener('WebComponentsReady', init_distill);
+  });
+
+  </script>
+
+  <!--/radix_placeholder_distill-->
+  <script src="site_libs/header-attrs-2.13/header-attrs.js"></script>
+  <script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+  <link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+  <script src="site_libs/popper-2.6.0/popper.min.js"></script>
+  <link href="site_libs/tippy-6.2.7/tippy.css" rel="stylesheet" />
+  <link href="site_libs/tippy-6.2.7/tippy-light-border.css" rel="stylesheet" />
+  <script src="site_libs/tippy-6.2.7/tippy.umd.min.js"></script>
+  <script src="site_libs/anchor-4.2.2/anchor.min.js"></script>
+  <script src="site_libs/bowser-1.9.3/bowser.min.js"></script>
+  <script src="site_libs/webcomponents-2.0.0/webcomponents.js"></script>
+  <script src="site_libs/distill-2.2.21/template.v2.js"></script>
+  <!--radix_placeholder_site_in_header-->
+  <!--/radix_placeholder_site_in_header-->
+
+
+</head>
+
+<body>
+
+<!--radix_placeholder_front_matter-->
+
+<script id="distill-front-matter" type="text/json">
+{"title":"Control Flow and Loops in R","authors":[]}
+</script>
+
+<!--/radix_placeholder_front_matter-->
+<!--radix_placeholder_navigation_before_body-->
+<header class="header header--fixed" role="banner">
+<nav class="distill-site-nav distill-site-header">
+<div class="nav-left">
+<a class="logo" href="https://www.ons.gov.uk/">
+<img src="images/ONS_Logo_Digital_White_Landscape_English_RGB.png" alt="Logo"/>
+</a>
+<a href="index.html" class="title">RAPID training</a>
+</div>
+<div class="nav-right">
+<div class="nav-dropdown">
+<button class="nav-dropbtn">
+RAP training in R
+ 
+<span class="down-arrow">&#x25BE;</span>
+</button>
+<div class="nav-dropdown-content">
+<a href="control_flow.html">Control Flow</a>
+<a href="functions.html">Functions</a>
+<a href="packages.html">Packages and unit tests</a>
+</div>
+</div>
+<a href="javascript:void(0);" class="nav-toggle">&#9776;</a>
+</div>
+</nav>
+</header>
+<!--/radix_placeholder_navigation_before_body-->
+<!--radix_placeholder_site_before_body-->
+<!--/radix_placeholder_site_before_body-->
+
+<div class="d-title">
+<h1>Control Flow and Loops in R</h1>
+<!--radix_placeholder_categories-->
+<!--/radix_placeholder_categories-->
+
+</div>
+
+
+<div class="d-article">
+<div class="d-contents d-contents-float">
+<nav class="l-text toc figcaption" id="TOC">
+<h3>Contents</h3>
+<ul>
+<li><a href="#what-are-loops">What are loops?</a></li>
+<li><a href="#for-loops"><code>for</code> loops</a>
+<ul>
+<li><a href="#syntax">Syntax</a></li>
+<li><a href="#example-of-the-advantages-of-a-for-loop">Example of the advantages of a <code>for</code> loop</a></li>
+<li><a href="#do-i-have-to-use-x">Do I have to use x?</a></li>
+<li><a href="#will-i-actually-use-this-much">Will I actually use this much?</a></li>
+<li><a href="#my-loop-is-stuck">My loop is stuck!</a></li>
+</ul></li>
+<li><a href="#while-loops"><code>while</code> loops</a>
+<ul>
+<li><a href="#syntax-1">Syntax</a></li>
+<li><a href="#example-of-a-while-loop">Example of a <code>while</code> loop</a></li>
+<li><a href="#will-i-actually-use-this-much-1">Will I actually use this much?</a></li>
+</ul></li>
+<li><a href="#if-statements-control-flow"><code>if</code> statements (control flow)</a>
+<ul>
+<li><a href="#syntax-2">Syntax</a></li>
+<li><a href="#relational-operators">Relational operators</a></li>
+<li><a href="#example-traffic-light">Example: traffic light</a></li>
+<li><a href="#else"><code>else</code></a></li>
+<li><a href="#else-if"><code>else if</code></a></li>
+<li><a href="#ifelse"><code>ifelse</code></a></li>
+</ul></li>
+<li><a href="#combining-loopsconditional-statements">Combining loops/conditional statements</a>
+<ul>
+<li><a href="#example">Example</a></li>
+<li><a href="#keep-track-of-your-brackets">Keep track of your brackets</a></li>
+<li><a href="#advanced-loop-features">Advanced loop features:</a></li>
+</ul></li>
+<li><a href="#exercises">Exercises</a></li>
+<li><a href="#switch">Switch</a></li>
+<li><a href="#functionals">Functionals</a>
+<ul>
+<li><a href="#apply">apply()</a></li>
+<li><a href="#lapply">lapply()</a></li>
+<li><a href="#sapply">sapply()</a></li>
+<li><a href="#additional-arguments">Additional arguments</a></li>
+</ul></li>
+<li><a href="#vectorisation">Vectorisation</a></li>
+<li><a href="#timing">Timing</a>
+<ul>
+<li><a href="#the-tictoc-package">The <code>tictoc</code> package:</a></li>
+<li><a href="#comparison-using-tictoc">Comparison using <code>tictoc</code></a></li>
+</ul></li>
+<li><a href="#answers">Poll answers</a></li>
+</ul>
+</nav>
+</div>
+<p><strong>Course details:</strong></p>
+<ul>
+<li>Pre-requisites:
+<ul>
+<li>have RStudio installed</li>
+<li>packages required: <code>tidyverse</code> and <code>tictoc</code> (advanced section)</li>
+<li>minimal basic R knowledge (e.g., variable assignment)</li>
+</ul></li>
+</ul>
+<p><strong>Useful resources:</strong></p>
+<p>This is an introduction to control flow, but for more comprehensive overviews see:</p>
+<ul>
+<li><a href="https://app.datacamp.com/learn/courses/intermediate-r">Intermediate R Course on DataCamp</a></li>
+<li><a href="https://adv-r.hadley.nz/control-flow.html">Advanced R: Control flow</a></li>
+</ul>
+<p><strong>Glossary</strong></p>
+<p>Here is a glossary of some terms I may use in this presentation:</p>
+<div class="layout-chunk" data-layout="l-body">
+<table class="table table-hover table-condensed" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Jargon
+</th>
+<th style="text-align:left;">
+Definition
+</th>
+<th style="text-align:left;">
+Links to further info
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Argument
+</td>
+<td style="text-align:left;">
+The input(s) to a function to make it do what you want.
+</td>
+<td style="text-align:left;">
+<a href="https://data-flair.training/blogs/r-arguments-introduction/" style="     ">Argument</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Console
+</td>
+<td style="text-align:left;">
+Where the code runs. You can interact directly with the console (type in it). Or when you run code in the script, it prints/runs here. Printouts also are show here.
+</td>
+<td style="text-align:left;">
+<a href="https://swcarpentry.github.io/r-novice-inflammation/09-supp-intro-rstudio/index.html" style="     ">Console</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Environment
+</td>
+<td style="text-align:left;">
+Generally talking about the global environment. Contains all the variables, data and functions that are accessible to the user.
+</td>
+<td style="text-align:left;">
+<a href="https://www.datamentor.io/r-programming/environment-scope/" style="     ">Environment</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+File path
+</td>
+<td style="text-align:left;">
+Location/address of your folders, sub-folders and files inside your drives. Can be see in Window’s File Explorer address bar. Used to find and read in objects/data and save out objects/data.
+</td>
+<td style="text-align:left;">
+<a href="https://sscc.wisc.edu/sscc/pubs/dwr/reading-text-data.html#paths-and-working-directories" style="     ">File path</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indent
+</td>
+<td style="text-align:left;">
+How many tabs/spaces away from the right hand side of the script the code is written. R doesn’t generally mind about indents but there is best practice.
+</td>
+<td style="text-align:left;">
+<a href="https://statisticsglobe.com/indent-multiple-lines-code-rstudio" style="     ">Indent</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Parentheses, Brackets, Bracers
+</td>
+<td style="text-align:left;">
+Round brackets (), Curly brackets {}, Square brackets []
+</td>
+<td style="text-align:left;">
+<a href="https://www.ucl.ac.uk/~uctqiax/PUBLG100/2015/faq/operators.html" style="     ">Parentheses, Brackets, Bracers</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Pipe
+</td>
+<td style="text-align:left;">
+The operator %&gt;% from magrittr which allows functions to be called on dataframes in a sequential order.
+</td>
+<td style="text-align:left;">
+<a href="https://cran.r-project.org/web/packages/dplyr/vignettes/dplyr.html" style="     ">Pipe</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Print/Printout
+</td>
+<td style="text-align:left;">
+Outputs text, data etc to the console.
+</td>
+<td style="text-align:left;">
+<a href="https://www.geeksforgeeks.org/printing-output-of-an-r-program/" style="     ">Print/Printout</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Return
+</td>
+<td style="text-align:left;">
+Colloquially similar to printout but when regarding a function.
+</td>
+<td style="text-align:left;">
+<a href="https://www.datamentor.io/r-programming/return-function/" style="     ">Return</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Script
+</td>
+<td style="text-align:left;">
+A text file containing code (a sequence of commands) that can be edited and saved. Code runs in the console.
+</td>
+<td style="text-align:left;">
+<a href="http://mercury.webster.edu/aleshunas/R_learning_infrastructure/R%20scripts.html" style="     ">Script</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Syntax
+</td>
+<td style="text-align:left;">
+Akin to a languages grammar. A fancy way of saying how something in the code is written to get it to do what you want. The rules of writing code. Differs across different programming languages.
+</td>
+<td style="text-align:left;">
+<a href="https://www.computerworld.com/article/2497319/business-intelligence-beginner-s-guide-to-r-syntax-quirks-you-ll-want-to-know.html" style="     ">Syntax</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Terminal
+</td>
+<td style="text-align:left;">
+Provides access to the system shell (command line interface with things like file explorer, Git).
+</td>
+<td style="text-align:left;">
+<a href="https://support.posit.co/hc/en-us/articles/115010737148-Using-the-RStudio-Terminal-in-the-RStudio-IDE" style="     ">Terminal</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Variable assignment, Assign a variable
+</td>
+<td style="text-align:left;">
+Save something (data, value, function etc) to a variable, primarily using &lt;- or =, so that it is availble in the environment to be used in the code.
+</td>
+<td style="text-align:left;">
+<a href="https://www.tutorialspoint.com/r/r_variables.htm" style="     ">Variable assignment, Assign a variable</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Working directory
+</td>
+<td style="text-align:left;">
+Folder where you are working. It’s the place (the environment) where you have to store your files of your project in order to load them or where your R objects will be saved.
+</td>
+<td style="text-align:left;">
+<a href="https://r-coder.com/working-directory-r/" style="     ">Working directory</a>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h1 id="what-are-loops">What are loops?</h1>
+<p>Loops are coding structures that help repeat highly similar or repetitive code effectively, without the need for copy-pasting. They increase code efficiency and readability.</p>
+<p>Types of loops:</p>
+<ul>
+<li><code>for</code> loop (do something x times)</li>
+<li><code>while</code> loop (do something until a certain event is reached)</li>
+<li><code>if</code> statements (control flow, not actually a ‘proper’ loop)</li>
+</ul>
+<p><strong><em>Poll 1: How confident are you with loops and control flow in R? (1 - not at all, 5 - very confident)</em></strong></p>
+<h1 id="for-loops"><code>for</code> loops</h1>
+<p>What is a <code>for</code> loop? It does something repeatedly a certain amount of times.</p>
+<h2 id="syntax">Syntax</h2>
+<pre><code>for (values to loop over) {
+  do all of this stuff for the current value
+}</code></pre>
+<p>The <code>for</code> loop keeps repeating until the last value is reached.</p>
+<p>In a bit more appropriate coding jargon:</p>
+<pre><code>for (var in seq) {
+  expr
+}</code></pre>
+<p>Where <code>var</code> = variable, <code>seq</code> = sequence, and <code>expr</code> = expression. You need to use these specific types of brackets in the correct place, otherwise the <code>for</code> loop won’t work.</p>
+<p>A really simple example is:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='kw'>for</span> <span class='op'>(</span><span class='va'>x</span> <span class='kw'>in</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span>  <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span></span>
+<span><span class='op'>}</span></span></code></pre>
+</div>
+</div>
+<p>Here, x is defined as 1:10 (a sequence of 1 to 10 in steps of 1, i.e., 1, 2, 3, … 10). The first time the loop runs, <code>x &lt;- 1</code>, so it prints 1. The second time, <code>x &lt;- 2</code>, so it prints 2. Etc. Until <code>x &lt;- 10</code> has been printed, then it stops as x has no further values.</p>
+<p><strong><em>Poll 2: What is the output of the following for loop: for (x in 1:2) { y &lt;- x + 3, print(y) }</em></strong></p>
+<ul>
+<li>1, 2<br />
+</li>
+<li>3, 4<br />
+</li>
+<li>4, 5<br />
+</li>
+<li>5, 6</li>
+</ul>
+<p><a href="#answers">Answer</a></p>
+<h2 id="example-of-the-advantages-of-a-for-loop">Example of the advantages of a <code>for</code> loop</h2>
+<p>Consider the following scenario. You want to create 3 variables, each is equal to the previous variable, plus 1.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>a</span> <span class='op'>&lt;-</span> <span class='fl'>1</span></span>
+<span><span class='va'>b</span> <span class='op'>&lt;-</span> <span class='va'>a</span> <span class='op'>+</span> <span class='fl'>1</span></span>
+<span><span class='va'>c</span> <span class='op'>&lt;-</span> <span class='va'>b</span> <span class='op'>+</span> <span class='fl'>1</span></span>
+<span><span class='va'>d</span> <span class='op'>&lt;-</span> <span class='va'>c</span> <span class='op'>+</span> <span class='fl'>1</span></span>
+<span><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>b</span>, <span class='va'>c</span>, <span class='va'>d</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
+</div>
+</div>
+<p>Easy enough to type out, right? If a is a different number, e.g., 3; b, c and d are still calculated correctly and you don’t need to change any lines other than the first where a value is assigned to a. Done!</p>
+<p>However, it turns out you now need to do the same thing, but rather than just 3 variables, you need to create 100! That’s a lot of copy-pasting to create e, f, g, …</p>
+<p>Let’s try to write a <code>for</code> loop to obtain the above 3 output variables:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>input_variable</span> <span class='op'>&lt;-</span> <span class='fl'>1</span></span>
+<span><span class='va'>number_of_outputs</span> <span class='op'>&lt;-</span> <span class='fl'>3</span></span>
+<span><span class='va'>output</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>)</span> <span class='co'>#empty vector to put outputs into</span></span>
+<span><span class='kw'>for</span> <span class='op'>(</span><span class='va'>x</span> <span class='kw'>in</span> <span class='fl'>1</span><span class='op'>:</span><span class='va'>number_of_outputs</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span>  <span class='va'>output</span><span class='op'>[</span><span class='va'>x</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='va'>x</span> <span class='op'>+</span> <span class='fl'>1</span></span>
+<span><span class='op'>}</span></span>
+<span><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>output</span><span class='op'>)</span></span></code></pre>
+</div>
+</div>
+<p>Not only did you just do the same thing super fast, you also tidied the output into a single list, so you don’t clutter your workspace with lots of separate variables. If you needed the 3rd output, you can obtain it using:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>output</span><span class='op'>[</span><span class='fl'>3</span><span class='op'>]</span></span></code></pre>
+</div>
+</div>
+<p>Hey, but that was more lines of code than the copy-pasting above! Yeah, well, now think about when you needed to do this 100 times, instead of 3. All you need to change is:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>input_variable</span> <span class='op'>&lt;-</span> <span class='fl'>1</span></span>
+<span><span class='va'>number_of_outputs</span> <span class='op'>&lt;-</span> <span class='fl'>100</span></span>
+<span><span class='va'>output</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>)</span> <span class='co'>#empty vector to put outputs into</span></span>
+<span><span class='kw'>for</span> <span class='op'>(</span><span class='va'>x</span> <span class='kw'>in</span> <span class='fl'>1</span><span class='op'>:</span><span class='va'>number_of_outputs</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span>  <span class='va'>output</span><span class='op'>[</span><span class='va'>x</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='va'>x</span> <span class='op'>+</span> <span class='fl'>1</span></span>
+<span><span class='op'>}</span></span>
+<span><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>output</span><span class='op'>)</span></span></code></pre>
+</div>
+</div>
+<p>No additional lines! And you can still easily change the input variable.</p>
+<h2 id="do-i-have-to-use-x">Do I have to use x?</h2>
+<p>No! ‘x’ is just a placeholder variable (a bit of a habit in coding examples, you may also see ‘i’ used often), it can be anything you like. In fact, it is a better idea to give it a sensible name (ideally following coding style best practice!) so you and anybody else reading your code can remember/figure out what this loop is actually doing.</p>
+<p>Let’s try a more sensible example:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>baby_names</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='st'>"Oliver"</span>, <span class='st'>"Leo"</span>, <span class='st'>"Olivia"</span>, <span class='st'>"Frank"</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='kw'>for</span> <span class='op'>(</span><span class='va'>baby_name</span> <span class='kw'>in</span> <span class='va'>baby_names</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span>  <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>baby_name</span><span class='op'>)</span></span>
+<span><span class='op'>}</span></span></code></pre>
+</div>
+</div>
+<h2 id="will-i-actually-use-this-much">Will I actually use this much?</h2>
+<p>Yes, a lot! It is a fundamental tool in coding. It takes some practice, but saves lots of time and effort in computing.</p>
+<h2 id="my-loop-is-stuck">My loop is stuck!</h2>
+<p>Your Console is hanging waiting for input, showing a ‘+’, and not a ‘&gt;’. You have most likely forgotten a bracket somewhere. Press ESC and you can correct your loop and try again.</p>
+<h1 id="while-loops"><code>while</code> loops</h1>
+<p>What is a <code>while</code> loop? It keeps on doing something continuously until a certain event is reached.</p>
+<h2 id="syntax-1">Syntax</h2>
+<pre><code>while (condition) {
+  expr
+}</code></pre>
+<p>Where <code>condition</code> is a criterion that needs to be satisfied for the loop to keep on running, and <code>expr</code> = expression (some bit of code). The condition uses a Boolean statement, that is: <code>TRUE</code> of <code>FALSE</code>. As long as the condition equals <code>TRUE</code>, the while loop will keep on executing the expression. As soon as this condition equals <code>FALSE</code>, it stops.</p>
+<h2 id="example-of-a-while-loop">Example of a <code>while</code> loop</h2>
+<p>You have 20 apples. You are handing out 1 at a time to others. Once you only have 2 apples left, you want to stop handing them out, so that you have some for yourself.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>num_apples</span> <span class='op'>&lt;-</span> <span class='fl'>20</span></span>
+<span><span class='kw'>while</span> <span class='op'>(</span><span class='va'>num_apples</span> <span class='op'>&gt;</span> <span class='fl'>2</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span>  <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='st'>"Keep handing out apples"</span><span class='op'>)</span></span>
+<span>  <span class='va'>num_apples</span> <span class='op'>&lt;-</span> <span class='va'>num_apples</span> <span class='op'>-</span> <span class='fl'>1</span></span>
+<span><span class='op'>}</span></span>
+<span><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='st'>"Stop handing out apples, because you only have "</span>, <span class='va'>num_apples</span>, <span class='st'>" left"</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
+</div>
+</div>
+<p>What happened there? The loop ran initially with <code>num_apples</code> = 20. On the next iteration, <code>num_apples &lt;- 19</code>, and <code>19 &gt; 2</code> == <code>TRUE</code>, so it kept on running, then it was 18, 17, etc, until <code>num_apples &lt;- 2</code> and <code>2 &gt; 2</code> == <code>FALSE</code>, so the loop stopped and the print line below the closing bracket of the loop was executed.</p>
+<p>Fun anecdote - while (!!) I was writing this loop, I made a typo, which meant the loop kept going forever as the condition never changed to <code>FALSE</code>! (Try the following code, then Press ESC to exit the stuck loop):</p>
+<pre><code>num_apples &lt;- 20
+while (num_apples &gt; 2) {
+  print(&quot;Keep handing out apples&quot;)
+  num_applies &lt;- num_apples - 1
+}
+print(num_apples)</code></pre>
+<p>You can see that <code>num_apples</code> never changed from 20, so the <code>while</code> condition remained <code>TRUE</code> at all times!</p>
+<h2 id="will-i-actually-use-this-much-1">Will I actually use this much?</h2>
+<p>Depends. In analytical work, probably not as much as <code>for</code> loops. But it has its uses.</p>
+<h4 id="exercises-in-breakout-rooms-15-min">Exercises in breakout rooms: 15 min</h4>
+<h1 id="if-statements-control-flow"><code>if</code> statements (control flow)</h1>
+<p>What is an <code>if</code> statement/control flow? It does what it suggests: conditional statements. If some criterion is <code>TRUE</code>, execute an expression. If it is <code>FALSE</code>, don’t execute the expression. This can be expanded with <code>else if</code> to include an additional alternative statement, and/or <code>else</code> to express what to do if none of the above criteria are satisfied (<code>else</code> always goes last).</p>
+<h2 id="syntax-2">Syntax</h2>
+<pre><code>if (test_expression) {
+  statement
+}</code></pre>
+<h2 id="relational-operators">Relational operators</h2>
+<p>You need relational operators to run <code>if</code> statements. These simply compare a statement on the left with a statement on the right. Here is a list:</p>
+<ul>
+<li>a <code>==</code> b “a is equal to b”</li>
+<li>a <code>&gt;</code> b “a is greater than b”</li>
+<li>a <code>&gt;=</code> b “a is greater than or equal to b”</li>
+<li>a <code>&lt;</code> b “a is smaller than b”</li>
+<li>a <code>&lt;=</code> b “a is smaller than or equal to b”</li>
+<li>a <code>!=</code> b “a is not equal to b”</li>
+</ul>
+<p>Try them out, for example:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>a</span> <span class='op'>&lt;-</span> <span class='fl'>1</span></span>
+<span><span class='va'>b</span> <span class='op'>&lt;-</span> <span class='fl'>2</span></span>
+<span><span class='va'>a</span> <span class='op'>==</span> <span class='va'>b</span></span>
+<span><span class='va'>b</span> <span class='op'>&lt;</span> <span class='va'>a</span></span>
+<span><span class='va'>a</span> <span class='op'>!=</span> <span class='va'>b</span></span></code></pre>
+</div>
+</div>
+<p>You can see the output in the console is a boolean/logical value, either <code>TRUE</code> or <code>FALSE</code>.</p>
+<p><strong><em>Poll 3: Given a &lt;- 4 and b &lt;- 6, what is the output to: a &lt; b</em></strong>
+- 2<br />
+- TRUE<br />
+- YES<br />
+- FALSE</p>
+<p><a href="#answers">Answer</a></p>
+<h2 id="example-traffic-light">Example: traffic light</h2>
+<p>Let’s try to code how a traffic light works. We’ll start with green:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>light_status</span> <span class='op'>&lt;-</span> <span class='st'>"green"</span></span>
+<span><span class='kw'>if</span> <span class='op'>(</span><span class='va'>light_status</span> <span class='op'>==</span> <span class='st'>"green"</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span>  <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='st'>"go"</span><span class='op'>)</span></span>
+<span><span class='op'>}</span></span></code></pre>
+</div>
+</div>
+<p>You will get to “go” only if the light is green and for no other value. (Try some other values for light_status)</p>
+<h2 id="else"><code>else</code></h2>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>light_status</span> <span class='op'>&lt;-</span> <span class='st'>"green"</span></span>
+<span><span class='kw'>if</span> <span class='op'>(</span><span class='va'>light_status</span> <span class='op'>==</span> <span class='st'>"green"</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span>  <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='st'>"go"</span><span class='op'>)</span></span>
+<span><span class='op'>}</span> <span class='kw'>else</span> <span class='op'>{</span></span>
+<span>  <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='st'>"stop"</span><span class='op'>)</span></span>
+<span><span class='op'>}</span></span></code></pre>
+</div>
+</div>
+<p>Same as before, except anything other than green now gets a “stop” message. (Try some other values for light_status)</p>
+<h2 id="else-if"><code>else if</code></h2>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>light_status</span> <span class='op'>&lt;-</span> <span class='st'>"green"</span></span>
+<span><span class='kw'>if</span> <span class='op'>(</span><span class='va'>light_status</span> <span class='op'>==</span> <span class='st'>"green"</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span>  <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='st'>"go"</span><span class='op'>)</span></span>
+<span><span class='op'>}</span> <span class='kw'>else</span> <span class='kw'>if</span> <span class='op'>(</span><span class='va'>light_status</span> <span class='op'>==</span> <span class='st'>"orange"</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span>  <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='st'>"stop if you are able to..."</span><span class='op'>)</span></span>
+<span><span class='op'>}</span> <span class='kw'>else</span> <span class='op'>{</span></span>
+<span>  <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='st'>"stop"</span><span class='op'>)</span></span>
+<span><span class='op'>}</span></span></code></pre>
+</div>
+</div>
+<p>A green light still gets “go”, a red light still gets “stop”, but an orange light now gets a different message.</p>
+<p>The traffic light works as it should! However… in coding you usually want to catch errors before they happen. Imagine the light cover is broken and the light is white. It might actually be a green, orange, or red. You will have to do a double take and determine which position the light is located and/or any further information available before deciding what to do. In the above example, anything other than green or orange would tell you to “stop”. We could expand this example by adding another <code>else if</code> statement:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>light_status</span> <span class='op'>&lt;-</span> <span class='st'>"white"</span></span>
+<span><span class='kw'>if</span> <span class='op'>(</span><span class='va'>light_status</span> <span class='op'>==</span> <span class='st'>"green"</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span>  <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='st'>"go"</span><span class='op'>)</span></span>
+<span><span class='op'>}</span> <span class='kw'>else</span> <span class='kw'>if</span> <span class='op'>(</span><span class='va'>light_status</span> <span class='op'>==</span> <span class='st'>"orange"</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span>  <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='st'>"stop if you are able to..."</span><span class='op'>)</span></span>
+<span><span class='op'>}</span> <span class='kw'>else</span> <span class='kw'>if</span> <span class='op'>(</span><span class='va'>light_status</span> <span class='op'>==</span> <span class='st'>"red"</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span>  <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='st'>"stop"</span><span class='op'>)</span></span>
+<span><span class='op'>}</span> <span class='kw'>else</span> <span class='op'>{</span></span>
+<span>  <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='st'>"Warning: unexpected colour! Be careful and assess the situation..."</span><span class='op'>)</span></span>
+<span><span class='op'>}</span></span></code></pre>
+</div>
+</div>
+<p>(Try some other values for light_status)</p>
+<p>Now you have catered for all possible scenarios. You can add as many <code>else if</code> statements as you wish.</p>
+<h2 id="ifelse"><code>ifelse</code></h2>
+<p>There is a quicker way to code an <code>if</code> statement, whenever the situation is binary, i.e., there are only 2 options: if <code>TRUE</code>, do this, if <code>FALSE</code>, do that. There is a special built-in function in R to do this in one line:</p>
+<p>Consider the following 2-option <code>if</code>, <code>else if</code> statement, where there are no other scenarios possible:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fl'>6</span></span>
+<span><span class='kw'>if</span> <span class='op'>(</span><span class='va'>x</span> <span class='op'>&lt;</span> <span class='fl'>10</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span>  <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='st'>"smaller than 10"</span><span class='op'>)</span></span>
+<span><span class='op'>}</span> <span class='kw'>else</span> <span class='kw'>if</span> <span class='op'>(</span><span class='va'>x</span> <span class='op'>&gt;=</span> <span class='fl'>10</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span>  <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='st'>"greater than 10"</span><span class='op'>)</span></span>
+<span><span class='op'>}</span></span></code></pre>
+</div>
+</div>
+<p>This can be replaced with <code>ifelse</code>, syntax:</p>
+<pre><code>ifelse(test, yes, no)</code></pre>
+<p>So here, this would be:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span><span class='op'>(</span><span class='va'>x</span> <span class='op'>&lt;</span> <span class='fl'>10</span>, <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='st'>"smaller than 10"</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='st'>"greater than 10"</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
+</div>
+</div>
+<p>5 lines of code became 1. Please note to only use this function when you have a binary decision. If there are 3 or more options, you need the full-version <code>if</code> statement.</p>
+<p>A small note: note how R printed the output twice. Because <code>ifelse</code> is a function, it returns a value. So if you didn’t want R to print out the resulting value twice in the console, you would need to assign the output to a variable (using &lt;- before <code>ifelse</code>).</p>
+<p><strong><em>Poll 4: Given x &lt;- 20, what is the output to: ifelse(x == 20, print(“FALSE”), print(“TRUE”))?</em></strong>
+- FALSE<br />
+- TRUE</p>
+<p><a href="#answers">Answer</a></p>
+<h1 id="combining-loopsconditional-statements">Combining loops/conditional statements</h1>
+<p>You can combine any of the above loops/conditional statements by nesting them.</p>
+<h2 id="example">Example</h2>
+<p>Let’s combine an <code>if</code> statement and <code>for</code> loop. Let’s expand the baby names examples from earlier, and only print a name if the name was in the top 10 in 2021. We’ll need to draw from a database to do this.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>baby_names</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='st'>"Oliver"</span>, <span class='st'>"Leo"</span>, <span class='st'>"Olivia"</span>, <span class='st'>"Frank"</span><span class='op'>)</span></span>
+<span><span class='va'>top_10_2021_boys</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Noah"</span>, <span class='st'>"Oliver"</span>, <span class='st'>"George"</span>, <span class='st'>"Arthur"</span>, <span class='st'>"Muhammad"</span>, <span class='st'>"Leo"</span>, <span class='st'>"Harry"</span>, <span class='st'>"Oscar"</span>, <span class='st'>"Archie"</span>, <span class='st'>"Henry"</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='kw'>for</span> <span class='op'>(</span><span class='va'>baby_name</span> <span class='kw'>in</span> <span class='va'>baby_names</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span>  <span class='kw'>if</span> <span class='op'>(</span><span class='va'>baby_name</span> <span class='op'><a href='https://rdrr.io/r/base/match.html'>%in%</a></span> <span class='va'>top_10_2021_boys</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span>    <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>baby_name</span><span class='op'>)</span></span>
+<span>  <span class='op'>}</span></span>
+<span><span class='op'>}</span></span></code></pre>
+</div>
+</div>
+<p>Note the use of <code>%in%</code> here for the <code>if</code> statement only. The <code>for</code> loop knows how to use a regular <code>in</code>, as it iterates over the contents of the sequence. However, the <code>if</code> statement requires a relational operator with result <code>TRUE</code> or <code>FALSE</code>. To check whether a variable is included within a list or vector, you can use <code>%in%</code> as you can see here.</p>
+<p><strong><em>Poll 5. I want to print a baby name if it’s in the top 10, but only if there are more than 5 babies in my database. What type of control flow structure would I start with, i.e., my first/outer-most one?</em></strong>
+- a for loop<br />
+- an if statement<br />
+- a while loop</p>
+<p><a href="#answers">Answer</a></p>
+<h2 id="keep-track-of-your-brackets">Keep track of your brackets</h2>
+<p>In nested loops, it is easily done to forget a bracket or have an extra one. In your script, you can place your cursor directly after one of the brackets, and the corresponding bracket will be highlighted.</p>
+<p>To keep track of your nested loops, and all the brackets required, it also helps a lot to use the correct indentation. You can re-indent lines automically by highlighting a section of code, then Code -&gt; Reindent Lines, or use the shortcut ctrl-I.</p>
+<h2 id="advanced-loop-features">Advanced loop features:</h2>
+<h3 id="break">Break</h3>
+<p>Sometimes, you want the loop to run, but stop when a certain criterion is reached. In this scenario, you can use the <code>break</code> statement.</p>
+<p>An example: you want to write out some data, but your system can’t handle more than 10 characters in the filename. Your <code>for</code> loop will print the output (in your real code, this would be a statement writing the data using the supplied filename), but it will first count the number of characters in your filename, and stop if the name is too long, so that your system doesn’t crash.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>filenames</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"filename1"</span>, <span class='st'>"filename2"</span>, <span class='st'>"fartoolongfilename3"</span>, <span class='st'>"filename4"</span><span class='op'>)</span></span>
+<span><span class='kw'>for</span> <span class='op'>(</span><span class='va'>filename</span> <span class='kw'>in</span> <span class='va'>filenames</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span>  <span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/nchar.html'>nchar</a></span><span class='op'>(</span><span class='va'>filename</span><span class='op'>)</span> <span class='op'>&gt;</span> <span class='fl'>10</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span>    <span class='kw'>break</span></span>
+<span>  <span class='op'>}</span></span>
+<span>  <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>filename</span><span class='op'>)</span></span>
+<span><span class='op'>}</span></span></code></pre>
+</div>
+</div>
+<h3 id="next">Next</h3>
+<p>Actually, we want the above loop to not just stop, but skip filenames that are too long and carry on with the next one! For this, you can use <code>next</code>.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>filenames</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"filename1"</span>, <span class='st'>"filename2"</span>, <span class='st'>"fartoolongfilename3"</span>, <span class='st'>"filename4"</span><span class='op'>)</span></span>
+<span><span class='kw'>for</span> <span class='op'>(</span><span class='va'>filename</span> <span class='kw'>in</span> <span class='va'>filenames</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span>  <span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/nchar.html'>nchar</a></span><span class='op'>(</span><span class='va'>filename</span><span class='op'>)</span> <span class='op'>&gt;</span> <span class='fl'>10</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span>    <span class='kw'>next</span></span>
+<span>  <span class='op'>}</span></span>
+<span>  <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>filename</span><span class='op'>)</span></span>
+<span><span class='op'>}</span></span></code></pre>
+</div>
+</div>
+<h3 id="looping-index">Looping index</h3>
+<p>As you know, a <code>for</code> loop will run for all values within the sequence. It can be very useful to have access to the index that goes along with each value. For example, you can use this to store the output in a vector, or to use a counter. The index reflects the current iteration of the loop.</p>
+<p>The following loop illustrates the difference between index and variable value:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>filenames</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"filename1"</span>, <span class='st'>"filename2"</span>, <span class='st'>"fartoolongfilename3"</span>, <span class='st'>"filename4"</span><span class='op'>)</span></span>
+<span><span class='kw'>for</span> <span class='op'>(</span><span class='va'>index</span> <span class='kw'>in</span> <span class='fl'>1</span><span class='op'>:</span><span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>filenames</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span>  <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='st'>"index: "</span>, <span class='va'>index</span><span class='op'>)</span><span class='op'>)</span></span>
+<span>  <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='st'>"current element: "</span>, <span class='va'>filenames</span><span class='op'>[</span><span class='va'>index</span><span class='op'>]</span><span class='op'>)</span><span class='op'>)</span></span>
+<span><span class='op'>}</span></span></code></pre>
+</div>
+</div>
+<p>And a numerical example, to show how you can use this to store results in a new vector:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>input</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>6</span>, <span class='fl'>3</span>, <span class='fl'>10</span>, <span class='fl'>2</span><span class='op'>)</span></span>
+<span><span class='va'>result</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span><span class='kw'>for</span> <span class='op'>(</span><span class='va'>i</span> <span class='kw'>in</span> <span class='fl'>1</span><span class='op'>:</span><span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>input</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span>  <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='st'>"index: "</span>, <span class='va'>i</span><span class='op'>)</span><span class='op'>)</span></span>
+<span>  <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='st'>"current value: "</span>, <span class='va'>input</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span><span class='op'>)</span><span class='op'>)</span></span>
+<span>  <span class='va'>result</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='va'>input</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span> <span class='op'>*</span> <span class='fl'>2</span></span>
+<span><span class='op'>}</span></span></code></pre>
+</div>
+</div>
+<p>Note: <code>seq_along()</code> can be used in place of <code>1:length(input)</code>. This is a built-in method that, by default, creates a sequence of consecutive integers from 1 to the length of the object (vector, list, data frame).</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>input</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>6</span>, <span class='fl'>3</span>, <span class='fl'>10</span>, <span class='fl'>2</span><span class='op'>)</span></span>
+<span><span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq_along</a></span><span class='op'>(</span><span class='va'>input</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>[1] 1 2 3 4</code></pre>
+</div>
+<p>i.e., the previous <code>for</code> loop can be written as:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>input</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>6</span>, <span class='fl'>3</span>, <span class='fl'>10</span>, <span class='fl'>2</span><span class='op'>)</span></span>
+<span><span class='va'>result</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span><span class='kw'>for</span> <span class='op'>(</span><span class='va'>i</span> <span class='kw'>in</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq_along</a></span><span class='op'>(</span><span class='va'>input</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span>  <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='st'>"index: "</span>, <span class='va'>i</span><span class='op'>)</span><span class='op'>)</span></span>
+<span>  <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='st'>"current value: "</span>, <span class='va'>input</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span><span class='op'>)</span><span class='op'>)</span></span>
+<span>  <span class='va'>result</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='va'>input</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span> <span class='op'>*</span> <span class='fl'>2</span></span>
+<span><span class='op'>}</span></span></code></pre>
+</div>
+</div>
+<h1 id="exercises">Exercises</h1>
+<p>Please see Controlflow_Exercises.R
+(and afterwards Controlflow_Exercise_Solutions.R)</p>
+<ul>
+<li><p>Here are some additional beginner’s <a href="https://towardsdatascience.com/the-ultimate-guide-to-conditional-statements-in-r-25fee0a3e435">exercises</a> you can try, with hints and solutions if you get stuck.</p></li>
+<li><p>And some additional advanced material including exercises: <a href="https://adv-r.hadley.nz/control-flow.html">Advanced R: Control flow</a></p></li>
+</ul>
+<h1 id="switch">Switch</h1>
+<p><a href="https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/switch"><code>switch()</code></a> is a function included in <code>base R</code>. It evaluates the first argument, <code>EXPR</code>, and then selects the output from one of the further arguments. It is most applicable for cases when <code>EXPR</code> has a character-string value.</p>
+<strong>Syntax:</strong>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='kw'><a href='https://rdrr.io/r/base/switch.html'>switch</a></span><span class='op'>(</span><span class='va'>EXPR</span>, <span class='va'>...</span><span class='op'>)</span></span></code></pre>
+</div>
+</div>
+<p>The <strong>last argument</strong> in the function determines the output if none of the previous conditions are matched. If this is left blank and the input is unmatched, it will return <code>NULL</code>.</p>
+Redoing the traffic light example with <code>switch</code>:
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>colour</span> <span class='op'>&lt;-</span> <span class='st'>"green"</span></span>
+<span><span class='kw'><a href='https://rdrr.io/r/base/switch.html'>switch</a></span><span class='op'>(</span><span class='va'>colour</span>,</span>
+<span>       red <span class='op'>=</span> <span class='st'>"stop"</span>,</span>
+<span>       orange <span class='op'>=</span> <span class='st'>"stop if you are able to..."</span>,</span>
+<span>       green <span class='op'>=</span> <span class='st'>"go"</span>,</span>
+<span>       <span class='st'>"Warning: unexpected colour! Be careful and assess the situation..."</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>[1] &quot;go&quot;</code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>colour</span> <span class='op'>&lt;-</span> <span class='st'>"white"</span></span>
+<span><span class='kw'><a href='https://rdrr.io/r/base/switch.html'>switch</a></span><span class='op'>(</span><span class='va'>colour</span>,</span>
+<span>       red <span class='op'>=</span> <span class='st'>"stop"</span>,</span>
+<span>       orange <span class='op'>=</span> <span class='st'>"stop if you are able to..."</span>,</span>
+<span>       green <span class='op'>=</span> <span class='st'>"go"</span>,</span>
+<span>       <span class='st'>"Warning: unexpected colour! Be careful and assess the situation..."</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>[1] &quot;Warning: unexpected colour! Be careful and assess the situation...&quot;</code></pre>
+</div>
+<p>You can find further information/examples <a href="https://adv-r.hadley.nz/control-flow.html#switch">here</a> and <a href="https://www.learnbyexample.org/r-switch-function/">here</a>.</p>
+<h1 id="functionals">Functionals</h1>
+<p>Functionals are functions which take another function as an argument, and return an object. The aim is to turn looped code into a function, which is then called on every element in the object (list, vector, matrix, etc.). The functions used within functionals can be <code>base R</code>, imported from a package, or custom made.</p>
+<p><br></p>
+<p>The <code>apply</code> family of functions are a group of <strong>functionals</strong> included in <code>base R</code>. Using these will avoid having to explicitly write a loop, and can make code cleaner and more efficient.</p>
+<p><br></p>
+<h2 id="apply">apply()</h2>
+<p><code>apply()</code> allows you to apply a function (<code>FUN</code>) over the margin of an array (<code>X</code>), and requires a dimension argument (<code>MARGIN</code>). The <code>MARGIN</code> argument determines which values are passed through the function. For 2-D arrays (matrices), <code>MARGIN = 1</code> indicates rows, and <code>MARGIN = 2</code> indicates columns.</p>
+<strong>Syntax:</strong>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/base/apply.html'>apply</a></span><span class='op'>(</span><span class='va'>X</span>, <span class='va'>MARGIN</span>, <span class='va'>FUN</span>, <span class='va'>...</span><span class='op'>)</span></span></code></pre>
+</div>
+</div>
+<p>For example, the code below uses <code>apply()</code> and the <code>max()</code> function to find the maximum value of each column of a matrix (<code>MARGIN = 2</code>) and then the maximum value of each row (<code>MARGIN = 1</code>).</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>my_matrix</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>5</span>, <span class='fl'>6</span>, <span class='fl'>7</span>, <span class='fl'>3</span>, <span class='fl'>1</span>, <span class='fl'>9</span>, <span class='fl'>5</span>, <span class='fl'>2</span>, <span class='fl'>4</span>, <span class='fl'>6</span>, <span class='fl'>4</span><span class='op'>)</span>, nrow <span class='op'>=</span> <span class='fl'>4</span><span class='op'>)</span></span>
+<span><span class='va'>my_matrix</span></span></code></pre>
+</div>
+<pre><code>     [,1] [,2] [,3]
+[1,]    1    3    2
+[2,]    5    1    4
+[3,]    6    9    6
+[4,]    7    5    4</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/base/apply.html'>apply</a></span><span class='op'>(</span><span class='va'>my_matrix</span>, <span class='fl'>2</span>, <span class='va'>max</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>[1] 7 9 6</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/base/apply.html'>apply</a></span><span class='op'>(</span><span class='va'>my_matrix</span>, <span class='fl'>1</span>, <span class='va'>max</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>[1] 3 5 9 7</code></pre>
+</div>
+<p><br></p>
+<p><br></p>
+<h2 id="lapply">lapply()</h2>
+<p><code>lapply()</code> takes an object (<code>X</code>), and applies a function (<code>FUN</code>) to each element of the object (list, vector, matrix, etc), returning a <strong>list</strong> of the same length.</p>
+<strong>Syntax:</strong>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span><span class='va'>X</span>, <span class='va'>FUN</span>, <span class='va'>...</span><span class='op'>)</span></span></code></pre>
+</div>
+</div>
+<p>For example, the code below uses <code>lapply()</code> to round each element of <code>my_list</code> using the <code>round()</code> function.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>my_list</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>A <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1.36</span>, <span class='fl'>2.51</span>, <span class='fl'>7.70</span><span class='op'>)</span>,</span>
+<span>                B <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>9.50</span>, <span class='fl'>5.66</span>, <span class='fl'>2.55</span><span class='op'>)</span>,</span>
+<span>                C <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>4.02</span>, <span class='fl'>1.65</span>, <span class='fl'>3.11</span><span class='op'>)</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>rounded_list</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span><span class='va'>my_list</span>, <span class='va'>round</span><span class='op'>)</span></span>
+<span><span class='va'>rounded_list</span></span></code></pre>
+</div>
+<pre><code>$A
+[1] 1 3 8
+
+$B
+[1] 10  6  3
+
+$C
+[1] 4 2 3</code></pre>
+</div>
+<p>If we try to do this without using a functional, an error will be returned:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span><span class='op'>(</span><span class='va'>my_list</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>Error in round(my_list): non-numeric argument to mathematical function</code></pre>
+</div>
+<p><br></p>
+<h2 id="sapply">sapply()</h2>
+<p><code>sapply()</code> is very similar to <code>lapply()</code>. The input is the same, however it tries to simplify the output. It will try to return a vector or matrix where possible, e.g.:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>rounded_list_simplified</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>sapply</a></span><span class='op'>(</span><span class='va'>my_list</span>, <span class='va'>round</span><span class='op'>)</span></span>
+<span><span class='va'>rounded_list_simplified</span></span></code></pre>
+</div>
+<pre><code>     A  B C
+[1,] 1 10 4
+[2,] 3  6 2
+[3,] 8  3 3</code></pre>
+</div>
+<p><br></p>
+<h2 id="additional-arguments">Additional arguments</h2>
+<p>Any additional arguments to the function used in the functional can also be added.</p>
+<p>The <code>round()</code> function defaults to rounding to an integer, however we can change this to 1 decimal place by adding <code>digits = 1</code>:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>rounded_list_simplified</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>sapply</a></span><span class='op'>(</span><span class='va'>my_list</span>, <span class='va'>round</span>, digits <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span></span>
+<span><span class='va'>rounded_list_simplified</span></span></code></pre>
+</div>
+<pre><code>       A   B   C
+[1,] 1.4 9.5 4.0
+[2,] 2.5 5.7 1.6
+[3,] 7.7 2.5 3.1</code></pre>
+</div>
+<p>The family also includes other variations such as <a href="https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/mapply"><code>mapply()</code></a>, and <a href="https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/tapply"><code>tapply()</code></a> that we will not cover.</p>
+<p><em>Adapted from <a href="https://www.dataquest.io/blog/apply-functions-in-r-sapply-lapply-tapply/">dataquest</a></em></p>
+<p><br></p>
+<p><strong>Tidyverse equivalent</strong><br />
+The <code>tidyverse</code> has a package called <a href="https://purrr.tidyverse.org/index.html"><code>purrr</code></a> which contains useful functional programming tools. You can find out more <a href="https://adv-r.hadley.nz/functionals.html#functionals">here</a>.</p>
+<p><br></p>
+<h1 id="vectorisation">Vectorisation</h1>
+<p>Although functionals avoid explicitly writing loops, they still iterate over each element in the object. <a href="https://adv-r.hadley.nz/perf-improve.html?q=vect#vectorise"><strong>Vectorising</strong></a> code refers to using objects as a whole, i.e., operating on all elements at once, and is therefore much faster. Most of the functions in <code>base R</code> and other packages are already vectorised, such as <code>dplyr</code>.</p>
+For example, when adding two vectors (<code>x</code> and <code>y</code>), we could add each element together in a loop:
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>)</span></span>
+<span><span class='va'>y</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>6</span><span class='op'>:</span><span class='fl'>9</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>output</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span><span class='kw'>for</span> <span class='op'>(</span><span class='va'>i</span> <span class='kw'>in</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span><span class='op'>)</span><span class='op'>{</span></span>
+<span>  <span class='va'>output</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='va'>x</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span> <span class='op'>+</span> <span class='va'>y</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span></span>
+<span><span class='op'>}</span></span>
+<span><span class='va'>output</span></span></code></pre>
+</div>
+<pre><code>[1]  8 10 12 14</code></pre>
+</div>
+Or we could add the two objects together:
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>output</span> <span class='op'>&lt;-</span> <span class='va'>x</span> <span class='op'>+</span> <span class='va'>y</span></span>
+<span><span class='va'>output</span></span></code></pre>
+</div>
+<pre><code>[1]  8 10 12 14</code></pre>
+</div>
+<p><em>Adapted from <a href="https://swcarpentry.github.io/r-novice-gapminder/09-vectorization/index.html#:~:text=Most%20of%20R&#39;s%20functions%20are,read%2C%20and%20less%20error%20prone.">swcarpentry</a></em></p>
+<p><br></p>
+<h1 id="timing">Timing</h1>
+<h2 id="the-tictoc-package">The <code>tictoc</code> package:</h2>
+<p>In addition to writing more concise code, functionals and vectorisation can improve efficiency. We can test this using the <a href="https://cran.r-project.org/web/packages/tictoc/tictoc.pdf"><code>tictoc</code></a> package, which times how long a task takes to run.</p>
+<code>tic()</code> starts the timer, <code>toc()</code> ends it, and a title can be added within <code>tic()</code>, e.g.:
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span><span class='op'>(</span><span class='fl'>2e4</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='fu'><a href='https://rdrr.io/pkg/tictoc/man/tic.html'>tic</a></span><span class='op'>(</span><span class='st'>"Rounding 20,000 random values in x to 2 d.p. using for loop"</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='kw'>for</span> <span class='op'>(</span><span class='va'>i</span> <span class='kw'>in</span> <span class='fl'>1</span><span class='op'>:</span><span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span><span class='op'>)</span><span class='op'>{</span></span>
+<span>  <span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span><span class='op'>(</span><span class='va'>x</span>, digits <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span></span>
+<span><span class='op'>}</span></span>
+<span></span>
+<span><span class='fu'><a href='https://rdrr.io/pkg/tictoc/man/tic.html'>toc</a></span><span class='op'>(</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>Rounding 20,000 random values in x to 2 d.p. using for loop: 23.48 sec elapsed</code></pre>
+</div>
+<p>Timing the same code may vary on each run (due other computer processes), so repeating this will ensure accurate results.</p>
+<p>This is the simplest way to time tasks, however there are better packages for measuring performance and <a href="https://adv-r.hadley.nz/perf-measure.html">profiling</a> such as <a href="https://cran.r-project.org/web/packages/profvis/profvis.pdf"><code>profvis</code></a> and <a href="https://cran.r-project.org/web/packages/bench/index.html"><code>bench</code></a>.</p>
+<p><br></p>
+<h2 id="comparison-using-tictoc">Comparison using <code>tictoc</code></h2>
+<p><strong>State if a value is even or odd</strong></p>
+<p><code>df</code> is a data frame with 2 columns: <code>x</code> and <code>even_odd</code>.
+<code>x</code> is the integers from 2 to 200,000, and <code>even_odd</code> is currently full of NAs.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span><span class='op'>:</span><span class='fl'>2e5</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span><span class='va'>x</span>, even_odd <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='cn'>NA</span><span class='op'>)</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>  x even_odd
+1 2       NA
+2 3       NA
+3 4       NA
+4 5       NA
+5 6       NA
+6 7       NA</code></pre>
+</div>
+<p><br>
+The task is to fill the <code>even_odd</code> column based on value of <code>x</code> (either “even” or “odd”).</p>
+<p>Using the <code>tictoc</code> package, we will compare the speeds of a variety of methods to do this:</p>
+<ul>
+<li><code>for</code> loop</li>
+<li><code>ifelse</code></li>
+<li>functional (<code>sapply</code>)</li>
+<li>vectorisation</li>
+<li><code>dplyr</code></li>
+</ul>
+<p>The <strong>modulo operator</strong>, %%, will be used. %% returns the remainder of the division of 2 numbers, e.g.,:</p>
+<p><code>5 %% 2 = 1</code> and <code>6 %% 3 = 0</code>.</p>
+<p><br></p>
+<h3 id="for-loop"><code>for</code> loop</h3>
+<p>Firstly, we will use a <code>for</code> loop:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/pkg/tictoc/man/tic.html'>tic</a></span><span class='op'>(</span><span class='st'>"for loop- even/odd"</span><span class='op'>)</span></span>
+<span><span class='kw'>for</span> <span class='op'>(</span><span class='va'>i</span> <span class='kw'>in</span> <span class='fl'>1</span><span class='op'>:</span><span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>$</span><span class='va'>x</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span>  <span class='kw'>if</span> <span class='op'>(</span><span class='va'>df</span><span class='op'>$</span><span class='va'>x</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span> <span class='op'><a href='https://rdrr.io/r/base/Arithmetic.html'>%%</a></span> <span class='fl'>2</span> <span class='op'>==</span> <span class='fl'>0</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span>    <span class='va'>df</span><span class='op'>$</span><span class='va'>even_odd</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='st'>"even"</span></span>
+<span>  <span class='op'>}</span> <span class='kw'>else</span> <span class='op'>{</span></span>
+<span>    <span class='va'>df</span><span class='op'>$</span><span class='va'>even_odd</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='st'>"odd"</span></span>
+<span>  <span class='op'>}</span></span>
+<span><span class='op'>}</span></span>
+<span><span class='fu'><a href='https://rdrr.io/pkg/tictoc/man/tic.html'>toc</a></span><span class='op'>(</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>for loop- even/odd: 90.68 sec elapsed</code></pre>
+</div>
+<p><br></p>
+<p>We will reset the data frame every time, to ensure that the timing is fair for each method.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>df</span><span class='op'>$</span><span class='va'>even_odd</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='cn'>NA</span><span class='op'>)</span></span></code></pre>
+</div>
+</div>
+<p><br></p>
+<h3 id="ifelse-1"><code>ifelse</code></h3>
+<p>Next, we will use the <code>ifelse</code> function:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/pkg/tictoc/man/tic.html'>tic</a></span><span class='op'>(</span><span class='st'>"ifelse - even/odd"</span><span class='op'>)</span></span>
+<span><span class='va'>df</span><span class='op'>$</span><span class='va'>even_odd</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span><span class='op'>(</span><span class='va'>x</span> <span class='op'><a href='https://rdrr.io/r/base/Arithmetic.html'>%%</a></span> <span class='fl'>2</span> <span class='op'>==</span> <span class='fl'>0</span>, <span class='st'>"even"</span>, <span class='st'>"odd"</span><span class='op'>)</span></span>
+<span><span class='fu'><a href='https://rdrr.io/pkg/tictoc/man/tic.html'>toc</a></span><span class='op'>(</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>ifelse - even/odd: 0.09 sec elapsed</code></pre>
+</div>
+<p><br></p>
+<p>Resetting the <code>even_odd</code> column of the data frame:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>df</span><span class='op'>$</span><span class='va'>even_odd</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='cn'>NA</span><span class='op'>)</span></span></code></pre>
+</div>
+</div>
+<p><br></p>
+<h3 id="sapply-1"><code>sapply</code></h3>
+<p>Now we will use a functional: <code>sapply</code>.</p>
+<p>The <code>sapply</code> function needs a function to be applied. The function <code>func_even_odd()</code> has been created for this:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>func_even_odd</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span>  <span class='kw'>if</span> <span class='op'>(</span><span class='va'>x</span> <span class='op'><a href='https://rdrr.io/r/base/Arithmetic.html'>%%</a></span> <span class='fl'>2</span> <span class='op'>==</span> <span class='fl'>0</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span>    <span class='st'>"even"</span></span>
+<span>  <span class='op'>}</span> <span class='kw'>else</span> <span class='op'>{</span></span>
+<span>    <span class='st'>"odd"</span></span>
+<span>  <span class='op'>}</span></span>
+<span><span class='op'>}</span></span></code></pre>
+</div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/pkg/tictoc/man/tic.html'>tic</a></span><span class='op'>(</span><span class='st'>"sapply - even/odd"</span><span class='op'>)</span></span>
+<span><span class='va'>df</span><span class='op'>$</span><span class='va'>even_odd</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>sapply</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>$</span><span class='va'>x</span>, <span class='va'>func_even_odd</span><span class='op'>)</span></span>
+<span><span class='fu'><a href='https://rdrr.io/pkg/tictoc/man/tic.html'>toc</a></span><span class='op'>(</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>sapply - even/odd: 0.22 sec elapsed</code></pre>
+</div>
+<p><br></p>
+<h3 id="vectorisation-1"><code>Vectorisation</code></h3>
+<p>Next we will use vectorised code:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>df</span><span class='op'>$</span><span class='va'>even_odd</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='cn'>NA</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='fu'><a href='https://rdrr.io/pkg/tictoc/man/tic.html'>tic</a></span><span class='op'>(</span><span class='st'>"vectorised - even/odd"</span><span class='op'>)</span></span>
+<span><span class='va'>df</span><span class='op'>$</span><span class='va'>even_odd</span><span class='op'>[</span><span class='va'>df</span><span class='op'>$</span><span class='va'>x</span> <span class='op'><a href='https://rdrr.io/r/base/Arithmetic.html'>%%</a></span> <span class='fl'>2</span> <span class='op'>==</span> <span class='fl'>0</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='st'>"even"</span></span>
+<span><span class='va'>df</span><span class='op'>$</span><span class='va'>even_odd</span><span class='op'>[</span><span class='va'>df</span><span class='op'>$</span><span class='va'>x</span> <span class='op'><a href='https://rdrr.io/r/base/Arithmetic.html'>%%</a></span> <span class='fl'>2</span> <span class='op'>!=</span> <span class='fl'>0</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='st'>"odd"</span></span>
+<span><span class='fu'><a href='https://rdrr.io/pkg/tictoc/man/tic.html'>toc</a></span><span class='op'>(</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>vectorised - even/odd: 0.01 sec elapsed</code></pre>
+</div>
+<p><br></p>
+<h3 id="dplyr"><code>dplyr</code></h3>
+<p>Finally, we will use the <code>dplyr</code> package, using <code>mutate()</code> and <code>case_when()</code>:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>df</span><span class='op'>$</span><span class='va'>even_odd</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='cn'>NA</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='fu'><a href='https://rdrr.io/pkg/tictoc/man/tic.html'>tic</a></span><span class='op'>(</span><span class='st'>"dplyr - even/odd"</span><span class='op'>)</span></span>
+<span><span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span><span class='va'>df</span>, even_odd <span class='op'>=</span> <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/case_when.html'>case_when</a></span><span class='op'>(</span><span class='va'>x</span> <span class='op'><a href='https://rdrr.io/r/base/Arithmetic.html'>%%</a></span> <span class='fl'>2</span> <span class='op'>==</span> <span class='fl'>0</span> <span class='op'>~</span> <span class='st'>"even"</span>,</span>
+<span>                                                    <span class='va'>x</span> <span class='op'><a href='https://rdrr.io/r/base/Arithmetic.html'>%%</a></span> <span class='fl'>2</span> <span class='op'>!=</span> <span class='fl'>0</span> <span class='op'>~</span> <span class='st'>"odd"</span><span class='op'>)</span><span class='op'>)</span></span>
+<span><span class='fu'><a href='https://rdrr.io/pkg/tictoc/man/tic.html'>toc</a></span><span class='op'>(</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>dplyr - even/odd: 0.08 sec elapsed</code></pre>
+</div>
+<p><br></p>
+<ul>
+<li><p>We can see that using an explicit <code>for</code> loop takes the longest by far, and that using <code>sapply</code> improves the speed.</p></li>
+<li><p>The vectorised code is the quickest of all methods, however, readability and interpretability are important, which can sometimes be an issue.</p></li>
+<li><p><code>case_when</code> allows the vectorisation of <code>ifelse</code> statements. We can see that for this task, where there is only two options, the speed and readability are similar. However, if there are more than two options, <code>case_when</code> is preferable, to avoid nested <code>ifelse</code> statements.</p></li>
+</ul>
+<h1 id="answers">Poll answers</h1>
+<p><strong>2: What is the output of the following for loop: for (x in 1:2) { y &lt;- x + 3, print(y) }</strong><br />
+<code>4, 5</code></p>
+<p><strong>3: Given a &lt;- 4 and b &lt;- 6, what is the output to: a &lt; b</strong><br />
+<code>TRUE</code></p>
+<p><strong>4: Given x &lt;- 20, what is the output to: ifelse(x == 20, print(“FALSE”), print(“TRUE”))?</strong><br />
+<code>FALSE</code></p>
+<p><strong>Poll 5. I want to print a baby name if it’s in the top 10, but only if there are more than 5 babies in my database. What type of control flow structure would I start with, i.e., my first/outer-most one?</strong>
+an if statement</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<!--radix_placeholder_article_footer-->
+<!--/radix_placeholder_article_footer-->
+</div>
+
+<div class="d-appendix">
+</div>
+
+
+<!--radix_placeholder_site_after_body-->
+<!--/radix_placeholder_site_after_body-->
+<!--radix_placeholder_appendices-->
+<div class="appendix-bottom"></div>
+<!--/radix_placeholder_appendices-->
+<!--radix_placeholder_navigation_after_body-->
+<div class="distill-site-nav distill-site-footer">
+<p>© Crown Copyright 2023</p>
+</div>
+<!--/radix_placeholder_navigation_after_body-->
+
+
+</body>
+
+</html>

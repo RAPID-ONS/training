@@ -1,0 +1,801 @@
+---
+title: "Control Flow and Loops in R"
+output:
+  distill::distill_article:
+    toc: true
+    toc_depth: 2
+    number_sections: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
+library(tidyverse)
+library(tictoc)
+# Show code but don't run the code
+```
+
+**Course details:**
+
+-   Pre-requisites:
+    -   have RStudio installed
+    -   packages required: `tidyverse` and `tictoc` (advanced section)
+    -   minimal basic R knowledge (e.g., variable assignment)
+
+**Useful resources:**
+
+This is an introduction to control flow, but for more comprehensive overviews see:
+
+- [Intermediate R Course on DataCamp](https://app.datacamp.com/learn/courses/intermediate-r)
+- [Advanced R: Control flow](https://adv-r.hadley.nz/control-flow.html)
+
+**Glossary**
+
+Here is a glossary of some terms I may use in this presentation:
+
+```{r include = T, eval = T, echo = F}
+
+glossary <- read.csv("data/glossary_of_jargon.csv", header = T, check.names = F, fileEncoding="UTF-8-BOM") %>%
+  dplyr::arrange(Jargon)
+
+links_glossary <- glossary$`Tutorials for further explanation (many exist)`
+
+glossary %>%
+  dplyr::select(-`Tutorials for further explanation (many exist)`) %>%
+  dplyr::mutate(`Links to further info` = 
+                  kableExtra::cell_spec(
+                    Jargon, "html", link = links_glossary)) %>%
+  kableExtra::kable("html", escape = FALSE) %>%
+  kableExtra::kable_styling(bootstrap_options = c("hover", "condensed"))
+
+
+```
+
+# What are loops?
+
+Loops are coding structures that help repeat highly similar or repetitive code effectively, without the need for copy-pasting. They increase code efficiency and readability.
+
+Types of loops:
+
+-   `for` loop (do something x times)
+-   `while` loop (do something until a certain event is reached)
+-   `if` statements (control flow, not actually a 'proper' loop)
+
+***Poll 1: How confident are you with loops and control flow in R? (1 - not at all, 5 - very confident)***
+
+# `for` loops
+
+What is a `for` loop? It does something repeatedly a certain amount of times.
+
+## Syntax
+
+    for (values to loop over) {
+      do all of this stuff for the current value
+    }
+
+The `for` loop keeps repeating until the last value is reached.
+
+In a bit more appropriate coding jargon:
+
+    for (var in seq) {
+      expr
+    }
+
+Where `var` = variable, `seq` = sequence, and `expr` = expression. You need to use these specific types of brackets in the correct place, otherwise the `for` loop won't work.
+
+A really simple example is:
+
+```{r}
+for (x in 1:10) {
+  print(x)
+}
+```
+
+Here, x is defined as 1:10 (a sequence of 1 to 10 in steps of 1, i.e., 1, 2, 3, ... 10). The first time the loop runs, `x <- 1`, so it prints 1. The second time, `x <- 2`, so it prints 2. Etc. Until `x <- 10` has been printed, then it stops as x has no further values.
+
+***Poll 2: What is the output of the following for loop: for (x in 1:2) { y <- x + 3, print(y) }***
+
+- 1, 2  
+- 3, 4  
+- 4, 5  
+- 5, 6  
+
+[Answer](#answers)
+
+## Example of the advantages of a `for` loop
+
+Consider the following scenario. You want to create 3 variables, each is equal to the previous variable, plus 1.
+
+```{r}
+a <- 1
+b <- a + 1
+c <- b + 1
+d <- c + 1
+print(c(b, c, d))
+```
+
+Easy enough to type out, right? If a is a different number, e.g., 3; b, c and d are still calculated correctly and you don't need to change any lines other than the first where a value is assigned to a. Done!
+
+However, it turns out you now need to do the same thing, but rather than just 3 variables, you need to create 100! That's a lot of copy-pasting to create e, f, g, ...
+
+Let's try to write a `for` loop to obtain the above 3 output variables:
+
+```{r}
+input_variable <- 1
+number_of_outputs <- 3
+output <- c() #empty vector to put outputs into
+for (x in 1:number_of_outputs) {
+  output[x] <- x + 1
+}
+print(output)
+```
+
+Not only did you just do the same thing super fast, you also tidied the output into a single list, so you don't clutter your workspace with lots of separate variables. If you needed the 3rd output, you can obtain it using:
+
+```{r}
+output[3]
+```
+
+Hey, but that was more lines of code than the copy-pasting above! Yeah, well, now think about when you needed to do this 100 times, instead of 3. All you need to change is:
+
+```{r}
+input_variable <- 1
+number_of_outputs <- 100
+output <- c() #empty vector to put outputs into
+for (x in 1:number_of_outputs) {
+  output[x] <- x + 1
+}
+print(output)
+```
+
+No additional lines! And you can still easily change the input variable.
+
+## Do I have to use x?
+
+No! 'x' is just a placeholder variable (a bit of a habit in coding examples, you may also see 'i' used often), it can be anything you like. In fact, it is a better idea to give it a sensible name (ideally following coding style best practice!) so you and anybody else reading your code can remember/figure out what this loop is actually doing.
+
+Let's try a more sensible example:
+
+```{r}
+baby_names <- list("Oliver", "Leo", "Olivia", "Frank")
+
+for (baby_name in baby_names) {
+  print(baby_name)
+}
+```
+
+## Will I actually use this much?
+
+Yes, a lot! It is a fundamental tool in coding. It takes some practice, but saves lots of time and effort in computing.
+
+## My loop is stuck!
+
+Your Console is hanging waiting for input, showing a '+', and not a '>'. You have most likely forgotten a bracket somewhere. Press ESC and you can correct your loop and try again.
+
+# `while` loops
+
+What is a `while` loop? It keeps on doing something continuously until a certain event is reached.
+
+## Syntax
+
+    while (condition) {
+      expr
+    }
+
+Where `condition` is a criterion that needs to be satisfied for the loop to keep on running, and `expr` = expression (some bit of code). The condition uses a Boolean statement, that is: `TRUE` of `FALSE`. As long as the condition equals `TRUE`, the while loop will keep on executing the expression. As soon as this condition equals `FALSE`, it stops.
+
+## Example of a `while` loop
+
+You have 20 apples. You are handing out 1 at a time to others. Once you only have 2 apples left, you want to stop handing them out, so that you have some for yourself.
+
+```{r}
+num_apples <- 20
+while (num_apples > 2) {
+  print("Keep handing out apples")
+  num_apples <- num_apples - 1
+}
+print(paste0("Stop handing out apples, because you only have ", num_apples, " left"))
+```
+
+What happened there? The loop ran initially with `num_apples` = 20. On the next iteration, `num_apples <- 19`, and `19 > 2` == `TRUE`, so it kept on running, then it was 18, 17, etc, until `num_apples <- 2` and `2 > 2` == `FALSE`, so the loop stopped and the print line below the closing bracket of the loop was executed.
+
+Fun anecdote - while (!!) I was writing this loop, I made a typo, which meant the loop kept going forever as the condition never changed to `FALSE`! (Try the following code, then Press ESC to exit the stuck loop):
+
+```
+num_apples <- 20
+while (num_apples > 2) {
+  print("Keep handing out apples")
+  num_applies <- num_apples - 1
+}
+print(num_apples)
+```
+You can see that `num_apples` never changed from 20, so the `while` condition remained `TRUE` at all times!
+
+## Will I actually use this much?
+
+Depends. In analytical work, probably not as much as `for` loops. But it has its uses.
+
+#### Exercises in breakout rooms: 15 min ####
+
+# `if` statements (control flow)
+
+What is an `if` statement/control flow? It does what it suggests: conditional statements. If some criterion is `TRUE`, execute an expression. If it is `FALSE`, don't execute the expression. This can be expanded with `else if` to include an additional alternative statement, and/or `else` to express what to do if none of the above criteria are satisfied (`else` always goes last).
+
+## Syntax
+
+    if (test_expression) {
+      statement
+    }
+
+## Relational operators
+
+You need relational operators to run `if` statements. These simply compare a statement on the left with a statement on the right. Here is a list:
+
+-   a `==` b "a is equal to b"
+-   a `>` b "a is greater than b"
+-   a `>=` b "a is greater than or equal to b"
+-   a `<` b "a is smaller than b"
+-   a `<=` b "a is smaller than or equal to b"
+-   a `!=` b "a is not equal to b"
+
+Try them out, for example:
+
+```{r}
+a <- 1
+b <- 2
+a == b
+b < a
+a != b
+```
+
+You can see the output in the console is a boolean/logical value, either `TRUE` or `FALSE`.
+
+***Poll 3: Given a <- 4 and b <- 6, what is the output to: a < b***
+- 2  
+- TRUE  
+- YES  
+- FALSE  
+
+[Answer](#answers)
+
+## Example: traffic light
+
+Let's try to code how a traffic light works. We'll start with green:
+
+```{r}
+light_status <- "green"
+if (light_status == "green") {
+  print("go")
+}
+```
+
+You will get to "go" only if the light is green and for no other value. (Try some other values for light_status)
+
+## `else`
+
+```{r}
+light_status <- "green"
+if (light_status == "green") {
+  print("go")
+} else {
+  print("stop")
+}
+```
+
+Same as before, except anything other than green now gets a "stop" message. (Try some other values for light_status)
+
+## `else if`
+
+```{r}
+light_status <- "green"
+if (light_status == "green") {
+  print("go")
+} else if (light_status == "orange") {
+  print("stop if you are able to...")
+} else {
+  print("stop")
+}
+```
+
+A green light still gets "go", a red light still gets "stop", but an orange light now gets a different message.
+
+The traffic light works as it should! However... in coding you usually want to catch errors before they happen. Imagine the light cover is broken and the light is white. It might actually be a green, orange, or red. You will have to do a double take and determine which position the light is located and/or any further information available before deciding what to do. In the above example, anything other than green or orange would tell you to "stop". We could expand this example by adding another `else if` statement:
+
+```{r}
+light_status <- "white"
+if (light_status == "green") {
+  print("go")
+} else if (light_status == "orange") {
+  print("stop if you are able to...")
+} else if (light_status == "red") {
+  print("stop")
+} else {
+  print("Warning: unexpected colour! Be careful and assess the situation...")
+}
+```
+(Try some other values for light_status)
+
+Now you have catered for all possible scenarios. You can add as many `else if` statements as you wish.
+
+## `ifelse`
+
+There is a quicker way to code an `if` statement, whenever the situation is binary, i.e., there are only 2 options: if `TRUE`, do this, if `FALSE`, do that. There is a special built-in function in R to do this in one line:
+
+Consider the following 2-option `if`, `else if` statement, where there are no other scenarios possible:
+
+```{r}
+x <- 6
+if (x < 10) {
+  print("smaller than 10")
+} else if (x >= 10) {
+  print("greater than 10")
+}
+```
+
+This can be replaced with `ifelse`, syntax:
+
+    ifelse(test, yes, no)
+
+So here, this would be:
+
+```{r}
+ifelse(x < 10, print("smaller than 10"), print("greater than 10"))
+```
+
+5 lines of code became 1. Please note to only use this function when you have a binary decision. If there are 3 or more options, you need the full-version `if` statement.
+
+A small note: note how R printed the output twice. Because `ifelse` is a function, it returns a value. So if you didn't want R to print out the resulting value twice in the console, you would need to assign the output to a variable (using <- before `ifelse`).
+
+***Poll 4: Given x <- 20, what is the output to: ifelse(x == 20, print("FALSE"), print("TRUE"))?***
+- FALSE  
+- TRUE  
+
+[Answer](#answers)
+
+# Combining loops/conditional statements
+
+You can combine any of the above loops/conditional statements by nesting them.
+
+## Example
+
+Let's combine an `if` statement and `for` loop. Let's expand the baby names examples from earlier, and only print a name if the name was in the top 10 in 2021. We'll need to draw from a database to do this.
+
+```{r}
+
+baby_names <- list("Oliver", "Leo", "Olivia", "Frank")
+top_10_2021_boys <- c("Noah", "Oliver", "George", "Arthur", "Muhammad", "Leo", "Harry", "Oscar", "Archie", "Henry")
+
+for (baby_name in baby_names) {
+  if (baby_name %in% top_10_2021_boys) {
+    print(baby_name)
+  }
+}
+```
+Note the use of `%in%` here for the `if` statement only. The `for` loop knows how to use a regular `in`, as it iterates over the contents of the sequence. However, the `if` statement requires a relational operator with result `TRUE` or `FALSE`. To check whether a variable is included within a list or vector, you can use `%in%` as you can see here.
+
+***Poll 5. I want to print a baby name if it's in the top 10, but only if there are more than 5 babies in my database. What type of control flow structure would I start with, i.e., my first/outer-most one?***
+- a for loop  
+- an if statement  
+- a while loop  
+
+[Answer](#answers)
+
+## Keep track of your brackets
+
+In nested loops, it is easily done to forget a bracket or have an extra one. In your script, you can place your cursor directly after one of the brackets, and the corresponding bracket will be highlighted.
+
+To keep track of your nested loops, and all the brackets required, it also helps a lot to use the correct indentation. You can re-indent lines automically by highlighting a section of code, then Code -> Reindent Lines, or use the shortcut ctrl-I.
+
+## Advanced loop features:
+
+### Break
+
+Sometimes, you want the loop to run, but stop when a certain criterion is reached. In this scenario, you can use the `break` statement.
+
+An example: you want to write out some data, but your system can't handle more than 10 characters in the filename. Your `for` loop will print the output (in your real code, this would be a statement writing the data using the supplied filename), but it will first count the number of characters in your filename, and stop if the name is too long, so that your system doesn't crash.
+
+```{r}
+filenames <- c("filename1", "filename2", "fartoolongfilename3", "filename4")
+for (filename in filenames) {
+  if (nchar(filename) > 10) {
+    break
+  }
+  print(filename)
+}
+```
+### Next
+
+Actually, we want the above loop to not just stop, but skip filenames that are too long and carry on with the next one! For this, you can use `next`.
+
+```{r}
+filenames <- c("filename1", "filename2", "fartoolongfilename3", "filename4")
+for (filename in filenames) {
+  if (nchar(filename) > 10) {
+    next
+  }
+  print(filename)
+}
+```
+### Looping index
+
+As you know, a `for` loop will run for all values within the sequence. It can be very useful to have access to the index that goes along with each value. For example, you can use this to store the output in a vector, or to use a counter. The index reflects the current iteration of the loop.
+
+The following loop illustrates the difference between index and variable value:
+
+```{r}
+filenames <- c("filename1", "filename2", "fartoolongfilename3", "filename4")
+for (index in 1:length(filenames)) {
+  print(paste0("index: ", index))
+  print(paste0("current element: ", filenames[index]))
+}
+```
+
+And a numerical example, to show how you can use this to store results in a new vector:
+
+```{r}
+input <- c(6, 3, 10, 2)
+result <- c()
+for (i in 1:length(input)) {
+  print(paste0("index: ", i))
+  print(paste0("current value: ", input[i]))
+  result[i] <- input[i] * 2
+}
+```
+
+Note: `seq_along()` can be used in place of `1:length(input)`. This is a built-in method that, by default, creates a sequence of consecutive integers from 1 to the length of the object (vector, list, data frame).
+
+```{r, eval=T}
+input <- c(6, 3, 10, 2)
+seq_along(input)
+```
+
+i.e., the previous `for` loop can be written as:  
+
+```{r, eval=FALSE}
+input <- c(6, 3, 10, 2)
+result <- c()
+for (i in seq_along(input)) {
+  print(paste0("index: ", i))
+  print(paste0("current value: ", input[i]))
+  result[i] <- input[i] * 2
+}
+```
+
+
+# Exercises
+
+Please see Controlflow_Exercises.R
+(and afterwards Controlflow_Exercise_Solutions.R)
+
+-   Here are some additional beginner's [exercises](https://towardsdatascience.com/the-ultimate-guide-to-conditional-statements-in-r-25fee0a3e435) you can try, with hints and solutions if you get stuck.
+
+
+- And some additional advanced material including exercises: [Advanced R: Control flow](https://adv-r.hadley.nz/control-flow.html)
+
+# Switch
+
+[`switch()`](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/switch) is a function included in `base R`. It evaluates the first argument, `EXPR`, and then selects the output from one of the further arguments. It is most applicable for cases when `EXPR` has a character-string value.
+
+
+**Syntax:**
+```{r, eval=FALSE}
+switch(EXPR, ...)
+```
+
+
+The **last argument** in the function determines the output if none of the previous conditions are matched. If this is left blank and the input is unmatched, it will return `NULL`.  
+
+
+Redoing the traffic light example with `switch`:
+```{r, eval=TRUE}
+colour <- "green"
+switch(colour,
+       red = "stop",
+       orange = "stop if you are able to...",
+       green = "go",
+       "Warning: unexpected colour! Be careful and assess the situation...")
+```
+
+
+```{r, eval=TRUE}
+colour <- "white"
+switch(colour,
+       red = "stop",
+       orange = "stop if you are able to...",
+       green = "go",
+       "Warning: unexpected colour! Be careful and assess the situation...")
+```
+
+You can find further information/examples [here](https://adv-r.hadley.nz/control-flow.html#switch) and [here](https://www.learnbyexample.org/r-switch-function/).
+
+# Functionals
+
+Functionals are functions which take another function as an argument, and return an object. The aim is to turn looped code into a function, which is then called on every element in the object (list, vector, matrix, etc.). The functions used within functionals can be `base R`, imported from a package, or custom made. 
+
+<br>
+
+The `apply` family of functions are a group of **functionals** included in `base R`. Using these will avoid having to explicitly write a loop, and can make code cleaner and more efficient. 
+
+<br>
+
+## apply()
+
+`apply()` allows you to apply a function (`FUN`) over the margin of an array (`X`), and requires a dimension argument (`MARGIN`). The `MARGIN` argument determines which values are passed through the function. For 2-D arrays (matrices), `MARGIN = 1` indicates rows, and `MARGIN = 2` indicates columns.
+
+**Syntax:**
+```{r, eval=FALSE}
+apply(X, MARGIN, FUN, ...)
+```
+
+For example, the code below uses `apply()` and the `max()` function to find the maximum value of each column of a matrix (`MARGIN = 2`) and then the maximum value of each row (`MARGIN = 1`). 
+
+```{r, eval=T}
+my_matrix <- matrix(c(1, 5, 6, 7, 3, 1, 9, 5, 2, 4, 6, 4), nrow = 4)
+my_matrix
+
+apply(my_matrix, 2, max)
+apply(my_matrix, 1, max)
+```
+
+<br>
+
+<br>
+
+## lapply()  
+
+`lapply()` takes an object (`X`), and applies a function (`FUN`) to each element of the object (list, vector, matrix, etc), returning a **list** of the same length. 
+
+**Syntax:**
+```{r, eval=FALSE}
+lapply(X, FUN, ...)
+```
+
+For example, the code below uses `lapply()` to round each element of `my_list` using the `round()` function. 
+
+```{r, eval=T}
+my_list <- list(A = c(1.36, 2.51, 7.70),
+                B = c(9.50, 5.66, 2.55),
+                C = c(4.02, 1.65, 3.11))
+
+rounded_list <- lapply(my_list, round)
+rounded_list
+```
+
+If we try to do this without using a functional, an error will be returned:
+
+```{r, error=TRUE, eval=T}
+round(my_list)
+```
+
+<br>
+
+## sapply()
+`sapply()` is very similar to `lapply()`. The input is the same, however it tries to simplify the output. It will try to return a vector or matrix where possible, e.g.:
+
+```{r, eval=T}
+rounded_list_simplified <- sapply(my_list, round)
+rounded_list_simplified
+```
+
+<br>
+
+## Additional arguments
+Any additional arguments to the function used in the functional can also be added.
+
+The `round()` function defaults to rounding to an integer, however we can change this to 1 decimal place by adding `digits = 1`:
+
+```{r, eval=T}
+rounded_list_simplified <- sapply(my_list, round, digits = 1)
+rounded_list_simplified
+```
+
+
+The family also includes other variations such as [`mapply()`](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/mapply), and [`tapply()`](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/tapply) that we will not cover.
+
+*Adapted from [dataquest](https://www.dataquest.io/blog/apply-functions-in-r-sapply-lapply-tapply/)*
+
+<br>
+
+**Tidyverse equivalent**  
+The `tidyverse` has a package called [`purrr`](https://purrr.tidyverse.org/index.html) which contains useful functional programming tools. You can find out more [here](https://adv-r.hadley.nz/functionals.html#functionals).
+
+<br>
+
+# Vectorisation  
+
+Although functionals avoid explicitly writing loops, they still iterate over each element in the object. [**Vectorising**](https://adv-r.hadley.nz/perf-improve.html?q=vect#vectorise) code refers to using objects as a whole, i.e., operating on all elements at once, and is therefore much faster. Most of the functions in ` base R` and other packages are already vectorised, such as `dplyr`. 
+
+For example, when adding two vectors (`x` and `y`), we could add each element together in a loop:
+```{r, eval=T}
+x <- c(2:5)
+y <- c(6:9)
+
+output <- c()
+for (i in 1:4){
+  output[i] <- x[i] + y[i]
+}
+output
+```
+
+Or we could add the two objects together:
+```{r, eval=T}
+output <- x + y
+output
+```
+*Adapted from [swcarpentry](https://swcarpentry.github.io/r-novice-gapminder/09-vectorization/index.html#:~:text=Most%20of%20R's%20functions%20are,read%2C%20and%20less%20error%20prone.)*
+
+<br>
+
+# Timing
+## The `tictoc` package:
+
+In addition to writing more concise code, functionals and vectorisation can improve efficiency. We can test this using the [`tictoc`](https://cran.r-project.org/web/packages/tictoc/tictoc.pdf) package, which times how long a task takes to run.
+
+`tic()` starts the timer, `toc()` ends it, and a title can be added within `tic()`, e.g.:
+```{r, eval=TRUE}
+x <- runif(2e4)
+
+tic("Rounding 20,000 random values in x to 2 d.p. using for loop")
+
+for (i in 1:length(x)){
+  round(x, digits = 2)
+}
+
+toc()
+```
+
+Timing the same code may vary on each run (due other computer processes), so repeating this will ensure accurate results.  
+
+
+This is the simplest way to time tasks, however there are better packages for measuring performance and [profiling](https://adv-r.hadley.nz/perf-measure.html) such as [`profvis`](https://cran.r-project.org/web/packages/profvis/profvis.pdf) and [`bench`](https://cran.r-project.org/web/packages/bench/index.html).
+
+<br>
+
+
+## Comparison using `tictoc`
+
+**State if a value is even or odd**
+
+`df` is a data frame with 2 columns: `x` and `even_odd`.
+`x` is the integers from 2 to 200,000, and `even_odd` is currently full of NAs.
+
+```{r, eval=T}
+x <- c(2:2e5)
+
+df <- data.frame(x, even_odd = c(NA))
+
+head(df)
+```
+
+<br>
+The task is to fill the `even_odd` column based on value of `x` (either "even" or "odd"). 
+
+Using the `tictoc` package, we will compare the speeds of a variety of methods to do this:
+
+-  `for` loop
+-  `ifelse`
+-  functional (`sapply`)
+-  vectorisation
+-  `dplyr`
+
+The **modulo operator**, %%, will be used. %% returns the remainder of the division of 2 numbers, e.g.,:
+
+`5 %% 2 = 1` and  `6 %% 3 = 0`.
+
+<br>
+
+### `for` loop 
+Firstly, we will use a `for` loop:
+
+```{r, eval=T}
+tic("for loop- even/odd")
+for (i in 1:length(df$x)) {
+  if (df$x[i] %% 2 == 0) {
+    df$even_odd[i] <- "even"
+  } else {
+    df$even_odd[i] <- "odd"
+  }
+}
+toc()
+```
+
+<br>
+
+We will reset the data frame every time, to ensure that the timing is fair for each method.
+
+```{r}
+df$even_odd <- c(NA)
+```
+
+<br>
+
+### `ifelse`
+Next, we will use the `ifelse` function:
+
+```{r, eval=T}
+tic("ifelse - even/odd")
+df$even_odd <- ifelse(x %% 2 == 0, "even", "odd")
+toc()
+```
+
+<br>
+
+Resetting the `even_odd` column of the data frame:
+
+```{r}
+df$even_odd <- c(NA)
+```
+
+<br>
+
+### `sapply`
+Now we will use a functional: `sapply`.
+
+The `sapply` function needs a function to be applied. The function `func_even_odd()` has been created for this:
+
+```{r, eval=T}
+func_even_odd <- function(x) {
+  if (x %% 2 == 0) {
+    "even"
+  } else {
+    "odd"
+  }
+}
+```
+
+
+```{r, eval=T}
+tic("sapply - even/odd")
+df$even_odd <- sapply(df$x, func_even_odd)
+toc()
+```
+
+<br>
+
+### `Vectorisation`
+Next we will use vectorised code:
+
+```{r, eval=T}
+df$even_odd <- c(NA)
+
+tic("vectorised - even/odd")
+df$even_odd[df$x %% 2 == 0] <- "even"
+df$even_odd[df$x %% 2 != 0] <- "odd"
+toc()
+```
+
+<br>
+
+### `dplyr` 
+
+Finally, we will use the `dplyr` package, using `mutate()` and `case_when()`:
+
+```{r, eval=T}
+df$even_odd <- c(NA)
+
+tic("dplyr - even/odd")
+df <- dplyr::mutate(df, even_odd = dplyr::case_when(x %% 2 == 0 ~ "even",
+                                                    x %% 2 != 0 ~ "odd"))
+toc()
+```
+
+<br>
+
+-  We can see that using an explicit `for` loop takes the longest by far, and that using `sapply` improves the speed.
+
+-  The vectorised code is the quickest of all methods, however, readability and interpretability are important, which can sometimes be an issue. 
+
+-  `case_when` allows the vectorisation of `ifelse` statements. We can see that for this task, where there is only two options, the speed and readability are similar. However, if there are more than two options, `case_when` is preferable, to avoid nested `ifelse` statements. 
+
+# Poll answers {#answers}
+**2: What is the output of the following for loop: for (x in 1:2) { y <- x + 3, print(y) }**  
+`4, 5`
+
+**3: Given a <- 4 and b <- 6, what is the output to: a < b**  
+`TRUE`
+
+**4: Given x <- 20, what is the output to: ifelse(x == 20, print("FALSE"), print("TRUE"))?**  
+`FALSE`
+
+**Poll 5. I want to print a baby name if it's in the top 10, but only if there are more than 5 babies in my database. What type of control flow structure would I start with, i.e., my first/outer-most one?**
+an if statement
+

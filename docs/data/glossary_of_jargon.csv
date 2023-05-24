@@ -1,0 +1,15 @@
+﻿Jargon,Definition,Tutorials for further explanation (many exist)
+Working directory,Folder where you are working. It's the place (the environment) where you have to store your files of your project in order to load them or where your R objects will be saved.,https://r-coder.com/working-directory-r/
+File path,"Location/address of your folders, sub-folders and files inside your drives. Can be see in Window's File Explorer address bar. Used to find and read in objects/data and save out objects/data.",https://sscc.wisc.edu/sscc/pubs/dwr/reading-text-data.html#paths-and-working-directories
+"Variable assignment, Assign a variable","Save something (data, value, function etc) to a variable, primarily using &lt;- or =, so that it is availble in the environment to be used in the code.",https://www.tutorialspoint.com/r/r_variables.htm
+"Parentheses, Brackets, Bracers","Round brackets (), Curly brackets {}, Square brackets []",https://www.ucl.ac.uk/~uctqiax/PUBLG100/2015/faq/operators.html
+Environment,"Generally talking about the global environment. Contains all the variables, data and functions that are accessible to the user. ",https://www.datamentor.io/r-programming/environment-scope/
+Print/Printout,"Outputs text, data etc to the console.",https://www.geeksforgeeks.org/printing-output-of-an-r-program/
+Console,"Where the code runs. You can interact directly with the console (type in it). Or when you run code in the script, it prints/runs here. Printouts also are show here. ",https://swcarpentry.github.io/r-novice-inflammation/09-supp-intro-rstudio/index.html
+Terminal,"Provides access to the system shell (command line interface with things like file explorer, Git).",https://support.posit.co/hc/en-us/articles/115010737148-Using-the-RStudio-Terminal-in-the-RStudio-IDE
+Script,A text file containing code (a sequence of commands) that can be edited and saved. Code runs in the console. ,http://mercury.webster.edu/aleshunas/R_learning_infrastructure/R%20scripts.html
+Indent,How many tabs/spaces away from the right hand side of the script the code is written. R doesn’t generally mind about indents but there is best practice. ,https://statisticsglobe.com/indent-multiple-lines-code-rstudio
+Argument,The input(s) to a function to make it do what you want.,https://data-flair.training/blogs/r-arguments-introduction/
+Return,Colloquially similar to printout but when regarding a function.,https://www.datamentor.io/r-programming/return-function/
+Pipe,The operator %>% from magrittr which allows functions to be called on dataframes in a sequential order.,https://cran.r-project.org/web/packages/dplyr/vignettes/dplyr.html
+Syntax,Akin to a languages grammar. A fancy way of saying how something in the code is written to get it to do what you want. The rules of writing code. Differs across different programming languages.,https://www.computerworld.com/article/2497319/business-intelligence-beginner-s-guide-to-r-syntax-quirks-you-ll-want-to-know.html
