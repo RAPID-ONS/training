@@ -1,0 +1,19 @@
+name: "web_raptraining"
+title: "RAPID training"
+description: |
+  RAPID training
+output_dir: "docs"
+navbar:
+  logo:
+    image: images/ONS_Logo_Digital_White_Landscape_English_RGB.png
+    href: https://www.ons.gov.uk/
+  right:
+  - text: "RAP training in R"
+    menu:
+      - text: "Control Flow"
+        href: control_flow.html
+      - text: "Functions"
+        href: functions.html
+      - text: "Packages and unit tests"
+        href: packages.html
+output: distill::distill_article
