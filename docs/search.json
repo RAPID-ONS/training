@@ -40,8 +40,8 @@
       "title": "RAPID training",
       "description": "Training materials for building Reproducible Analytical Pipelines\n",
       "author": [],
-      "contents": "\r\nWhat is RAP and why should it be implemented.\r\nSee RAP in R for training resources for R and R Studio.\r\nAdd links to other useful sites: ASAP, analysis function, NHSD Python repo.\r\n\r\n\r\n\r\n",
-      "last_modified": "2023-05-25T18:27:10+01:00"
+      "contents": "\r\nAbout this page\r\nThis page contains training resources for building Reproducible Analytical Pipelines. They are aimed at Government Analysts wanting to implement best practice into their work.\r\nPage is under construction and more resources will be gradually added. Please come back in a few weeks!\r\nComing soon:\r\nGit training\r\nAdvanced control flow in R\r\nHow to write a good README\r\nSpreadsheet automation in R\r\nand more!\r\nWhat is RAP and why you should implemment it\r\nReproducible analytical pipelines (RAP) have a range of benefits – from increasing efficiency to improving business continuity.\r\nHow implementing RAP can benefit you and your team?\r\nReduced risks and improved quality\r\nLowers the risk of human error, automated checks and audit trail ensure mistakes are never repeated, all of which boost organisation’s trustworthiness and reputation.\r\nYou can read more about RAP introduction in the civil service in Analysis Function strategy and Goldacre review.\r\nIncreased resilience and business continuity\r\nWell-documented code stored in accessible location can be used by new analysts with minimal preparation, which makes the team more resilient when people move roles or fall ill. \r\nIncreased efficiency\r\nMore time to spend on exploring new ideas or personal development, and less time on copy/pasting and manual checks.\r\nIncreased collaboration\r\nSharing code on Git allows analysts to reuse code between projects, which reduces time to create new analytical pipelines and allows to quickly implement trusted solutions.\r\n\r\n\r\n\r\n",
+      "last_modified": "2023-05-25T22:43:25+01:00"
     },
     {
       "path": "packages.html",

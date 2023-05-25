@@ -1,8 +1,9 @@
 ---
 title: "RAPID training"
-description: |
-  Training materials for building Reproducible Analytical Pipelines
-site: distill::distill_website
+description:
+  Training materials created by RAP Implementation and Development team
+site:
+  distill::distill_website
 ---
 
 ```{r setup, include=FALSE}
@@ -15,9 +16,38 @@ knitr::opts_chunk$set(echo = FALSE)
 # https://rstudio.github.io/distill/publish_website.html#github-pages
 
 ```
+# About this page
+This page contains training resources for building Reproducible Analytical Pipelines. They are aimed at Government Analysts wanting to implement best practice into their work. Check out our <b>RAP training in R</b> resources on the top right of the page.
+<br>
+More materials will be added in the coming weeks: 
 
-What is RAP and why should it be implemented.
+* Git training
+* Advanced control flow in R
+* How to write a good README
+* Spreadsheet automation in R and more!
 
-See RAP in R for training resources for R and R Studio. 
+# What is RAP and why you should implement it
 
-Add links to other useful sites: ASAP, analysis function, NHSD Python repo.
+Reproducible analytical pipelines (RAP) have a range of benefits – from increasing efficiency to improving business continuity.
+
+
+### How implementing RAP can benefit you and your team? 
+
+**Reduced risks and improved quality**
+
+Lowers the risk of human error, automated checks and audit trail ensure mistakes are never repeated, all of which boost organisation's trustworthiness and reputation. 
+You can read more about RAP introduction in the civil service in [Analysis Function strategy](https://analysisfunction.civilservice.gov.uk/policy-store/reproducible-analytical-pipelines-strategy/) and [Goldacre review](https://www.goldacrereview.org/). 
+
+**Increased resilience and business continuity**
+
+Well-documented code stored in accessible location can be used by new analysts with minimal preparation, which makes the team more resilient when people move roles or fall ill. 
+
+**Increased efficiency** 
+
+More time to spend on exploring new ideas or personal development, and less time on copy/pasting and manual checks. 
+
+**Increased collaboration**
+
+Sharing code on Git allows analysts to reuse code between projects, which reduces time to create new analytical pipelines and allows to quickly implement trusted solutions. 
+
+ 
