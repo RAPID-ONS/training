@@ -1,0 +1,509 @@
+---
+title: " Advanced Functions in R"
+output:
+  distill::distill_article:
+    toc: true
+    toc_depth: 2
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
+library(tidyverse)
+xaringanExtra::use_panelset()
+```
+
+**Prerequisites:**
+
+* Knowledge of `dplyr` package
+
+# Functionals
+
+The `apply` family of functions (`lapply()`, `sapply()`, `vapply()`) can be used within bespoke functions or used to apply bespoke functions, not just regular functions.  
+
+
+```{r eval = T}
+vector <- c(1, NA, 3, 4, 5)
+dataframe <- data.frame(col1 = c(NA, NA, 6, 8),
+                        col2 = c(2, 4, NA, 9))
+
+data_list <- list(vector, dataframe)
+
+## lapply for a bespoke function
+
+cut_in_half <- function(data) {
+  data / 2
+}
+
+cut_in_half(vector)
+cut_in_half(dataframe)
+
+lapply(data_list, cut_in_half)
+```
+
+```{r eval = T}
+## lapply inside function
+
+cut_list_in_half <- function(list) {
+  lapply(list, cut_in_half)
+}
+
+cut_list_in_half(data_list)
+```
+
+# Anonymous functions
+
+Not all functions need to be named. Small (one-line) functions that are not worth naming are called anonymous functions.  
+
+A good rule of thumb is that an anonymous function should fit on one line and shouldn’t need to use `{}`.
+
+```{r, echo = TRUE, include = TRUE, eval = T}
+sapply(starwars, function(x) length(unique(x)))
+
+# Keeps only non-numeric columns
+head(Filter(function(x) !is.numeric(x), starwars))
+
+# Integrates x to the power of 2 using limits of 0 and 10
+integrate(function(x) x ^ 2, 0, 10)
+```
+
+# Lists of functions
+
+The best way to group functions together is using  packages.  
+
+If you are not going to build a package for your functions, a simple way to group similar/related functions together is to combine them into a list (remember, functions are objects).  
+You then call them the same way that you would call a list element.  
+
+This is **not** generally recommended.  
+
+```{r eval = T}
+function_list <- list(
+  half_num = function(x) x / 2,
+  double_num = function(x) x * 2
+)
+
+function_list$double_num(10)
+```
+
+
+# Functions with Dynamic Arguments
+
+**Using `base r` and `dplyr` Function Tidy Evaluation**
+
+Some variables, commonly column names, can be dependent on some external factor (e.g. user input, data values) and you may want to manipulate them in a generic way in using function arguments. This can commonly happen when you want to choose the column of interest manually in a function or when iterating/looping through.  
+
+This can be done with `base r`, using variable selection such as square brackets `[]` and double square brackets `[[]]`.
+
+**For example, using `base r`:**
+```{r eval = T}
+
+colour_data <- data.frame(red = c(1, 2, 3),
+                          blue = c(5, 7, 3),
+                          green = c(9, 8, 7))
+
+# I want to get the mean of one column of my choice.
+
+col_mean <- function(data, col) {
+  print(paste0(col, ": ", mean(data[[col]])))
+}
+
+col_mean(colour_data, "blue")
+
+# I want to iterate through the columns using a vector
+
+col_vector <- c("green", "blue", "red")
+
+for (colour in col_vector) {
+  col_mean(colour_data, colour)
+}
+
+```
+
+Some people prefer to structure their code following `tidyverse` styling.  
+`dplyr` provides a way to dynamically manipulate columns, but it makes writing functions containing `dplyr` functions a bit more complicated.  
+
+
+### Environmental variables vs data variables
+
+To determine the syntax to use, you need to remember the distinction between data and environmental variables and which `dplyr` function uses which.  
+
+- **Env-variables** are “programming” variables that live in an environment, usually created with `<-`, can be seen in the RStudio Environment window.  
+- **Data-variables** are “statistical” variables that live in a data frame (generally columns).  
+
+Use `?dplyr::function()` to see which type of formatting the variable uses: data masking or tidy selection.  
+
+
+### Quoted vs unquoted variables
+
+The syntax for dynamic arguments in `dplyr` are dependent on if the variable (column name) is quoted (a string) or unquoted (not a string).  
+
+It is possible to convert between the two but that gets even more complicated.  
+
+```{r include = T, eval = T, error = T}
+df <- data.frame(column_one = c(seq(1, 5, 1)),
+                 column_two = c(seq(6, 10, 1)))
+colname <- "column_one"
+
+## Base using the known column name unquoted and quoted
+df$column_one
+df$"column_one"
+df[, "column_one"]
+
+
+## Base with a variable column name
+df[[colname]]
+df[, colname]
+
+# Doesn't work
+df$colname
+df$"colname"
+df[["colname"]]
+
+
+## dplyr can use unquoted and quoted column names
+dplyr::pull(df, column_one)
+dplyr::pull(df, colname)
+
+
+## But when you use dplyr functions inside bespoke functions
+  # It works like normal if you statically define the column name
+pull_col_one <- function(data) {
+  dplyr::pull(data, column_one)
+}
+pull_col_one(df)
+
+pull_col_one <- function(data) {
+  dplyr::pull(data, "column_one")
+}
+pull_col_one(df)
+
+
+# It becomes more complicated when you want to chose the column with an argument
+  # This doesn't work
+pull_colname <- function(data, column_name) {
+  dplyr::pull(data, column_name)
+}
+pull_colname(df, column_one)
+
+
+```
+
+**Unquoted**  
+The variable is generally unquoted when you know what the column name is (i.e. you aren't pulling it from somewhere else or creating it somehow). This requires external knowledge of the data.  
+
+This is how we use `dplyr` functions to access column names.  
+
+
+**Quoted**  
+Quoted/string variables are generally useful for when the column name is derived from something else in an automated way (e.g. using `paste()`, `colnames()` e.t.c.). Column names as strings are much easier to work with than unquoted, but the syntax for creating dynamic arguments is a bit more complicated. These string column names are more flexible as they can be manipulated with normal string manipulation.  
+
+### Arguments
+
+When creating `dplyr` tidy evaluation functions, the first argument should be data.  
+
+Then when you are piping with your custom functions, you do not need to give the data argument.
+
+Further information can be found in [`dplyr` documentation](https://dplyr.tidyverse.org/articles/programming.html).  
+
+
+## Data Masking
+
+Applies to:
+
+- `filter()`
+- `group_by()`
+- `mutate()`
+- `summarise()`
+- `arrange()`
+- `count()`
+
+Can use column names (i.e. data variables) as if they were variables in the environment, similar to how `dplyr` variables are called.  
+
+i.e. you write `column_name`, not `df$column_name` or `df[[column_name]]`  
+
+### If the variable is unquoted/not a string:
+
+Need to double-embrace it with curly brackets `{{variable}}` where it is used in the body of the function.  
+Also, can use glue syntax with `:=` to name the resulting variables after the unquoted argument variable contained in double curly brackets `{{}}`.
+
+```{r, include = TRUE, eval = T}
+
+group_count_min_max <- function(df, group_var, summ_var) {
+  df %>%
+    dplyr::group_by({{group_var}}) %>%
+    dplyr::summarise("n_{{summ_var}}" := n(),
+                     "min_{{summ_var}}" := min({{summ_var}}),
+                     "max_{{summ_var}}" := max({{summ_var}}))
+}
+
+group_count_min_max(df = mtcars, group_var = cyl, summ_var = mpg)
+
+# If piping, so long as your first argument of your custom function is the data,
+  # you don't need to specify the data using a full-stop
+# Can pipe the custom function along with other dplyr functions
+mtcars %>%
+  dplyr::select(-gear) %>%
+  group_count_min_max(group_var = cyl, summ_var = mpg)
+
+
+## This is much more complicated to do in base
+
+```
+
+
+### If the variable is quoted/a string:
+
+If a variable exists as a character string (i.e. as an env-variable), need to indirectly select it from `.data` in the body of the function where it is used using `[[]]`.  
+
+The `.data` bit does not vary with different argument names, it is always the `.data` as it refers to the data within the pipe level above.  
+
+Can also use glue syntax with `:=` to name the resulting variables after the quoted argument variable (embraced by single curly brackets `{}`). 
+
+```{r, include = TRUE, eval = TRUE}
+
+group_count_min_max <- function(df, group_var, summ_var) {
+  df %>%
+    dplyr::group_by(.data[[group_var]]) %>%
+    dplyr::summarise("n_{summ_var}" := n(),
+                     "min_{summ_var}" := min(.data[[summ_var]]),
+                     "max_{summ_var}" := max(.data[[summ_var]]))
+}
+
+mtcars %>%
+  group_count_min_max(group_var = "cyl", summ_var = "mpg")
+```
+
+
+## Tidy Selection
+
+Applies to:
+
+- `select()`
+- `across()`
+- `rename()`
+- `relocate()`
+- `pull()`
+
+Can easily choose variables based on their position, name or type. 
+e.g. `starts_with("x")` or `is.numeric()`  
+
+### If the variable is unquoted:
+
+Similar to data masking, you can use embracing with double curly brackets `{{}}`.
+
+```{r, eval = T}
+drop_rename_iris <- function(data, drop_var, chosen_var) {
+  data %>%
+    dplyr::select(-{{drop_var}}) %>%
+    dplyr::rename(var_of_interest = {{chosen_var}})
+}
+
+iris %>%
+  drop_rename_iris(drop_var = Sepal.Length,
+                   chosen_var = Species) %>%
+  head()
+
+```
+
+### If the variable is quoted:
+
+Similar to data masking, can use indirect selection from `.data` using `[[]]`.
+
+```{r, include = TRUE, eval = TRUE}
+
+drop_rename_iris <- function(data, drop_var, chosen_var) {
+  data %>%
+    dplyr::select(-.data[[drop_var]]) %>%
+    dplyr::rename(var_of_interest = .data[[chosen_var]])
+}
+
+iris %>%
+  drop_rename_iris(drop_var = "Sepal.Length",
+                   chosen_var = "Species") %>%
+  head()
+
+
+# As seen in the warning above, it appears that .data[[var]] 
+  # has now been depreciated
+
+drop_rename_iris <- function(data, drop_var, chosen_var) {
+  data %>%
+    dplyr::select(-all_of(drop_var)) %>%
+    dplyr::rename(var_of_interest = .data[[chosen_var]])
+}
+
+iris %>%
+  drop_rename_iris(drop_var = "Sepal.Length",
+                   chosen_var = "Species") %>%
+  head()
+
+## More advanced example
+
+df <- data.frame(index_partial = sample(0:1, size = 100, replace = TRUE),
+                 index_all = sample(0:1, size = 100, replace = TRUE),
+                 days_partial = sample(x = 0:100, size = 100),
+                 days_all = sample(x = 0:100, size = 100))
+
+mean_day <- function(var_name) {
+  df %>%
+    dplyr::filter(.data[[paste0("index_", var_name)]] == 1) %>%
+    dplyr::summarise("mean_days_{ var_name }" := 
+                       mean(.data[[paste0("days_", var_name)]], na.rm = TRUE))
+}
+
+mean_day("partial")
+
+```
+
+## Quiz
+
+::::: {.panelset}
+
+::: {.panel}
+
+### Question {.panel-name}
+
+How do you select a variable in a function with data masking?
+
+<ol type="A">
+  <li>unquoted: `{var}` quoted: `[var]`</li>
+  <li>quoted: `{var}` unquoted: `[var]`</li>
+  <li>unquoted: `{{var}}` quoted: `.data[[var]]`</li>
+  <li>quoted: `{{var}}` unquoted: `.data[[var]]`</li>
+</ol>
+
+:::
+
+::: {.panel}
+
+### See Answer {.panel-name}
+
+How do you select a variable in a function with data masking?
+
+<ol type="A">
+  <li>unquoted: `{var}` quoted: `[var]`</li>
+  <li>quoted: `{var}` unquoted: `[var]`</li>
+  <li><b>unquoted: `{{var}}` quoted: `.data[[var]]`</b></li>
+  <li>quoted: `{{var}}` unquoted: `.data[[var]]`</li>
+</ol>
+:::
+
+:::::
+
+## Dynamic data selection excercises
+
+::::: {.panelset}
+
+::: {.panel}
+
+### Exercises {.panel-name}
+
+```{r eval = FALSE}
+##### Exercise 3 - Dplyr Data Masking vs base -----
+
+## Write 3 functions to keep rows in a starwars dataset (from dplyr) if it 
+  ## contains a certain value in a selected column 
+## 1) using dplyr where the column name is unquoted
+## 2) using dplyr where the column name is quoted
+## 3) in base r
+
+# Test if your function works by selecting those who are "feminine" in 
+  # the gender column
+
+data("starwars")
+
+
+##### Exercise 4 - Dplyr Tidy Selection vs base -----
+
+## Write a function to select the winning team (given by an argument)
+## Then sort the winning team into alphabetical order
+## using both base r and dplyr
+## EXTRA: Loop over each of the names and save the output as <team_name>_wins
+## using both base r and dplyr
+
+team_names <- c("apple", "banana", "orange", "pear")
+
+school_teams <- data.frame(
+  apple = c("Willibald", "Kilie", "Anuradha", "Theodora"),
+  banana = c("Branislav", "Thorbjorn", "Ward", "Silvana"),
+  orange = c("Seeta", "Yota", "Griet", "Edmund"),
+  pear = c("Gyula", "Della", "Duru", "Sutekh"))
+
+```
+
+:::
+
+::: {.panel}
+
+### Example solutions {.panel-name}
+
+```{r eval = FALSE}
+##### Answer 3 -----
+
+# dplyr - unquoted column name
+starwars_filter_unquoted <- function(data,
+                                     col_name_filter,
+                                     filter_by) {
+  dplyr::filter(data, {{col_name_filter}} == filter_by)
+}
+
+starwars_filter_unquoted(data = starwars,
+                         col_name_filter = gender,
+                         filter_by = "feminine")
+
+# dplyr - quoted column name
+
+starwars_filter_quoted <- function(data,
+                                   col_name_filter,
+                                   filter_by) {
+  dplyr::filter(data, .data[[col_name_filter]] == filter_by)
+}
+
+starwars_filter_quoted(data = starwars,
+                       col_name_filter = "gender",
+                       filter_by = "feminine")
+
+# Base
+starwars_filter_base <- function(data,
+                                 col_name_filter,
+                                 filter_by) {
+  data[which(data[[col_name_filter]] == filter_by), ]
+}
+
+starwars_filter_base(data = starwars,
+                     col_name_filter = "gender",
+                     filter_by = "feminine")
+
+##### Answer 4 -----
+
+winning_team_alph <- function(data, winning_team) {
+
+  data <- data %>%
+    dplyr::select(winning_team)
+
+  data <- data.frame(data[order(data[1]), ])
+  colnames(data) <- "winning team"
+
+  data
+
+}
+
+winning_team_alph(data = school_teams, winning_team = "apple")
+
+winning_team_alph <- function(data, winning_team) {
+  
+  data <- data %>%
+    dplyr::select({{winning_team}})
+  
+  data <- data.frame(data[order(data[1]), ])
+  colnames(data) <- "winning team"
+  
+  data
+  
+}
+
+winning_team_alph(data = school_teams, winning_team = "apple")
+```
+
+:::
+
+:::::

@@ -10,6 +10,14 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 xaringanExtra::use_panelset()
 ```
+**Prerequisities**
+
+You will need devtools and roxygen packages installed for this tutorial.
+
+```{r eval = FALSE}
+install.packages(c("devtools", "roxygen"), dependencies = TRUE, type = "win.binary")
+```
+
 # What is a package and when do we need one?
 
 To put simply a package is a collection of functions that we can load into our workspace and use. Base R contains many functions already, but loading packages extends R functionality. Some of the most popular packages in HAPI include dplyr for data manipulation and ggplot2 for creating charts.
@@ -61,14 +69,6 @@ Our guidance for small projects is aproppriate for projects that would fit in a 
 
 :::::
 
-# Prerequisities
-
-You will need devtools and roxygen packages installed for this tutorial.
-
-```{r eval = FALSE}
-install.packages(c("devtools", "roxygen"), dependencies = TRUE, type = "win.binary")
-```
-
 
 # Package structure and setup
 
@@ -115,7 +115,39 @@ project/
 ```
 This is the basic package structure, there will be few more things in the package that you'll learn about in the further sections.
 
-#### Q5
+## Quiz 2
+
+::::: {.panelset}
+
+::: {.panel}
+
+### Question {.panel-name}
+
+What would be a good name for your new package?
+
+<ol type="A">
+  <li>dplyr</li>
+  <li>quarterly_births</li>
+  <li>qrt.birth</li>
+</ol>
+
+:::
+
+::: {.panel}
+
+### See Answer {.panel-name}
+
+What would be a good name for your new package?
+
+<ol type="A">
+  <li>dplyr</li>
+  <li>quarterly_births</li>
+  <li><b>qrt.birth</b></li>
+</ol>
+:::
+
+:::::
+
 
 # Functions and installing/testing your package
 
@@ -689,9 +721,9 @@ devtools::test("my.awesome.package")
 :::::
 
 # How to share your package?
-Upload the package folder on git, then people can simmply clone it and run devtools::install() ! 
 
-You can also add on cran, but we won't cover that here - see more advanced resources below.
+Upload the package folder on git, then people can simmply clone it and run devtools::install(). 
+You can also add it on cran, but we won't cover that here - see more advanced resources below.
 
 # Additional resources
 

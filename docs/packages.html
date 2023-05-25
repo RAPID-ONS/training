@@ -88,26 +88,26 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 
 
   <!--radix_placeholder_meta_tags-->
-  <title>RAPID training: Packages and unit testing in R</title>
+  <title>RAPID training: Packages and unit testing</title>
 
 
 
 
   <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
-  <meta property="og:title" content="RAPID training: Packages and unit testing in R"/>
+  <meta property="og:title" content="RAPID training: Packages and unit testing"/>
   <meta property="og:type" content="article"/>
   <meta property="og:locale" content="en_US"/>
   <meta property="og:site_name" content="RAPID training"/>
 
   <!--  https://dev.twitter.com/cards/types/summary -->
   <meta property="twitter:card" content="summary"/>
-  <meta property="twitter:title" content="RAPID training: Packages and unit testing in R"/>
+  <meta property="twitter:title" content="RAPID training: Packages and unit testing"/>
 
   <!--/radix_placeholder_meta_tags-->
   <!--radix_placeholder_rmarkdown_metadata-->
 
   <script type="text/json" id="radix-rmarkdown-metadata">
-  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","output"]}},"value":[{"type":"character","attributes":{},"value":["Packages and unit testing in R"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["toc","toc_depth","number_sections"]}},"value":[{"type":"logical","attributes":{},"value":[true]},{"type":"integer","attributes":{},"value":[2]},{"type":"logical","attributes":{},"value":[true]}]}]}]}
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","output"]}},"value":[{"type":"character","attributes":{},"value":["Packages and unit testing"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["toc","toc_depth","number_sections"]}},"value":[{"type":"logical","attributes":{},"value":[true]},{"type":"integer","attributes":{},"value":[2]},{"type":"logical","attributes":{},"value":[true]}]}]}]}
   </script>
   <!--/radix_placeholder_rmarkdown_metadata-->
   <!--radix_placeholder_navigation_in_header-->
@@ -2093,7 +2093,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"Packages and unit testing in R","authors":[]}
+{"title":"Packages and unit testing","authors":[]}
 </script>
 
 <!--/radix_placeholder_front_matter-->
@@ -2116,8 +2116,10 @@ RAP training in R
 <div class="nav-dropdown-content">
 <a href="control_flow.html">Control Flow</a>
 <a href="functions.html">Functions</a>
+<a href="advanced_functions.html">Advanced Functions</a>
 <a href="projects.html">Project structure</a>
 <a href="packages.html">Packages and unit tests</a>
+<a href="glossary.html">Glossary</a>
 </div>
 </div>
 <a href="javascript:void(0);" class="nav-toggle">&#9776;</a>
@@ -2129,7 +2131,7 @@ RAP training in R
 <!--/radix_placeholder_site_before_body-->
 
 <div class="d-title">
-<h1>Packages and unit testing in R</h1>
+<h1>Packages and unit testing</h1>
 <!--radix_placeholder_categories-->
 <!--/radix_placeholder_categories-->
 
@@ -2141,12 +2143,15 @@ RAP training in R
 <nav class="l-text toc figcaption" id="TOC">
 <h3>Contents</h3>
 <ul>
-<li><a href="#what-is-a-package-and-when-do-we-need-one">What is a package and when do we need one?</a></li>
-<li><a href="#prerequisities">Prerequisities</a></li>
+<li><a href="#what-is-a-package-and-when-do-we-need-one">What is a package and when do we need one?</a>
+<ul>
+<li><a href="#quiz-1">Quiz 1</a></li>
+</ul></li>
 <li><a href="#package-structure-and-setup">Package structure and setup</a>
 <ul>
 <li><a href="#package-name">Package name</a></li>
 <li><a href="#creating-basic-structure">Creating basic structure</a></li>
+<li><a href="#quiz-2">Quiz 2</a></li>
 </ul></li>
 <li><a href="#functions-and-installingtesting-your-package">Functions and installing/testing your package</a>
 <ul>
@@ -2180,6 +2185,13 @@ RAP training in R
 </ul>
 </nav>
 </div>
+<p><strong>Prerequisities</strong></p>
+<p>You will need devtools and roxygen packages installed for this tutorial.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/utils/install.packages.html'>install.packages</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"devtools"</span>, <span class='st'>"roxygen"</span><span class='op'>)</span>, dependencies <span class='op'>=</span> <span class='cn'>TRUE</span>, type <span class='op'>=</span> <span class='st'>"win.binary"</span><span class='op'>)</span></span></code></pre>
+</div>
+</div>
 <h1 id="what-is-a-package-and-when-do-we-need-one">What is a package and when do we need one?</h1>
 <p>To put simply a package is a collection of functions that we can load into our workspace and use. Base R contains many functions already, but loading packages extends R functionality. Some of the most popular packages in HAPI include dplyr for data manipulation and ggplot2 for creating charts.</p>
 <p>Is a package only way to store and load your functions? No. Depending on the size and complexity of your project you should select one of the following options to store your functions.</p>
@@ -2195,13 +2207,45 @@ RAP training in R
 <ol start="3" type="1">
 <li>You can create a package that will contain all your functions. Benefits of that solution include good dependency management (using other packages, requiring specific versions etc.), simple implementation of unit tests and good documentation solutions that make it easier for other people to use your functions. Package is often the best solution for more complex analyses.</li>
 </ol>
-<h4 id="q1">Q1</h4>
-<h1 id="prerequisities">Prerequisities</h1>
-<p>You will need devtools and roxygen packages installed for this tutorial.</p>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/utils/install.packages.html'>install.packages</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"devtools"</span>, <span class='st'>"roxygen"</span><span class='op'>)</span>, dependencies <span class='op'>=</span> <span class='cn'>TRUE</span>, type <span class='op'>=</span> <span class='st'>"win.binary"</span><span class='op'>)</span></span></code></pre>
-</div>
+<h2 id="quiz-1">Quiz 1</h2>
+<div class="panelset">
+<section id="question" class="panel-name panel">
+<h3 class="panel-name">Question</h3>
+<p>What do you class as a small project?</p>
+<ol type="A">
+<li>
+Project with less than 10 bespoke functions
+</li>
+<li>
+Project that comfortable fits in a single script
+</li>
+<li>
+Project producing less than 10 tables
+</li>
+<li>
+Project that uses no more than 3 scripts for analysis
+</li>
+</ol>
+</section>
+<section id="see-answer" class="panel-name panel">
+<h3 class="panel-name">See Answer</h3>
+<p>What do you class as a small project?</p>
+<ol type="A">
+<li>
+Project with less than 10 bespoke functions
+</li>
+<li>
+<b>Project that comfortable fits in a single script</b>
+</li>
+<li>
+Project producing less than 10 tables
+</li>
+<li>
+Project that uses no more than 3 scripts for analysis
+</li>
+</ol>
+<p>Our guidance for small projects is aproppriate for projects that would fit in a single script.</p>
+</section>
 </div>
 <h1 id="package-structure-and-setup">Package structure and setup</h1>
 <h2 id="package-name">Package name</h2>
@@ -2218,7 +2262,7 @@ RAP training in R
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/base/list.files.html'>dir</a></span><span class='op'>(</span><span class='st'>"pckgname"</span><span class='op'>)</span></span></code></pre>
 </div>
-<pre><code>[1] &quot;DESCRIPTION&quot; &quot;NAMESPACE&quot;   &quot;R&quot;          </code></pre>
+<pre><code>[1] &quot;DESCRIPTION&quot; &quot;NAMESPACE&quot;   &quot;R&quot;           &quot;tests&quot;      </code></pre>
 </div>
 <p>DESCRIPTION file can be edited manually (e.g. using notepad) and should contain:</p>
 <ul>
@@ -2242,7 +2286,39 @@ RAP training in R
   config.yaml OR config.R
   main.R</code></pre>
 <p>This is the basic package structure, there will be few more things in the package that you’ll learn about in the further sections.</p>
-<h4 id="q5">Q5</h4>
+<h2 id="quiz-2">Quiz 2</h2>
+<div class="panelset">
+<section id="question-1" class="panel-name panel">
+<h3 class="panel-name">Question</h3>
+<p>What would be a good name for your new package?</p>
+<ol type="A">
+<li>
+dplyr
+</li>
+<li>
+quarterly_births
+</li>
+<li>
+qrt.birth
+</li>
+</ol>
+</section>
+<section id="see-answer-1" class="panel-name panel">
+<h3 class="panel-name">See Answer</h3>
+<p>What would be a good name for your new package?</p>
+<ol type="A">
+<li>
+dplyr
+</li>
+<li>
+quarterly_births
+</li>
+<li>
+<b>qrt.birth</b>
+</li>
+</ol>
+</section>
+</div>
 <h1 id="functions-and-installingtesting-your-package">Functions and installing/testing your package</h1>
 <h2 id="adding-functions-to-your-package">Adding functions to your package</h2>
 <p>Functions need to be stored in R/ folder inside the package. You can have individual files for each function or store multiple functions in a single file. Files containing a single function should have the same name as that function. When you store couple of functions together they should be grouped with similar functions (e.g. import functions) and files should have informative names (e.g. data_import.R). The easiest way to add functions to a package is to create an R script and save it in the project/pckgname/R folder.</p>
@@ -2269,46 +2345,22 @@ RAP training in R
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'>devtools</span><span class='fu'>::</span><span class='fu'><a href='https://devtools.r-lib.org/reference/install.html'>install</a></span><span class='op'>(</span><span class='st'>"pckgname"</span><span class='op'>)</span></span></code></pre>
 </div>
-<pre><code>  
-  
-  
-   checking for file &#39;D:\github\web_raptraining\pckgname/DESCRIPTION&#39; ...
-  
-v  checking for file &#39;D:\github\web_raptraining\pckgname/DESCRIPTION&#39; (722ms)
-
-  
-  
-  
--  preparing &#39;pckgname&#39;:
-   checking DESCRIPTION meta-information ...
-  
-   checking DESCRIPTION meta-information ... 
-  
-v  checking DESCRIPTION meta-information
-
-  
-  
-  
--  checking for LF line-endings in source and make files and shell scripts
-
-  
--  checking for empty or unneeded directories
-
-  
-  
-  
--  building &#39;pckgname_0.0.0.9000.tar.gz&#39;
-
-  
-   
+<pre><code>* checking for file &#39;D:\github\web_raptraining\pckgname/DESCRIPTION&#39; ... OK
+* preparing &#39;pckgname&#39;:
+* checking DESCRIPTION meta-information ... OK
+* checking for LF line-endings in source and make files and shell scripts
+* checking for empty or unneeded directories
+Removed empty directory &#39;pckgname/tests/testthat&#39;
+* building &#39;pckgname_0.0.0.9000.tar.gz&#39;
 
 Running &quot;C:/MY_RST~1/R-41~1.3/bin/x64/Rcmd.exe&quot; INSTALL \
-  &quot;C:\Users\delonp\AppData\Local\Temp\RtmpglHL13/pckgname_0.0.0.9000.tar.gz&quot; \
+  &quot;C:\Users\delonp\AppData\Local\Temp\RtmpsJYU42/pckgname_0.0.0.9000.tar.gz&quot; \
   --install-tests 
 * installing to library &#39;C:/My_RStudio/pckgs&#39;
 * installing *source* package &#39;pckgname&#39; ...
 ** using staged installation
 ** R
+** tests
 ** byte-compile and prepare package for lazy loading
 ** help
 No man pages found in package  &#39;pckgname&#39; 
@@ -2621,14 +2673,14 @@ DESCRIPTION file. You can update the description file manually. For instance, ro
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/base/list.files.html'>dir</a></span><span class='op'>(</span><span class='st'>"pckgname"</span><span class='op'>)</span></span></code></pre>
 </div>
-<pre><code>[1] &quot;DESCRIPTION&quot; &quot;NAMESPACE&quot;   &quot;R&quot;          </code></pre>
+<pre><code>[1] &quot;DESCRIPTION&quot; &quot;NAMESPACE&quot;   &quot;R&quot;           &quot;tests&quot;      </code></pre>
 </div>
 <p>You can see a folder called tests - let’s see what’s inside.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/base/list.files.html'>dir</a></span><span class='op'>(</span><span class='st'>"pckgname/tests"</span><span class='op'>)</span></span></code></pre>
 </div>
-<pre><code>character(0)</code></pre>
+<pre><code>[1] &quot;testthat&quot;   &quot;testthat.R&quot;</code></pre>
 </div>
 <h2 id="how-to-write-unit-tests-with-testthat">How to write unit tests with testthat?</h2>
 <p>For each function you’ll need a separate .R file named test-function_name.R. Inside you create test data and output that function should produce for the test data you create within the test script. Then you compare the expected output (that is hardcoded) with output of the function.</p>
@@ -2793,8 +2845,8 @@ DESCRIPTION file. You can update the description file manually. For instance, ro
 </section>
 </div>
 <h1 id="how-to-share-your-package">How to share your package?</h1>
-<p>Upload the package folder on git, then people can simmply clone it and run devtools::install() !</p>
-<p>You can also add on cran, but we won’t cover that here - see more advanced resources below.</p>
+<p>Upload the package folder on git, then people can simmply clone it and run devtools::install().
+You can also add it on cran, but we won’t cover that here - see more advanced resources below.</p>
 <h1 id="additional-resources">Additional resources</h1>
 <p>For more information see:</p>
 <ul>

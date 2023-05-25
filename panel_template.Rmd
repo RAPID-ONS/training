@@ -61,16 +61,7 @@ What do you class as a small project?
 
 ### See Answer {.panel-name}
 
-What do you class as a small project?
 
-<ol type="A">
-  <li>Project with less than 10 bespoke functions</li>
-  <li><b>Project that comfortable fits in a single script</b></li>
-  <li>Project producing less than 10 tables</li>
-  <li>Project that uses no more than 3 scripts for analysis</li>
-</ol>
- 
-Our guidance for small projects is aproppriate for projects that would fit in a single script.
 :::
 
 :::::

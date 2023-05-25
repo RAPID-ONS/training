@@ -2072,8 +2072,8 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 
   <!--/radix_placeholder_distill-->
   <script src="site_libs/header-attrs-2.13/header-attrs.js"></script>
-  <script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
-  <link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+  <link href="site_libs/panelset-0.2.6/panelset.css" rel="stylesheet" />
+  <script src="site_libs/panelset-0.2.6/panelset.js"></script>
   <script src="site_libs/popper-2.6.0/popper.min.js"></script>
   <link href="site_libs/tippy-6.2.7/tippy.css" rel="stylesheet" />
   <link href="site_libs/tippy-6.2.7/tippy-light-border.css" rel="stylesheet" />
@@ -2116,8 +2116,10 @@ RAP training in R
 <div class="nav-dropdown-content">
 <a href="control_flow.html">Control Flow</a>
 <a href="functions.html">Functions</a>
+<a href="advanced_functions.html">Advanced Functions</a>
 <a href="projects.html">Project structure</a>
 <a href="packages.html">Packages and unit tests</a>
+<a href="glossary.html">Glossary</a>
 </div>
 </div>
 <a href="javascript:void(0);" class="nav-toggle">&#9776;</a>
@@ -2142,9 +2144,9 @@ RAP training in R
 <h3>Contents</h3>
 <ul>
 <li><a href="#what-are-loops">What are loops?</a></li>
-<li><a href="#for-loops"><code>for</code> loops</a>
+<li><a href="#for-loops"><code>For</code> loops</a>
 <ul>
-<li><a href="#syntax">Syntax</a></li>
+<li><a href="#quiz-1">Quiz 1</a></li>
 <li><a href="#example-of-the-advantages-of-a-for-loop">Example of the advantages of a <code>for</code> loop</a></li>
 <li><a href="#do-i-have-to-use-x">Do I have to use x?</a></li>
 <li><a href="#will-i-actually-use-this-much">Will I actually use this much?</a></li>
@@ -2152,234 +2154,44 @@ RAP training in R
 </ul></li>
 <li><a href="#while-loops"><code>while</code> loops</a>
 <ul>
-<li><a href="#syntax-1">Syntax</a></li>
+<li><a href="#syntax">Syntax</a></li>
 <li><a href="#example-of-a-while-loop">Example of a <code>while</code> loop</a></li>
 <li><a href="#will-i-actually-use-this-much-1">Will I actually use this much?</a></li>
+<li><a href="#loop-excercises">Loop excercises</a></li>
 </ul></li>
 <li><a href="#if-statements-control-flow"><code>if</code> statements (control flow)</a>
 <ul>
-<li><a href="#syntax-2">Syntax</a></li>
-<li><a href="#relational-operators">Relational operators</a></li>
-<li><a href="#example-traffic-light">Example: traffic light</a></li>
+<li><a href="#quiz-2">Quiz 2</a></li>
+<li><a href="#example-traffic-lights">Example: traffic lights</a></li>
 <li><a href="#else"><code>else</code></a></li>
 <li><a href="#else-if"><code>else if</code></a></li>
 <li><a href="#ifelse"><code>ifelse</code></a></li>
+<li><a href="#quiz-3">Quiz 3</a></li>
+<li><a href="#control-flow-exercises">Control flow exercises</a></li>
 </ul></li>
 <li><a href="#combining-loopsconditional-statements">Combining loops/conditional statements</a>
 <ul>
 <li><a href="#example">Example</a></li>
+<li><a href="#quiz-4">Quiz 4</a></li>
 <li><a href="#keep-track-of-your-brackets">Keep track of your brackets</a></li>
-<li><a href="#advanced-loop-features">Advanced loop features:</a></li>
 </ul></li>
-<li><a href="#exercises">Exercises</a></li>
-<li><a href="#switch">Switch</a></li>
-<li><a href="#functionals">Functionals</a>
+<li><a href="#advanced-loop-features">Advanced loop features</a>
 <ul>
-<li><a href="#apply">apply()</a></li>
-<li><a href="#lapply">lapply()</a></li>
-<li><a href="#sapply">sapply()</a></li>
-<li><a href="#additional-arguments">Additional arguments</a></li>
+<li><a href="#break">Break</a></li>
+<li><a href="#next">Next</a></li>
+<li><a href="#looping-index">Looping index</a></li>
+<li><a href="#control-flow-and-loops-excercises">Control flow and loops excercises</a></li>
 </ul></li>
-<li><a href="#vectorisation">Vectorisation</a></li>
-<li><a href="#timing">Timing</a>
-<ul>
-<li><a href="#the-tictoc-package">The <code>tictoc</code> package:</a></li>
-<li><a href="#comparison-using-tictoc">Comparison using <code>tictoc</code></a></li>
-</ul></li>
-<li><a href="#answers">Poll answers</a></li>
+<li><a href="#additional-resources">Additional resources</a></li>
 </ul>
 </nav>
 </div>
-<p><strong>Course details:</strong></p>
-<ul>
-<li>Pre-requisites:
+<p><strong>Pre-requisites:</strong></p>
 <ul>
 <li>have RStudio installed</li>
-<li>packages required: <code>tidyverse</code> and <code>tictoc</code> (advanced section)</li>
-<li>minimal basic R knowledge (e.g., variable assignment)</li>
-</ul></li>
+<li>packages required: <code>tidyverse</code></li>
+<li>basic R knowledge (e.g., variable assignment)</li>
 </ul>
-<p><strong>Useful resources:</strong></p>
-<p>This is an introduction to control flow, but for more comprehensive overviews see:</p>
-<ul>
-<li><a href="https://app.datacamp.com/learn/courses/intermediate-r">Intermediate R Course on DataCamp</a></li>
-<li><a href="https://adv-r.hadley.nz/control-flow.html">Advanced R: Control flow</a></li>
-</ul>
-<p><strong>Glossary</strong></p>
-<p>Here is a glossary of some terms I may use in this presentation:</p>
-<div class="layout-chunk" data-layout="l-body">
-<table class="table table-hover table-condensed" style="margin-left: auto; margin-right: auto;">
-<thead>
-<tr>
-<th style="text-align:left;">
-Jargon
-</th>
-<th style="text-align:left;">
-Definition
-</th>
-<th style="text-align:left;">
-Links to further info
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-Argument
-</td>
-<td style="text-align:left;">
-The input(s) to a function to make it do what you want.
-</td>
-<td style="text-align:left;">
-<a href="https://data-flair.training/blogs/r-arguments-introduction/" style="     ">Argument</a>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Console
-</td>
-<td style="text-align:left;">
-Where the code runs. You can interact directly with the console (type in it). Or when you run code in the script, it prints/runs here. Printouts also are show here.
-</td>
-<td style="text-align:left;">
-<a href="https://swcarpentry.github.io/r-novice-inflammation/09-supp-intro-rstudio/index.html" style="     ">Console</a>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Environment
-</td>
-<td style="text-align:left;">
-Generally talking about the global environment. Contains all the variables, data and functions that are accessible to the user.
-</td>
-<td style="text-align:left;">
-<a href="https://www.datamentor.io/r-programming/environment-scope/" style="     ">Environment</a>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-File path
-</td>
-<td style="text-align:left;">
-Location/address of your folders, sub-folders and files inside your drives. Can be see in Window’s File Explorer address bar. Used to find and read in objects/data and save out objects/data.
-</td>
-<td style="text-align:left;">
-<a href="https://sscc.wisc.edu/sscc/pubs/dwr/reading-text-data.html#paths-and-working-directories" style="     ">File path</a>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Indent
-</td>
-<td style="text-align:left;">
-How many tabs/spaces away from the right hand side of the script the code is written. R doesn’t generally mind about indents but there is best practice.
-</td>
-<td style="text-align:left;">
-<a href="https://statisticsglobe.com/indent-multiple-lines-code-rstudio" style="     ">Indent</a>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Parentheses, Brackets, Bracers
-</td>
-<td style="text-align:left;">
-Round brackets (), Curly brackets {}, Square brackets []
-</td>
-<td style="text-align:left;">
-<a href="https://www.ucl.ac.uk/~uctqiax/PUBLG100/2015/faq/operators.html" style="     ">Parentheses, Brackets, Bracers</a>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Pipe
-</td>
-<td style="text-align:left;">
-The operator %&gt;% from magrittr which allows functions to be called on dataframes in a sequential order.
-</td>
-<td style="text-align:left;">
-<a href="https://cran.r-project.org/web/packages/dplyr/vignettes/dplyr.html" style="     ">Pipe</a>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Print/Printout
-</td>
-<td style="text-align:left;">
-Outputs text, data etc to the console.
-</td>
-<td style="text-align:left;">
-<a href="https://www.geeksforgeeks.org/printing-output-of-an-r-program/" style="     ">Print/Printout</a>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Return
-</td>
-<td style="text-align:left;">
-Colloquially similar to printout but when regarding a function.
-</td>
-<td style="text-align:left;">
-<a href="https://www.datamentor.io/r-programming/return-function/" style="     ">Return</a>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Script
-</td>
-<td style="text-align:left;">
-A text file containing code (a sequence of commands) that can be edited and saved. Code runs in the console.
-</td>
-<td style="text-align:left;">
-<a href="http://mercury.webster.edu/aleshunas/R_learning_infrastructure/R%20scripts.html" style="     ">Script</a>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Syntax
-</td>
-<td style="text-align:left;">
-Akin to a languages grammar. A fancy way of saying how something in the code is written to get it to do what you want. The rules of writing code. Differs across different programming languages.
-</td>
-<td style="text-align:left;">
-<a href="https://www.computerworld.com/article/2497319/business-intelligence-beginner-s-guide-to-r-syntax-quirks-you-ll-want-to-know.html" style="     ">Syntax</a>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Terminal
-</td>
-<td style="text-align:left;">
-Provides access to the system shell (command line interface with things like file explorer, Git).
-</td>
-<td style="text-align:left;">
-<a href="https://support.posit.co/hc/en-us/articles/115010737148-Using-the-RStudio-Terminal-in-the-RStudio-IDE" style="     ">Terminal</a>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Variable assignment, Assign a variable
-</td>
-<td style="text-align:left;">
-Save something (data, value, function etc) to a variable, primarily using &lt;- or =, so that it is availble in the environment to be used in the code.
-</td>
-<td style="text-align:left;">
-<a href="https://www.tutorialspoint.com/r/r_variables.htm" style="     ">Variable assignment, Assign a variable</a>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Working directory
-</td>
-<td style="text-align:left;">
-Folder where you are working. It’s the place (the environment) where you have to store your files of your project in order to load them or where your R objects will be saved.
-</td>
-<td style="text-align:left;">
-<a href="https://r-coder.com/working-directory-r/" style="     ">Working directory</a>
-</td>
-</tr>
-</tbody>
-</table>
-</div>
 <h1 id="what-are-loops">What are loops?</h1>
 <p>Loops are coding structures that help repeat highly similar or repetitive code effectively, without the need for copy-pasting. They increase code efficiency and readability.</p>
 <p>Types of loops:</p>
@@ -2388,10 +2200,9 @@ Folder where you are working. It’s the place (the environment) where you have 
 <li><code>while</code> loop (do something until a certain event is reached)</li>
 <li><code>if</code> statements (control flow, not actually a ‘proper’ loop)</li>
 </ul>
-<p><strong><em>Poll 1: How confident are you with loops and control flow in R? (1 - not at all, 5 - very confident)</em></strong></p>
-<h1 id="for-loops"><code>for</code> loops</h1>
+<h1 id="for-loops"><code>For</code> loops</h1>
 <p>What is a <code>for</code> loop? It does something repeatedly a certain amount of times.</p>
-<h2 id="syntax">Syntax</h2>
+<p><strong>Syntax</strong></p>
 <pre><code>for (values to loop over) {
   do all of this stuff for the current value
 }</code></pre>
@@ -2410,17 +2221,61 @@ Folder where you are working. It’s the place (the environment) where you have 
 </div>
 </div>
 <p>Here, x is defined as 1:10 (a sequence of 1 to 10 in steps of 1, i.e., 1, 2, 3, … 10). The first time the loop runs, <code>x &lt;- 1</code>, so it prints 1. The second time, <code>x &lt;- 2</code>, so it prints 2. Etc. Until <code>x &lt;- 10</code> has been printed, then it stops as x has no further values.</p>
-<p><strong><em>Poll 2: What is the output of the following for loop: for (x in 1:2) { y &lt;- x + 3, print(y) }</em></strong></p>
-<ul>
-<li>1, 2<br />
+<h2 id="quiz-1">Quiz 1</h2>
+<div class="panelset">
+<section id="question" class="panel-name panel">
+<h3 class="panel-name">Question</h3>
+<p>What is the output of the following for loop:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='kw'>for</span> <span class='op'>(</span><span class='va'>x</span> <span class='kw'>in</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span>  <span class='va'>y</span> <span class='op'>&lt;-</span> <span class='va'>x</span> <span class='op'>+</span> <span class='fl'>3</span></span>
+<span>  <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>y</span><span class='op'>)</span> </span>
+<span><span class='op'>}</span></span></code></pre>
+</div>
+</div>
+<ol type="A">
+<li>
+1, 2
 </li>
-<li>3, 4<br />
+<li>
+3, 4
 </li>
-<li>4, 5<br />
+<li>
+4, 5
 </li>
-<li>5, 6</li>
-</ul>
-<p><a href="#answers">Answer</a></p>
+<li>
+5, 6
+</li>
+</ol>
+</section>
+<section id="see-answer" class="panel-name panel">
+<h3 class="panel-name">See Answer</h3>
+<p>What is the output of the following for loop:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='kw'>for</span> <span class='op'>(</span><span class='va'>x</span> <span class='kw'>in</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span>  <span class='va'>y</span> <span class='op'>&lt;-</span> <span class='va'>x</span> <span class='op'>+</span> <span class='fl'>3</span></span>
+<span>  <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>y</span><span class='op'>)</span> </span>
+<span><span class='op'>}</span></span></code></pre>
+</div>
+</div>
+<ol type="A">
+<li>
+1, 2
+</li>
+<li>
+3, 4
+</li>
+<li>
+<b>4, 5</b>
+</li>
+<li>
+5, 6
+</li>
+</ol>
+</section>
+</div>
 <h2 id="example-of-the-advantages-of-a-for-loop">Example of the advantages of a <code>for</code> loop</h2>
 <p>Consider the following scenario. You want to create 3 variables, each is equal to the previous variable, plus 1.</p>
 <div class="layout-chunk" data-layout="l-body">
@@ -2439,7 +2294,7 @@ Folder where you are working. It’s the place (the environment) where you have 
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>input_variable</span> <span class='op'>&lt;-</span> <span class='fl'>1</span></span>
 <span><span class='va'>number_of_outputs</span> <span class='op'>&lt;-</span> <span class='fl'>3</span></span>
-<span><span class='va'>output</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>)</span> <span class='co'>#empty vector to put outputs into</span></span>
+<span><span class='va'>output</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>)</span> <span class='co'># empty vector to put outputs into</span></span>
 <span><span class='kw'>for</span> <span class='op'>(</span><span class='va'>x</span> <span class='kw'>in</span> <span class='fl'>1</span><span class='op'>:</span><span class='va'>number_of_outputs</span><span class='op'>)</span> <span class='op'>{</span></span>
 <span>  <span class='va'>output</span><span class='op'>[</span><span class='va'>x</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='va'>x</span> <span class='op'>+</span> <span class='fl'>1</span></span>
 <span><span class='op'>}</span></span>
@@ -2483,7 +2338,7 @@ Folder where you are working. It’s the place (the environment) where you have 
 <p>Your Console is hanging waiting for input, showing a ‘+’, and not a ‘&gt;’. You have most likely forgotten a bracket somewhere. Press ESC and you can correct your loop and try again.</p>
 <h1 id="while-loops"><code>while</code> loops</h1>
 <p>What is a <code>while</code> loop? It keeps on doing something continuously until a certain event is reached.</p>
-<h2 id="syntax-1">Syntax</h2>
+<h2 id="syntax">Syntax</h2>
 <pre><code>while (condition) {
   expr
 }</code></pre>
@@ -2511,14 +2366,59 @@ print(num_apples)</code></pre>
 <p>You can see that <code>num_apples</code> never changed from 20, so the <code>while</code> condition remained <code>TRUE</code> at all times!</p>
 <h2 id="will-i-actually-use-this-much-1">Will I actually use this much?</h2>
 <p>Depends. In analytical work, probably not as much as <code>for</code> loops. But it has its uses.</p>
-<h4 id="exercises-in-breakout-rooms-15-min">Exercises in breakout rooms: 15 min</h4>
+<h2 id="loop-excercises">Loop excercises</h2>
+<div class="panelset">
+<section id="exercises" class="panel-name panel">
+<h3 class="panel-name">Exercises</h3>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Exercise 1: Try and write a for loop, printing the numbers 1 to 20:</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Exercise 2: This for loop doesn&#39;t work. Why not? Try to fix it:</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span> {</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(i)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Exercise 3: Try and write a while loop, increasing a variable &#39;i&#39; by 1 at each</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co"># iteration, starting with i &lt;- 1. Keep running until i reaches 6, then stop.</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Print i at each iteration to keep track of your loop:</span></span></code></pre></div>
+</div>
+</section>
+<section id="example-solutions" class="panel-name panel">
+<h3 class="panel-name">Example solutions</h3>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'># Exercise 1: Try and write a for loop, printing the numbers 1 to 20:</span></span>
+<span><span class='kw'>for</span> <span class='op'>(</span><span class='va'>i</span> <span class='kw'>in</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>20</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span>  <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>i</span><span class='op'>)</span></span>
+<span><span class='op'>}</span></span>
+<span></span>
+<span><span class='co'># Exercise 2: This for loop doesn't work. Why not? Try to fix it:</span></span>
+<span><span class='co'># Answer: you forgot some brackets!</span></span>
+<span><span class='kw'>for</span> <span class='op'>(</span><span class='va'>i</span> <span class='kw'>in</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span>  <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>i</span><span class='op'>)</span></span>
+<span><span class='op'>}</span></span>
+<span></span>
+<span><span class='co'># Exercise 3: Try and write a while loop, increasing a variable 'i' by 1 at each</span></span>
+<span><span class='co'># iteration, starting with i &lt;- 1. Keep running until i reaches 6, then stop.</span></span>
+<span><span class='co'># Print i at each iteration to keep track of your loop:</span></span>
+<span><span class='va'>i</span> <span class='op'>&lt;-</span> <span class='fl'>1</span></span>
+<span><span class='kw'>while</span> <span class='op'>(</span><span class='va'>i</span> <span class='op'>&lt;</span> <span class='fl'>6</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span>  <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>i</span><span class='op'>)</span></span>
+<span>  <span class='va'>i</span> <span class='op'>&lt;-</span> <span class='va'>i</span> <span class='op'>+</span> <span class='fl'>1</span></span>
+<span><span class='op'>}</span></span></code></pre>
+</div>
+</div>
+</section>
+</div>
 <h1 id="if-statements-control-flow"><code>if</code> statements (control flow)</h1>
 <p>What is an <code>if</code> statement/control flow? It does what it suggests: conditional statements. If some criterion is <code>TRUE</code>, execute an expression. If it is <code>FALSE</code>, don’t execute the expression. This can be expanded with <code>else if</code> to include an additional alternative statement, and/or <code>else</code> to express what to do if none of the above criteria are satisfied (<code>else</code> always goes last).</p>
-<h2 id="syntax-2">Syntax</h2>
+<p><strong>Syntax</strong></p>
 <pre><code>if (test_expression) {
   statement
 }</code></pre>
-<h2 id="relational-operators">Relational operators</h2>
+<p><strong>Relational operators</strong></p>
 <p>You need relational operators to run <code>if</code> statements. These simply compare a statement on the left with a statement on the right. Here is a list:</p>
 <ul>
 <li>a <code>==</code> b “a is equal to b”</li>
@@ -2539,14 +2439,60 @@ print(num_apples)</code></pre>
 </div>
 </div>
 <p>You can see the output in the console is a boolean/logical value, either <code>TRUE</code> or <code>FALSE</code>.</p>
-<p><strong><em>Poll 3: Given a &lt;- 4 and b &lt;- 6, what is the output to: a &lt; b</em></strong>
-- 2<br />
-- TRUE<br />
-- YES<br />
-- FALSE</p>
-<p><a href="#answers">Answer</a></p>
-<h2 id="example-traffic-light">Example: traffic light</h2>
-<p>Let’s try to code how a traffic light works. We’ll start with green:</p>
+<h2 id="quiz-2">Quiz 2</h2>
+<div class="panelset">
+<section id="question-1" class="panel-name panel">
+<h3 class="panel-name">Question</h3>
+<p>What is the output of: a &lt; b</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>a</span> <span class='op'>&lt;-</span> <span class='fl'>4</span></span>
+<span><span class='va'>b</span> <span class='op'>&lt;-</span> <span class='fl'>6</span></span>
+<span><span class='va'>a</span> <span class='op'>&lt;</span> <span class='va'>b</span></span></code></pre>
+</div>
+</div>
+<ol type="A">
+<li>
+2
+</li>
+<li>
+TRUE
+</li>
+<li>
+NA
+</li>
+<li>
+FALSE
+</li>
+</ol>
+</section>
+<section id="see-answer-1" class="panel-name panel">
+<h3 class="panel-name">See Answer</h3>
+<p>What is the output to: a &lt; b</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="dv">4</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="dv">6</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>a <span class="sc">&lt;</span> b</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span></code></pre></div>
+</div>
+<ol type="A">
+<li>
+2
+</li>
+<li>
+<b>TRUE</b>
+</li>
+<li>
+NA
+</li>
+<li>
+FALSE
+</li>
+</ol>
+</section>
+</div>
+<h2 id="example-traffic-lights">Example: traffic lights</h2>
+<p>Let’s try to code how a traffic lights work. We’ll start with green:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>light_status</span> <span class='op'>&lt;-</span> <span class='st'>"green"</span></span>
@@ -2622,10 +2568,94 @@ print(num_apples)</code></pre>
 </div>
 <p>5 lines of code became 1. Please note to only use this function when you have a binary decision. If there are 3 or more options, you need the full-version <code>if</code> statement.</p>
 <p>A small note: note how R printed the output twice. Because <code>ifelse</code> is a function, it returns a value. So if you didn’t want R to print out the resulting value twice in the console, you would need to assign the output to a variable (using &lt;- before <code>ifelse</code>).</p>
-<p><strong><em>Poll 4: Given x &lt;- 20, what is the output to: ifelse(x == 20, print(“FALSE”), print(“TRUE”))?</em></strong>
-- FALSE<br />
-- TRUE</p>
-<p><a href="#answers">Answer</a></p>
+<h2 id="quiz-3">Quiz 3</h2>
+<div class="panelset">
+<section id="question-2" class="panel-name panel">
+<h3 class="panel-name">Question</h3>
+<p>What will be the output of:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fl'>20</span></span>
+<span><span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span><span class='op'>(</span><span class='va'>x</span> <span class='op'>==</span> <span class='fl'>20</span>, <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='st'>"FALSE"</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='st'>"TRUE"</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
+</div>
+</div>
+<ol type="A">
+<li>
+TRUE
+</li>
+<li>
+FALSE
+</li>
+</ol>
+</section>
+<section id="see-answer-2" class="panel-name panel">
+<h3 class="panel-name">See Answer</h3>
+<p>What will be the output of:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fl'>20</span></span>
+<span><span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span><span class='op'>(</span><span class='va'>x</span> <span class='op'>==</span> <span class='fl'>20</span>, <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='st'>"FALSE"</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='st'>"TRUE"</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
+</div>
+</div>
+<ol type="A">
+<li>
+TRUE
+</li>
+<li>
+<b>FALSE</b>
+</li>
+</ol>
+</section>
+</div>
+<h2 id="control-flow-exercises">Control flow exercises</h2>
+<div class="panelset">
+<section id="exercises-1" class="panel-name panel">
+<h3 class="panel-name">Exercises</h3>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Exercise 4: Try and write an if statement, printing &quot;below 5&quot; if the input</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co"># value is &lt;5, and &quot;5 up&quot; if 5 or above:</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Exercise 5: This if statement doesn&#39;t work. Why not? Try to fix it:</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>input <span class="ot">&lt;-</span> <span class="st">&quot;apple&quot;</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (input <span class="sc">==</span> <span class="st">&quot;apple&quot;</span>) {</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  output <span class="ot">&lt;-</span> <span class="st">&quot;This is an apple&quot;</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>  output <span class="ot">&lt;-</span> <span class="st">&quot;This is not an apple or a pear&quot;</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> <span class="cf">if</span> (input <span class="sc">==</span> <span class="st">&quot;pear&quot;</span>) {</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>  output <span class="ot">&lt;-</span> <span class="st">&quot;This is a pear&quot;</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(output)</span></code></pre></div>
+</div>
+</section>
+<section id="example-solutions-1" class="panel-name panel">
+<h3 class="panel-name">Example solutions</h3>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'># Exercise 4: Try and write an if statement, printing "below 5" if the input</span></span>
+<span><span class='co'># value is &lt;5, and "5 up" if 5 or above:</span></span>
+<span><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fl'>6</span></span>
+<span><span class='kw'>if</span> <span class='op'>(</span><span class='va'>x</span> <span class='op'>&lt;</span> <span class='fl'>5</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span>  <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='st'>"below 5"</span><span class='op'>)</span></span>
+<span><span class='op'>}</span> <span class='kw'>else</span> <span class='kw'>if</span> <span class='op'>(</span><span class='va'>x</span> <span class='op'>&gt;=</span> <span class='fl'>5</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span>  <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='st'>"5 up"</span><span class='op'>)</span></span>
+<span><span class='op'>}</span></span>
+<span></span>
+<span><span class='co'># Exercise 5: This if statement doesn't work. Why not? Try to fix it:</span></span>
+<span><span class='co'># Answer: else and else if were the wrong way around!</span></span>
+<span><span class='va'>input</span> <span class='op'>&lt;-</span> <span class='st'>"apple"</span></span>
+<span><span class='kw'>if</span> <span class='op'>(</span><span class='va'>input</span> <span class='op'>==</span> <span class='st'>"apple"</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span>  <span class='va'>output</span> <span class='op'>&lt;-</span> <span class='st'>"This is an apple"</span></span>
+<span><span class='op'>}</span> <span class='kw'>else</span> <span class='kw'>if</span> <span class='op'>(</span><span class='va'>input</span> <span class='op'>==</span> <span class='st'>"pear"</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span>  <span class='va'>output</span> <span class='op'>&lt;-</span> <span class='st'>"This is a pear"</span></span>
+<span><span class='op'>}</span> <span class='kw'>else</span> <span class='op'>{</span></span>
+<span>  <span class='va'>output</span> <span class='op'>&lt;-</span> <span class='st'>"This is not an apple or a pear"</span></span>
+<span><span class='op'>}</span></span>
+<span><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>output</span><span class='op'>)</span></span></code></pre>
+</div>
+</div>
+</section>
+</div>
 <h1 id="combining-loopsconditional-statements">Combining loops/conditional statements</h1>
 <p>You can combine any of the above loops/conditional statements by nesting them.</p>
 <h2 id="example">Example</h2>
@@ -2643,16 +2673,46 @@ print(num_apples)</code></pre>
 </div>
 </div>
 <p>Note the use of <code>%in%</code> here for the <code>if</code> statement only. The <code>for</code> loop knows how to use a regular <code>in</code>, as it iterates over the contents of the sequence. However, the <code>if</code> statement requires a relational operator with result <code>TRUE</code> or <code>FALSE</code>. To check whether a variable is included within a list or vector, you can use <code>%in%</code> as you can see here.</p>
-<p><strong><em>Poll 5. I want to print a baby name if it’s in the top 10, but only if there are more than 5 babies in my database. What type of control flow structure would I start with, i.e., my first/outer-most one?</em></strong>
-- a for loop<br />
-- an if statement<br />
-- a while loop</p>
-<p><a href="#answers">Answer</a></p>
+<h2 id="quiz-4">Quiz 4</h2>
+<div class="panelset">
+<section id="question-3" class="panel-name panel">
+<h3 class="panel-name">Question</h3>
+<p>I want to print a baby name if it’s in the top 10, but only if there are more than 5 babies in my database.
+What type of control flow structure would I start with (i.e. the first/outer-most one)?</p>
+<ol type="A">
+<li>
+for loop
+</li>
+<li>
+if statement
+</li>
+<li>
+while loop
+</li>
+</ol>
+</section>
+<section id="see-answer-3" class="panel-name panel">
+<h3 class="panel-name">See Answer</h3>
+<p>I want to print a baby name if it’s in the top 10, but only if there are more than 5 babies in my database.
+What type of control flow structure would I start with (i.e. the first/outer-most one)?</p>
+<ol type="A">
+<li>
+for loop
+</li>
+<li>
+<b>if statement</b>
+</li>
+<li>
+while loop
+</li>
+</ol>
+</section>
+</div>
 <h2 id="keep-track-of-your-brackets">Keep track of your brackets</h2>
 <p>In nested loops, it is easily done to forget a bracket or have an extra one. In your script, you can place your cursor directly after one of the brackets, and the corresponding bracket will be highlighted.</p>
 <p>To keep track of your nested loops, and all the brackets required, it also helps a lot to use the correct indentation. You can re-indent lines automically by highlighting a section of code, then Code -&gt; Reindent Lines, or use the shortcut ctrl-I.</p>
-<h2 id="advanced-loop-features">Advanced loop features:</h2>
-<h3 id="break">Break</h3>
+<h1 id="advanced-loop-features">Advanced loop features</h1>
+<h2 id="break">Break</h2>
 <p>Sometimes, you want the loop to run, but stop when a certain criterion is reached. In this scenario, you can use the <code>break</code> statement.</p>
 <p>An example: you want to write out some data, but your system can’t handle more than 10 characters in the filename. Your <code>for</code> loop will print the output (in your real code, this would be a statement writing the data using the supplied filename), but it will first count the number of characters in your filename, and stop if the name is too long, so that your system doesn’t crash.</p>
 <div class="layout-chunk" data-layout="l-body">
@@ -2666,7 +2726,7 @@ print(num_apples)</code></pre>
 <span><span class='op'>}</span></span></code></pre>
 </div>
 </div>
-<h3 id="next">Next</h3>
+<h2 id="next">Next</h2>
 <p>Actually, we want the above loop to not just stop, but skip filenames that are too long and carry on with the next one! For this, you can use <code>next</code>.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
@@ -2679,7 +2739,7 @@ print(num_apples)</code></pre>
 <span><span class='op'>}</span></span></code></pre>
 </div>
 </div>
-<h3 id="looping-index">Looping index</h3>
+<h2 id="looping-index">Looping index</h2>
 <p>As you know, a <code>for</code> loop will run for all values within the sequence. It can be very useful to have access to the index that goes along with each value. For example, you can use this to store the output in a vector, or to use a counter. The index reflects the current iteration of the loop.</p>
 <p>The following loop illustrates the difference between index and variable value:</p>
 <div class="layout-chunk" data-layout="l-body">
@@ -2723,336 +2783,139 @@ print(num_apples)</code></pre>
 <span><span class='op'>}</span></span></code></pre>
 </div>
 </div>
-<h1 id="exercises">Exercises</h1>
-<p>Please see Controlflow_Exercises.R
-(and afterwards Controlflow_Exercise_Solutions.R)</p>
-<ul>
-<li><p>Here are some additional beginner’s <a href="https://towardsdatascience.com/the-ultimate-guide-to-conditional-statements-in-r-25fee0a3e435">exercises</a> you can try, with hints and solutions if you get stuck.</p></li>
-<li><p>And some additional advanced material including exercises: <a href="https://adv-r.hadley.nz/control-flow.html">Advanced R: Control flow</a></p></li>
-</ul>
-<h1 id="switch">Switch</h1>
-<p><a href="https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/switch"><code>switch()</code></a> is a function included in <code>base R</code>. It evaluates the first argument, <code>EXPR</code>, and then selects the output from one of the further arguments. It is most applicable for cases when <code>EXPR</code> has a character-string value.</p>
-<strong>Syntax:</strong>
+<h2 id="control-flow-and-loops-excercises">Control flow and loops excercises</h2>
+<div class="panelset">
+<section id="exercises-2" class="panel-name panel">
+<h3 class="panel-name">Exercises</h3>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='kw'><a href='https://rdrr.io/r/base/switch.html'>switch</a></span><span class='op'>(</span><span class='va'>EXPR</span>, <span class='va'>...</span><span class='op'>)</span></span></code></pre>
-</div>
-</div>
-<p>The <strong>last argument</strong> in the function determines the output if none of the previous conditions are matched. If this is left blank and the input is unmatched, it will return <code>NULL</code>.</p>
-Redoing the traffic light example with <code>switch</code>:
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>colour</span> <span class='op'>&lt;-</span> <span class='st'>"green"</span></span>
-<span><span class='kw'><a href='https://rdrr.io/r/base/switch.html'>switch</a></span><span class='op'>(</span><span class='va'>colour</span>,</span>
-<span>       red <span class='op'>=</span> <span class='st'>"stop"</span>,</span>
-<span>       orange <span class='op'>=</span> <span class='st'>"stop if you are able to..."</span>,</span>
-<span>       green <span class='op'>=</span> <span class='st'>"go"</span>,</span>
-<span>       <span class='st'>"Warning: unexpected colour! Be careful and assess the situation..."</span><span class='op'>)</span></span></code></pre>
-</div>
-<pre><code>[1] &quot;go&quot;</code></pre>
-</div>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>colour</span> <span class='op'>&lt;-</span> <span class='st'>"white"</span></span>
-<span><span class='kw'><a href='https://rdrr.io/r/base/switch.html'>switch</a></span><span class='op'>(</span><span class='va'>colour</span>,</span>
-<span>       red <span class='op'>=</span> <span class='st'>"stop"</span>,</span>
-<span>       orange <span class='op'>=</span> <span class='st'>"stop if you are able to..."</span>,</span>
-<span>       green <span class='op'>=</span> <span class='st'>"go"</span>,</span>
-<span>       <span class='st'>"Warning: unexpected colour! Be careful and assess the situation..."</span><span class='op'>)</span></span></code></pre>
-</div>
-<pre><code>[1] &quot;Warning: unexpected colour! Be careful and assess the situation...&quot;</code></pre>
-</div>
-<p>You can find further information/examples <a href="https://adv-r.hadley.nz/control-flow.html#switch">here</a> and <a href="https://www.learnbyexample.org/r-switch-function/">here</a>.</p>
-<h1 id="functionals">Functionals</h1>
-<p>Functionals are functions which take another function as an argument, and return an object. The aim is to turn looped code into a function, which is then called on every element in the object (list, vector, matrix, etc.). The functions used within functionals can be <code>base R</code>, imported from a package, or custom made.</p>
-<p><br></p>
-<p>The <code>apply</code> family of functions are a group of <strong>functionals</strong> included in <code>base R</code>. Using these will avoid having to explicitly write a loop, and can make code cleaner and more efficient.</p>
-<p><br></p>
-<h2 id="apply">apply()</h2>
-<p><code>apply()</code> allows you to apply a function (<code>FUN</code>) over the margin of an array (<code>X</code>), and requires a dimension argument (<code>MARGIN</code>). The <code>MARGIN</code> argument determines which values are passed through the function. For 2-D arrays (matrices), <code>MARGIN = 1</code> indicates rows, and <code>MARGIN = 2</code> indicates columns.</p>
-<strong>Syntax:</strong>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/base/apply.html'>apply</a></span><span class='op'>(</span><span class='va'>X</span>, <span class='va'>MARGIN</span>, <span class='va'>FUN</span>, <span class='va'>...</span><span class='op'>)</span></span></code></pre>
-</div>
-</div>
-<p>For example, the code below uses <code>apply()</code> and the <code>max()</code> function to find the maximum value of each column of a matrix (<code>MARGIN = 2</code>) and then the maximum value of each row (<code>MARGIN = 1</code>).</p>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>my_matrix</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>5</span>, <span class='fl'>6</span>, <span class='fl'>7</span>, <span class='fl'>3</span>, <span class='fl'>1</span>, <span class='fl'>9</span>, <span class='fl'>5</span>, <span class='fl'>2</span>, <span class='fl'>4</span>, <span class='fl'>6</span>, <span class='fl'>4</span><span class='op'>)</span>, nrow <span class='op'>=</span> <span class='fl'>4</span><span class='op'>)</span></span>
-<span><span class='va'>my_matrix</span></span></code></pre>
-</div>
-<pre><code>     [,1] [,2] [,3]
-[1,]    1    3    2
-[2,]    5    1    4
-[3,]    6    9    6
-[4,]    7    5    4</code></pre>
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/base/apply.html'>apply</a></span><span class='op'>(</span><span class='va'>my_matrix</span>, <span class='fl'>2</span>, <span class='va'>max</span><span class='op'>)</span></span></code></pre>
-</div>
-<pre><code>[1] 7 9 6</code></pre>
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/base/apply.html'>apply</a></span><span class='op'>(</span><span class='va'>my_matrix</span>, <span class='fl'>1</span>, <span class='va'>max</span><span class='op'>)</span></span></code></pre>
-</div>
-<pre><code>[1] 3 5 9 7</code></pre>
-</div>
-<p><br></p>
-<p><br></p>
-<h2 id="lapply">lapply()</h2>
-<p><code>lapply()</code> takes an object (<code>X</code>), and applies a function (<code>FUN</code>) to each element of the object (list, vector, matrix, etc), returning a <strong>list</strong> of the same length.</p>
-<strong>Syntax:</strong>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span><span class='va'>X</span>, <span class='va'>FUN</span>, <span class='va'>...</span><span class='op'>)</span></span></code></pre>
-</div>
-</div>
-<p>For example, the code below uses <code>lapply()</code> to round each element of <code>my_list</code> using the <code>round()</code> function.</p>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>my_list</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>A <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1.36</span>, <span class='fl'>2.51</span>, <span class='fl'>7.70</span><span class='op'>)</span>,</span>
-<span>                B <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>9.50</span>, <span class='fl'>5.66</span>, <span class='fl'>2.55</span><span class='op'>)</span>,</span>
-<span>                C <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>4.02</span>, <span class='fl'>1.65</span>, <span class='fl'>3.11</span><span class='op'>)</span><span class='op'>)</span></span>
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'># Exercise 6: Can you expand the baby names example to print "This baby name is </span></span>
+<span><span class='co'># in the top 10 girls names" when this is the case?</span></span>
+<span><span class='co'># (hint: you'll need to add another 'database': </span></span>
+<span><span class='co'># top_10_2021_girls &lt;- c("Olivia", "Amelia", "Isla", "Ava", "Ivy", "Freya",</span></span>
+<span><span class='co'># "Lily", "Florence", "Mia", "Willow")</span></span>
 <span></span>
-<span><span class='va'>rounded_list</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span><span class='va'>my_list</span>, <span class='va'>round</span><span class='op'>)</span></span>
-<span><span class='va'>rounded_list</span></span></code></pre>
-</div>
-<pre><code>$A
-[1] 1 3 8
-
-$B
-[1] 10  6  3
-
-$C
-[1] 4 2 3</code></pre>
-</div>
-<p>If we try to do this without using a functional, an error will be returned:</p>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span><span class='op'>(</span><span class='va'>my_list</span><span class='op'>)</span></span></code></pre>
-</div>
-<pre><code>Error in round(my_list): non-numeric argument to mathematical function</code></pre>
-</div>
-<p><br></p>
-<h2 id="sapply">sapply()</h2>
-<p><code>sapply()</code> is very similar to <code>lapply()</code>. The input is the same, however it tries to simplify the output. It will try to return a vector or matrix where possible, e.g.:</p>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>rounded_list_simplified</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>sapply</a></span><span class='op'>(</span><span class='va'>my_list</span>, <span class='va'>round</span><span class='op'>)</span></span>
-<span><span class='va'>rounded_list_simplified</span></span></code></pre>
-</div>
-<pre><code>     A  B C
-[1,] 1 10 4
-[2,] 3  6 2
-[3,] 8  3 3</code></pre>
-</div>
-<p><br></p>
-<h2 id="additional-arguments">Additional arguments</h2>
-<p>Any additional arguments to the function used in the functional can also be added.</p>
-<p>The <code>round()</code> function defaults to rounding to an integer, however we can change this to 1 decimal place by adding <code>digits = 1</code>:</p>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>rounded_list_simplified</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>sapply</a></span><span class='op'>(</span><span class='va'>my_list</span>, <span class='va'>round</span>, digits <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span></span>
-<span><span class='va'>rounded_list_simplified</span></span></code></pre>
-</div>
-<pre><code>       A   B   C
-[1,] 1.4 9.5 4.0
-[2,] 2.5 5.7 1.6
-[3,] 7.7 2.5 3.1</code></pre>
-</div>
-<p>The family also includes other variations such as <a href="https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/mapply"><code>mapply()</code></a>, and <a href="https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/tapply"><code>tapply()</code></a> that we will not cover.</p>
-<p><em>Adapted from <a href="https://www.dataquest.io/blog/apply-functions-in-r-sapply-lapply-tapply/">dataquest</a></em></p>
-<p><br></p>
-<p><strong>Tidyverse equivalent</strong><br />
-The <code>tidyverse</code> has a package called <a href="https://purrr.tidyverse.org/index.html"><code>purrr</code></a> which contains useful functional programming tools. You can find out more <a href="https://adv-r.hadley.nz/functionals.html#functionals">here</a>.</p>
-<p><br></p>
-<h1 id="vectorisation">Vectorisation</h1>
-<p>Although functionals avoid explicitly writing loops, they still iterate over each element in the object. <a href="https://adv-r.hadley.nz/perf-improve.html?q=vect#vectorise"><strong>Vectorising</strong></a> code refers to using objects as a whole, i.e., operating on all elements at once, and is therefore much faster. Most of the functions in <code>base R</code> and other packages are already vectorised, such as <code>dplyr</code>.</p>
-For example, when adding two vectors (<code>x</code> and <code>y</code>), we could add each element together in a loop:
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>)</span></span>
-<span><span class='va'>y</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>6</span><span class='op'>:</span><span class='fl'>9</span><span class='op'>)</span></span>
+<span><span class='co'># This is a copy of the babies loop used in the training course:</span></span>
+<span><span class='va'>baby_names</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='st'>"Oliver"</span>, <span class='st'>"Leo"</span>, <span class='st'>"Olivia"</span>, <span class='st'>"Frank"</span><span class='op'>)</span></span>
+<span><span class='va'>top_10_2021_boys</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Noah"</span>, <span class='st'>"Oliver"</span>, <span class='st'>"George"</span>, <span class='st'>"Arthur"</span>, <span class='st'>"Muhammad"</span>, <span class='st'>"Leo"</span>, </span>
+<span>                      <span class='st'>"Harry"</span>, <span class='st'>"Oscar"</span>, <span class='st'>"Archie"</span>, <span class='st'>"Henry"</span><span class='op'>)</span></span>
 <span></span>
-<span><span class='va'>output</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>)</span></span>
-<span><span class='kw'>for</span> <span class='op'>(</span><span class='va'>i</span> <span class='kw'>in</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span><span class='op'>)</span><span class='op'>{</span></span>
-<span>  <span class='va'>output</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='va'>x</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span> <span class='op'>+</span> <span class='va'>y</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span></span>
-<span><span class='op'>}</span></span>
-<span><span class='va'>output</span></span></code></pre>
-</div>
-<pre><code>[1]  8 10 12 14</code></pre>
-</div>
-Or we could add the two objects together:
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>output</span> <span class='op'>&lt;-</span> <span class='va'>x</span> <span class='op'>+</span> <span class='va'>y</span></span>
-<span><span class='va'>output</span></span></code></pre>
-</div>
-<pre><code>[1]  8 10 12 14</code></pre>
-</div>
-<p><em>Adapted from <a href="https://swcarpentry.github.io/r-novice-gapminder/09-vectorization/index.html#:~:text=Most%20of%20R&#39;s%20functions%20are,read%2C%20and%20less%20error%20prone.">swcarpentry</a></em></p>
-<p><br></p>
-<h1 id="timing">Timing</h1>
-<h2 id="the-tictoc-package">The <code>tictoc</code> package:</h2>
-<p>In addition to writing more concise code, functionals and vectorisation can improve efficiency. We can test this using the <a href="https://cran.r-project.org/web/packages/tictoc/tictoc.pdf"><code>tictoc</code></a> package, which times how long a task takes to run.</p>
-<code>tic()</code> starts the timer, <code>toc()</code> ends it, and a title can be added within <code>tic()</code>, e.g.:
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span><span class='op'>(</span><span class='fl'>2e4</span><span class='op'>)</span></span>
-<span></span>
-<span><span class='fu'><a href='https://rdrr.io/pkg/tictoc/man/tic.html'>tic</a></span><span class='op'>(</span><span class='st'>"Rounding 20,000 random values in x to 2 d.p. using for loop"</span><span class='op'>)</span></span>
-<span></span>
-<span><span class='kw'>for</span> <span class='op'>(</span><span class='va'>i</span> <span class='kw'>in</span> <span class='fl'>1</span><span class='op'>:</span><span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span><span class='op'>)</span><span class='op'>{</span></span>
-<span>  <span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span><span class='op'>(</span><span class='va'>x</span>, digits <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span></span>
-<span><span class='op'>}</span></span>
-<span></span>
-<span><span class='fu'><a href='https://rdrr.io/pkg/tictoc/man/tic.html'>toc</a></span><span class='op'>(</span><span class='op'>)</span></span></code></pre>
-</div>
-<pre><code>Rounding 20,000 random values in x to 2 d.p. using for loop: 17.9 sec elapsed</code></pre>
-</div>
-<p>Timing the same code may vary on each run (due other computer processes), so repeating this will ensure accurate results.</p>
-<p>This is the simplest way to time tasks, however there are better packages for measuring performance and <a href="https://adv-r.hadley.nz/perf-measure.html">profiling</a> such as <a href="https://cran.r-project.org/web/packages/profvis/profvis.pdf"><code>profvis</code></a> and <a href="https://cran.r-project.org/web/packages/bench/index.html"><code>bench</code></a>.</p>
-<p><br></p>
-<h2 id="comparison-using-tictoc">Comparison using <code>tictoc</code></h2>
-<p><strong>State if a value is even or odd</strong></p>
-<p><code>df</code> is a data frame with 2 columns: <code>x</code> and <code>even_odd</code>.
-<code>x</code> is the integers from 2 to 200,000, and <code>even_odd</code> is currently full of NAs.</p>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span><span class='op'>:</span><span class='fl'>2e5</span><span class='op'>)</span></span>
-<span></span>
-<span><span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span><span class='va'>x</span>, even_odd <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='cn'>NA</span><span class='op'>)</span><span class='op'>)</span></span>
-<span></span>
-<span><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span></span></code></pre>
-</div>
-<pre><code>  x even_odd
-1 2       NA
-2 3       NA
-3 4       NA
-4 5       NA
-5 6       NA
-6 7       NA</code></pre>
-</div>
-<p><br>
-The task is to fill the <code>even_odd</code> column based on value of <code>x</code> (either “even” or “odd”).</p>
-<p>Using the <code>tictoc</code> package, we will compare the speeds of a variety of methods to do this:</p>
-<ul>
-<li><code>for</code> loop</li>
-<li><code>ifelse</code></li>
-<li>functional (<code>sapply</code>)</li>
-<li>vectorisation</li>
-<li><code>dplyr</code></li>
-</ul>
-<p>The <strong>modulo operator</strong>, %%, will be used. %% returns the remainder of the division of 2 numbers, e.g.,:</p>
-<p><code>5 %% 2 = 1</code> and <code>6 %% 3 = 0</code>.</p>
-<p><br></p>
-<h3 id="for-loop"><code>for</code> loop</h3>
-<p>Firstly, we will use a <code>for</code> loop:</p>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/pkg/tictoc/man/tic.html'>tic</a></span><span class='op'>(</span><span class='st'>"for loop- even/odd"</span><span class='op'>)</span></span>
-<span><span class='kw'>for</span> <span class='op'>(</span><span class='va'>i</span> <span class='kw'>in</span> <span class='fl'>1</span><span class='op'>:</span><span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>$</span><span class='va'>x</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span></span>
-<span>  <span class='kw'>if</span> <span class='op'>(</span><span class='va'>df</span><span class='op'>$</span><span class='va'>x</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span> <span class='op'><a href='https://rdrr.io/r/base/Arithmetic.html'>%%</a></span> <span class='fl'>2</span> <span class='op'>==</span> <span class='fl'>0</span><span class='op'>)</span> <span class='op'>{</span></span>
-<span>    <span class='va'>df</span><span class='op'>$</span><span class='va'>even_odd</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='st'>"even"</span></span>
-<span>  <span class='op'>}</span> <span class='kw'>else</span> <span class='op'>{</span></span>
-<span>    <span class='va'>df</span><span class='op'>$</span><span class='va'>even_odd</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='st'>"odd"</span></span>
+<span><span class='kw'>for</span> <span class='op'>(</span><span class='va'>baby_name</span> <span class='kw'>in</span> <span class='va'>baby_names</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span>  <span class='kw'>if</span> <span class='op'>(</span><span class='va'>baby_name</span> <span class='op'><a href='https://rdrr.io/r/base/match.html'>%in%</a></span> <span class='va'>top_10_2021_boys</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span>    <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>baby_name</span><span class='op'>)</span></span>
 <span>  <span class='op'>}</span></span>
 <span><span class='op'>}</span></span>
-<span><span class='fu'><a href='https://rdrr.io/pkg/tictoc/man/tic.html'>toc</a></span><span class='op'>(</span><span class='op'>)</span></span></code></pre>
-</div>
-<pre><code>for loop- even/odd: 76.58 sec elapsed</code></pre>
-</div>
-<p><br></p>
-<p>We will reset the data frame every time, to ensure that the timing is fair for each method.</p>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>df</span><span class='op'>$</span><span class='va'>even_odd</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='cn'>NA</span><span class='op'>)</span></span></code></pre>
-</div>
-</div>
-<p><br></p>
-<h3 id="ifelse-1"><code>ifelse</code></h3>
-<p>Next, we will use the <code>ifelse</code> function:</p>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/pkg/tictoc/man/tic.html'>tic</a></span><span class='op'>(</span><span class='st'>"ifelse - even/odd"</span><span class='op'>)</span></span>
-<span><span class='va'>df</span><span class='op'>$</span><span class='va'>even_odd</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span><span class='op'>(</span><span class='va'>x</span> <span class='op'><a href='https://rdrr.io/r/base/Arithmetic.html'>%%</a></span> <span class='fl'>2</span> <span class='op'>==</span> <span class='fl'>0</span>, <span class='st'>"even"</span>, <span class='st'>"odd"</span><span class='op'>)</span></span>
-<span><span class='fu'><a href='https://rdrr.io/pkg/tictoc/man/tic.html'>toc</a></span><span class='op'>(</span><span class='op'>)</span></span></code></pre>
-</div>
-<pre><code>ifelse - even/odd: 0.07 sec elapsed</code></pre>
-</div>
-<p><br></p>
-<p>Resetting the <code>even_odd</code> column of the data frame:</p>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>df</span><span class='op'>$</span><span class='va'>even_odd</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='cn'>NA</span><span class='op'>)</span></span></code></pre>
-</div>
-</div>
-<p><br></p>
-<h3 id="sapply-1"><code>sapply</code></h3>
-<p>Now we will use a functional: <code>sapply</code>.</p>
-<p>The <code>sapply</code> function needs a function to be applied. The function <code>func_even_odd()</code> has been created for this:</p>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>func_even_odd</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='op'>{</span></span>
-<span>  <span class='kw'>if</span> <span class='op'>(</span><span class='va'>x</span> <span class='op'><a href='https://rdrr.io/r/base/Arithmetic.html'>%%</a></span> <span class='fl'>2</span> <span class='op'>==</span> <span class='fl'>0</span><span class='op'>)</span> <span class='op'>{</span></span>
-<span>    <span class='st'>"even"</span></span>
+<span></span>
+<span><span class='co'># Now expand this to print "This baby name is in the top 10 girls names" when </span></span>
+<span><span class='co'># applicable:</span></span>
+<span></span>
+<span></span>
+<span><span class='co'># Exercise 7: This nested loop doesn't work. Why not? Try to fix it:</span></span>
+<span></span>
+<span><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span></span>
+<span><span class='kw'>for</span> <span class='op'>(</span><span class='va'>i</span> <span class='kw'>in</span> <span class='va'>x</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span>  <span class='kw'>if</span> <span class='op'>(</span><span class='va'>x</span> <span class='op'>&lt;</span> <span class='fl'>3</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span>    <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='st'>"i = "</span>, <span class='va'>i</span>, <span class='st'>" = below 3"</span><span class='op'>)</span><span class='op'>)</span></span>
 <span>  <span class='op'>}</span> <span class='kw'>else</span> <span class='op'>{</span></span>
-<span>    <span class='st'>"odd"</span></span>
+<span>    <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='st'>"i = "</span>, <span class='va'>i</span>, <span class='st'>" = not below 3"</span><span class='op'>)</span><span class='op'>)</span></span>
 <span>  <span class='op'>}</span></span>
-<span><span class='op'>}</span></span></code></pre>
-</div>
-</div>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/pkg/tictoc/man/tic.html'>tic</a></span><span class='op'>(</span><span class='st'>"sapply - even/odd"</span><span class='op'>)</span></span>
-<span><span class='va'>df</span><span class='op'>$</span><span class='va'>even_odd</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>sapply</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>$</span><span class='va'>x</span>, <span class='va'>func_even_odd</span><span class='op'>)</span></span>
-<span><span class='fu'><a href='https://rdrr.io/pkg/tictoc/man/tic.html'>toc</a></span><span class='op'>(</span><span class='op'>)</span></span></code></pre>
-</div>
-<pre><code>sapply - even/odd: 0.17 sec elapsed</code></pre>
-</div>
-<p><br></p>
-<h3 id="vectorisation-1"><code>Vectorisation</code></h3>
-<p>Next we will use vectorised code:</p>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>df</span><span class='op'>$</span><span class='va'>even_odd</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='cn'>NA</span><span class='op'>)</span></span>
+<span><span class='op'>}</span></span>
 <span></span>
-<span><span class='fu'><a href='https://rdrr.io/pkg/tictoc/man/tic.html'>tic</a></span><span class='op'>(</span><span class='st'>"vectorised - even/odd"</span><span class='op'>)</span></span>
-<span><span class='va'>df</span><span class='op'>$</span><span class='va'>even_odd</span><span class='op'>[</span><span class='va'>df</span><span class='op'>$</span><span class='va'>x</span> <span class='op'><a href='https://rdrr.io/r/base/Arithmetic.html'>%%</a></span> <span class='fl'>2</span> <span class='op'>==</span> <span class='fl'>0</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='st'>"even"</span></span>
-<span><span class='va'>df</span><span class='op'>$</span><span class='va'>even_odd</span><span class='op'>[</span><span class='va'>df</span><span class='op'>$</span><span class='va'>x</span> <span class='op'><a href='https://rdrr.io/r/base/Arithmetic.html'>%%</a></span> <span class='fl'>2</span> <span class='op'>!=</span> <span class='fl'>0</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='st'>"odd"</span></span>
-<span><span class='fu'><a href='https://rdrr.io/pkg/tictoc/man/tic.html'>toc</a></span><span class='op'>(</span><span class='op'>)</span></span></code></pre>
+<span></span>
+<span><span class='co'>## The following are more advanced exercises:</span></span>
+<span></span>
+<span><span class='co'># Exercise 8: Can you write the apples example `while` loop as a `for` loop</span></span>
+<span><span class='co'># instead? Try to use an index iterator, and print this each time the loop runs:</span></span>
+<span></span>
+<span><span class='co'># A repeat of the while loop used in the course:</span></span>
+<span><span class='va'>num_apples</span> <span class='op'>&lt;-</span> <span class='fl'>20</span></span>
+<span><span class='kw'>while</span> <span class='op'>(</span><span class='va'>num_apples</span> <span class='op'>&gt;</span> <span class='fl'>2</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span>  <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='st'>"Keep handing out apples"</span><span class='op'>)</span></span>
+<span>  <span class='va'>num_apples</span> <span class='op'>&lt;-</span> <span class='va'>num_apples</span> <span class='op'>-</span> <span class='fl'>1</span></span>
+<span><span class='op'>}</span></span>
+<span><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='st'>"Stop handing out apples, because you only have "</span>,</span>
+<span>             <span class='va'>num_apples</span>, <span class='st'>" left"</span><span class='op'>)</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='co'># Now try writing this as a for loop instead (requires some simple maths):</span></span></code></pre>
 </div>
-<pre><code>vectorised - even/odd: 0.02 sec elapsed</code></pre>
 </div>
-<p><br></p>
-<h3 id="dplyr"><code>dplyr</code></h3>
-<p>Finally, we will use the <code>dplyr</code> package, using <code>mutate()</code> and <code>case_when()</code>:</p>
+</section>
+<section id="example-solutions-2" class="panel-name panel">
+<h3 class="panel-name">Example solutions</h3>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>df</span><span class='op'>$</span><span class='va'>even_odd</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='cn'>NA</span><span class='op'>)</span></span>
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'># Exercise 6: Can you expand the baby names example to print "This baby name is </span></span>
+<span><span class='co'># in the top 10 girls names" when this is the case?</span></span>
+<span><span class='co'># (hint: you'll need to add another 'database': </span></span>
+<span><span class='co'># top_10_2021_girls &lt;- c("Olivia", "Amelia", "Isla", "Ava", "Ivy", "Freya",</span></span>
+<span><span class='co'># "Lily", "Florence", "Mia", "Willow")</span></span>
 <span></span>
-<span><span class='fu'><a href='https://rdrr.io/pkg/tictoc/man/tic.html'>tic</a></span><span class='op'>(</span><span class='st'>"dplyr - even/odd"</span><span class='op'>)</span></span>
-<span><span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span><span class='va'>df</span>, even_odd <span class='op'>=</span> <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/case_when.html'>case_when</a></span><span class='op'>(</span><span class='va'>x</span> <span class='op'><a href='https://rdrr.io/r/base/Arithmetic.html'>%%</a></span> <span class='fl'>2</span> <span class='op'>==</span> <span class='fl'>0</span> <span class='op'>~</span> <span class='st'>"even"</span>,</span>
-<span>                                                    <span class='va'>x</span> <span class='op'><a href='https://rdrr.io/r/base/Arithmetic.html'>%%</a></span> <span class='fl'>2</span> <span class='op'>!=</span> <span class='fl'>0</span> <span class='op'>~</span> <span class='st'>"odd"</span><span class='op'>)</span><span class='op'>)</span></span>
-<span><span class='fu'><a href='https://rdrr.io/pkg/tictoc/man/tic.html'>toc</a></span><span class='op'>(</span><span class='op'>)</span></span></code></pre>
+<span><span class='co'># This is a copy of the babies loop used in the training course:</span></span>
+<span><span class='va'>baby_names</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='st'>"Oliver"</span>, <span class='st'>"Leo"</span>, <span class='st'>"Olivia"</span>, <span class='st'>"Frank"</span><span class='op'>)</span></span>
+<span><span class='va'>top_10_2021_boys</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Noah"</span>, <span class='st'>"Oliver"</span>, <span class='st'>"George"</span>, <span class='st'>"Arthur"</span>, <span class='st'>"Muhammad"</span>, <span class='st'>"Leo"</span>, </span>
+<span>                      <span class='st'>"Harry"</span>, <span class='st'>"Oscar"</span>, <span class='st'>"Archie"</span>, <span class='st'>"Henry"</span><span class='op'>)</span></span>
+<span><span class='va'>top_10_2021_girls</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Olivia"</span>, <span class='st'>"Amelia"</span>, <span class='st'>"Isla"</span>, <span class='st'>"Ava"</span>, <span class='st'>"Ivy"</span>, <span class='st'>"Freya"</span>,</span>
+<span>                       <span class='st'>"Lily"</span>, <span class='st'>"Florence"</span>, <span class='st'>"Mia"</span>, <span class='st'>"Willow"</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='kw'>for</span> <span class='op'>(</span><span class='va'>baby_name</span> <span class='kw'>in</span> <span class='va'>baby_names</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span>  <span class='kw'>if</span> <span class='op'>(</span><span class='va'>baby_name</span> <span class='op'><a href='https://rdrr.io/r/base/match.html'>%in%</a></span> <span class='va'>top_10_2021_boys</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span>    <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>baby_name</span><span class='op'>)</span></span>
+<span>  <span class='op'>}</span> <span class='kw'>else</span> <span class='kw'>if</span> <span class='op'>(</span><span class='va'>baby_name</span> <span class='op'><a href='https://rdrr.io/r/base/match.html'>%in%</a></span> <span class='va'>top_10_2021_girls</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span>    <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>baby_name</span><span class='op'>)</span></span>
+<span>    <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='st'>"This baby name is in the top 10 girls names"</span> <span class='op'>)</span></span>
+<span>  <span class='op'>}</span></span>
+<span><span class='op'>}</span></span>
+<span></span>
+<span><span class='co'># Exercise 7: This nested loop doesn't work. Why not? Try to fix it:</span></span>
+<span><span class='co'># Answer: you used the wrong iterator (x vs i)!</span></span>
+<span><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span></span>
+<span><span class='kw'>for</span> <span class='op'>(</span><span class='va'>i</span> <span class='kw'>in</span> <span class='va'>x</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span>  <span class='kw'>if</span> <span class='op'>(</span><span class='va'>i</span> <span class='op'>&lt;</span> <span class='fl'>3</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span>    <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='st'>"i = "</span>, <span class='va'>i</span>, <span class='st'>" = below 3"</span><span class='op'>)</span><span class='op'>)</span></span>
+<span>  <span class='op'>}</span> <span class='kw'>else</span> <span class='op'>{</span></span>
+<span>    <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='st'>"i = "</span>, <span class='va'>i</span>, <span class='st'>" = not below 3"</span><span class='op'>)</span><span class='op'>)</span></span>
+<span>  <span class='op'>}</span></span>
+<span><span class='op'>}</span></span>
+<span></span>
+<span><span class='co'>## The following are more advanced exercises:</span></span>
+<span></span>
+<span><span class='co'># Exercise 8: Can you write the apples example `while` loop as a `for` loop</span></span>
+<span><span class='co'># instead? Try to use an index iterator, and print this each time the loop runs:</span></span>
+<span></span>
+<span><span class='co'># for loop:</span></span>
+<span><span class='va'>num_apples</span> <span class='op'>&lt;-</span> <span class='fl'>20</span></span>
+<span><span class='va'>num_apples_to_keep</span> <span class='op'>&lt;-</span> <span class='fl'>2</span></span>
+<span><span class='va'>num_apples_hand_out</span> <span class='op'>&lt;-</span> <span class='fl'>1</span></span>
+<span><span class='kw'>for</span> <span class='op'>(</span><span class='va'>i</span> <span class='kw'>in</span> <span class='fl'>1</span><span class='op'>:</span><span class='op'>(</span><span class='op'>(</span><span class='va'>num_apples</span> <span class='op'>-</span> <span class='va'>num_apples_to_keep</span><span class='op'>)</span> <span class='op'>/</span> <span class='va'>num_apples_hand_out</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span>  <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='st'>"Loop iteration: "</span>, <span class='va'>i</span><span class='op'>)</span><span class='op'>)</span></span>
+<span>  <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='st'>"Keep handing out apples, you still have "</span>,</span>
+<span>               <span class='va'>num_apples</span>, <span class='st'>" left"</span><span class='op'>)</span><span class='op'>)</span></span>
+<span>  <span class='va'>num_apples</span> <span class='op'>&lt;-</span> <span class='va'>num_apples</span> <span class='op'>-</span> <span class='va'>num_apples_hand_out</span></span>
+<span><span class='op'>}</span></span>
+<span><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='st'>"Stop handing out apples, because you only have "</span>,</span>
+<span>             <span class='va'>num_apples</span>, <span class='st'>" left"</span><span class='op'>)</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='co'># or, without the variables assigned in advance:</span></span>
+<span><span class='va'>num_apples</span> <span class='op'>&lt;-</span> <span class='fl'>20</span></span>
+<span><span class='kw'>for</span> <span class='op'>(</span><span class='va'>i</span> <span class='kw'>in</span> <span class='fl'>1</span><span class='op'>:</span><span class='op'>(</span><span class='op'>(</span><span class='va'>num_apples</span> <span class='op'>-</span> <span class='fl'>2</span><span class='op'>)</span> <span class='op'>/</span> <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span>  <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='st'>"Loop iteration: "</span>, <span class='va'>i</span><span class='op'>)</span><span class='op'>)</span></span>
+<span>  <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='st'>"Keep handing out apples, you still have "</span>,</span>
+<span>               <span class='va'>num_apples</span>, <span class='st'>" left"</span><span class='op'>)</span><span class='op'>)</span></span>
+<span>  <span class='va'>num_apples</span> <span class='op'>&lt;-</span> <span class='va'>num_apples</span> <span class='op'>-</span> <span class='fl'>1</span></span>
+<span><span class='op'>}</span></span>
+<span><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='st'>"Stop handing out apples, because you only have "</span>,</span>
+<span>             <span class='va'>num_apples</span>, <span class='st'>" left"</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
 </div>
-<pre><code>dplyr - even/odd: 0.08 sec elapsed</code></pre>
 </div>
-<p><br></p>
+</section>
+</div>
+<h1 id="additional-resources">Additional resources</h1>
+<p>For more information about control flow see:</p>
 <ul>
-<li><p>We can see that using an explicit <code>for</code> loop takes the longest by far, and that using <code>sapply</code> improves the speed.</p></li>
-<li><p>The vectorised code is the quickest of all methods, however, readability and interpretability are important, which can sometimes be an issue.</p></li>
-<li><p><code>case_when</code> allows the vectorisation of <code>ifelse</code> statements. We can see that for this task, where there is only two options, the speed and readability are similar. However, if there are more than two options, <code>case_when</code> is preferable, to avoid nested <code>ifelse</code> statements.</p></li>
+<li><a href="https://adv-r.hadley.nz/control-flow.html">Advanced R: Control flow</a></li>
+<li><a href="https://learninghub.ons.gov.uk/course/view.php?id=635">R Control Flow, Loops and Functions</a> - course on LearningHub</li>
 </ul>
-<h1 id="answers">Poll answers</h1>
-<p><strong>2: What is the output of the following for loop: for (x in 1:2) { y &lt;- x + 3, print(y) }</strong><br />
-<code>4, 5</code></p>
-<p><strong>3: Given a &lt;- 4 and b &lt;- 6, what is the output to: a &lt; b</strong><br />
-<code>TRUE</code></p>
-<p><strong>4: Given x &lt;- 20, what is the output to: ifelse(x == 20, print(“FALSE”), print(“TRUE”))?</strong><br />
-<code>FALSE</code></p>
-<p><strong>Poll 5. I want to print a baby name if it’s in the top 10, but only if there are more than 5 babies in my database. What type of control flow structure would I start with, i.e., my first/outer-most one?</strong>
-an if statement</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>

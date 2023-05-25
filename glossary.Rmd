@@ -1,0 +1,32 @@
+---
+title: "Glossary"
+output:
+  distill::distill_article:
+    toc: true
+    toc_depth: 2
+    number_sections: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
+```
+
+Glossary of terms that appear across the tutorials:
+
+```{r include = T, eval = T, echo = F}
+
+glossary <- read.csv("data/glossary_of_jargon.csv", header = T, check.names = F, fileEncoding="UTF-8-BOM") %>%
+  dplyr::arrange(Jargon)
+
+links_glossary <- glossary$`Tutorials for further explanation (many exist)`
+
+glossary %>%
+  dplyr::select(-`Tutorials for further explanation (many exist)`) %>%
+  dplyr::mutate(`Links to further info` = 
+                  kableExtra::cell_spec(
+                    Jargon, "html", link = links_glossary)) %>%
+  kableExtra::kable("html", escape = FALSE) %>%
+  kableExtra::kable_styling(bootstrap_options = c("hover", "condensed"))
+
+
+```

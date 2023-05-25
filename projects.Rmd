@@ -126,5 +126,75 @@ project/
 
 For a big project, you should really unit test your functions. As always code should be quality assured by another analyst. Ideally you should produce logs each time your code is run with outcomes of your sanity checks and any parameters specified in the config.
 
-### Q3,4
+## Quiz 2
+
+::::: {.panelset}
+
+::: {.panel}
+
+### Question {.panel-name}
+
+What files every project should include?
+
+<ol type="A">
+  <li>README, functions.R</li>
+  <li>main.R, config, functions.R</li>
+  <li>README, main.R</li>
+  <li>main.R, config, README</li>
+</ol>
+
+:::
+
+::: {.panel}
+
+### See Answer {.panel-name}
+What files every project should include?
+
+<ol type="A">
+  <li>README, functions.R</li>
+  <li>main.R, config, functions.R</li>
+  <li><b>README, main.R</b></li>
+  <li>main.R, config, README</li>
+</ol>
+
+For small projects config might be a section in the main script.
+:::
+
+:::::
+
+## Quiz 3
+
+::::: {.panelset}
+
+::: {.panel}
+
+### Question {.panel-name}
+
+What quality assurance of code should always be employed across small, medium and large projects?
+
+<ol type="A">
+  <li>peer review of the code</li>
+  <li>dual runs with another analyst and comparing results</li>
+  <li>unit testing</li>
+</ol>
+
+This question refers to QA of code, not methodology or results. We only talk about QA of code in this tutorial.
+:::
+
+::: {.panel}
+
+### See Answer {.panel-name}
+
+What quality assurance of code should always be employed across small, medium and large projects?
+
+<ol type="A">
+  <li><b>peer review of the code</b></li>
+  <li>dual runs with another analyst and comparing results</li>
+  <li>unit testing</li>
+</ol>
+
+:::
+
+:::::
+
 

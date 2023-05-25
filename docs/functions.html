@@ -2072,8 +2072,8 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 
   <!--/radix_placeholder_distill-->
   <script src="site_libs/header-attrs-2.13/header-attrs.js"></script>
-  <script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
-  <link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+  <link href="site_libs/panelset-0.2.6/panelset.css" rel="stylesheet" />
+  <script src="site_libs/panelset-0.2.6/panelset.js"></script>
   <script src="site_libs/popper-2.6.0/popper.min.js"></script>
   <link href="site_libs/tippy-6.2.7/tippy.css" rel="stylesheet" />
   <link href="site_libs/tippy-6.2.7/tippy-light-border.css" rel="stylesheet" />
@@ -2116,8 +2116,10 @@ RAP training in R
 <div class="nav-dropdown-content">
 <a href="control_flow.html">Control Flow</a>
 <a href="functions.html">Functions</a>
+<a href="advanced_functions.html">Advanced Functions</a>
 <a href="projects.html">Project structure</a>
 <a href="packages.html">Packages and unit tests</a>
+<a href="glossary.html">Glossary</a>
 </div>
 </div>
 <a href="javascript:void(0);" class="nav-toggle">&#9776;</a>
@@ -2144,24 +2146,26 @@ RAP training in R
 <li><a href="#intro">What are Functions?</a>
 <ul>
 <li><a href="#benefit-of-functions">Benefit of Functions</a></li>
+<li><a href="#repetitive-vs-functionalised-code">Repetitive vs functionalised code</a></li>
 <li><a href="#three-elements-of-a-function">Three Elements of a Function</a></li>
 <li><a href="#analogy-baking-a-cake">Analogy: Baking a Cake</a></li>
-<li><a href="#two-main-types-of-function">Two main types of function:</a></li>
+<li><a href="#two-main-types-of-functions">Two main types of functions:</a></li>
 </ul></li>
 <li><a href="#how-to-write-and-call-a-function">How to write and call a function</a>
 <ul>
-<li><a href="#simplesub-functions">Simple/Sub-Functions</a></li>
+<li><a href="#nested-functions">Nested functions</a></li>
 <li><a href="#wrapper-functions">Wrapper Functions</a></li>
 </ul></li>
 <li><a href="#arguments">Arguments</a>
 <ul>
 <li><a href="#required-arguments">Required arguments</a></li>
 <li><a href="#default-arguments">Default arguments</a></li>
+<li><a href="#quiz-1">Quiz 1</a></li>
 <li><a href="#assignment">Assignment</a></li>
 <li><a href="#order-of-arguments-for-existing-and-own-functions">Order of arguments for existing and own functions</a></li>
+<li><a href="#functions-intro-excercises">Functions intro excercises</a></li>
 </ul></li>
-<li><a href="#intro-breakout-rooms">INTRO BREAKOUT ROOMS</a></li>
-<li><a href="#best-practice-style-of-function">Best Practice <strong>Style</strong> of Function</a>
+<li><a href="#best-practice-style-for-functions">Best Practice <strong>Style</strong> for functions</a>
 <ul>
 <li><a href="#function-name">Function name</a></li>
 <li><a href="#lines">Lines</a></li>
@@ -2172,221 +2176,33 @@ RAP training in R
 <li><a href="#arguments-1">Arguments</a></li>
 <li><a href="#comments">Comments</a></li>
 <li><a href="#piping-styledplyr-advanced">Piping <code>%&gt;%</code> style/<code>dplyr</code> (Advanced)</a></li>
+<li><a href="#quiz-2">Quiz 2</a></li>
 </ul></li>
 <li><a href="#docstrings">Documentation (docstrings)</a>
 <ul>
 <li><a href="#function-documentation-roxygen2">Function documentation: <code>roxygen2</code></a></li>
+<li><a href="#quiz-3">Quiz 3</a></li>
 </ul></li>
 <li><a href="#piping">Piping <code>%&gt;%</code></a></li>
 <li><a href="#warnings-and-errors">Warnings and Errors</a>
 <ul>
 <li><a href="#warnings">Warnings</a></li>
 <li><a href="#errors">Errors</a></li>
+<li><a href="#quiz-3-1">Quiz 3</a></li>
+<li><a href="#function-exercises-cd">Function exercises cd</a></li>
 </ul></li>
-<li><a href="#intro-breakout-rooms-1">INTRO BREAKOUT ROOMS</a></li>
-<li><a href="#advanced-breakout-rooms">ADVANCED BREAKOUT ROOMS</a></li>
-<li><a href="#advanced">Intermediate/Advanced Functions</a></li>
-<li><a href="#lists-of-functions">Lists of functions</a></li>
-<li><a href="#functionals">Functionals</a></li>
-<li><a href="#anonymous-functions">Anonymous functions</a></li>
-<li><a href="#functions-with-dynamic-arguments">Functions with Dynamic Arguments</a>
-<ul>
-<li><a href="#data-masking">Data Masking</a></li>
-<li><a href="#tidy-selection">Tidy Selection</a></li>
-</ul></li>
-<li><a href="#advanced-breakout-rooms-1">ADVANCED BREAKOUT ROOMS</a></li>
-<li><a href="#answers">Poll Answers</a></li>
+<li><a href="#additional-resources">Additional resources</a></li>
 </ul>
 </nav>
 </div>
 <p><strong>Prerequisites:</strong></p>
 <ul>
-<li>RStudio and R installed on laptop
-<ul>
+<li>RStudio and R installed on laptop<br />
+</li>
 <li>Packages required: <code>tidyverse</code><br />
 </li>
-</ul></li>
-<li>Basic R coding<br />
-</li>
-<li>Required for Advanced section: Coding in <code>dplyr</code></li>
+<li>Basic R coding skills</li>
 </ul>
-<p>Click here to skip to the <a href="#advanced">Advanced Section</a>.</p>
-<p><strong>Glossary</strong></p>
-<p>Here is a glossary of some terms I may use in this presentation and some links to learn more:</p>
-<div class="layout-chunk" data-layout="l-body">
-<table class="table table-hover table-condensed" style="margin-left: auto; margin-right: auto;">
-<thead>
-<tr>
-<th style="text-align:left;">
-Jargon
-</th>
-<th style="text-align:left;">
-Definition
-</th>
-<th style="text-align:left;">
-Links to further info
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-Argument
-</td>
-<td style="text-align:left;">
-The input(s) to a function to make it do what you want.
-</td>
-<td style="text-align:left;">
-<a href="https://data-flair.training/blogs/r-arguments-introduction/" style="     ">Argument</a>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Console
-</td>
-<td style="text-align:left;">
-Where the code runs. You can interact directly with the console (type in it). Or when you run code in the script, it prints/runs here. Printouts also are show here.
-</td>
-<td style="text-align:left;">
-<a href="https://swcarpentry.github.io/r-novice-inflammation/09-supp-intro-rstudio/index.html" style="     ">Console</a>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Environment
-</td>
-<td style="text-align:left;">
-Generally talking about the global environment. Contains all the variables, data and functions that are accessible to the user.
-</td>
-<td style="text-align:left;">
-<a href="https://www.datamentor.io/r-programming/environment-scope/" style="     ">Environment</a>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-File path
-</td>
-<td style="text-align:left;">
-Location/address of your folders, sub-folders and files inside your drives. Can be see in Window’s File Explorer address bar. Used to find and read in objects/data and save out objects/data.
-</td>
-<td style="text-align:left;">
-<a href="https://sscc.wisc.edu/sscc/pubs/dwr/reading-text-data.html#paths-and-working-directories" style="     ">File path</a>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Indent
-</td>
-<td style="text-align:left;">
-How many tabs/spaces away from the right hand side of the script the code is written. R doesn’t generally mind about indents but there is best practice.
-</td>
-<td style="text-align:left;">
-<a href="https://statisticsglobe.com/indent-multiple-lines-code-rstudio" style="     ">Indent</a>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Parentheses, Brackets, Bracers
-</td>
-<td style="text-align:left;">
-Round brackets (), Curly brackets {}, Square brackets []
-</td>
-<td style="text-align:left;">
-<a href="https://www.ucl.ac.uk/~uctqiax/PUBLG100/2015/faq/operators.html" style="     ">Parentheses, Brackets, Bracers</a>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Pipe
-</td>
-<td style="text-align:left;">
-The operator %&gt;% from magrittr which allows functions to be called on dataframes in a sequential order.
-</td>
-<td style="text-align:left;">
-<a href="https://cran.r-project.org/web/packages/dplyr/vignettes/dplyr.html" style="     ">Pipe</a>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Print/Printout
-</td>
-<td style="text-align:left;">
-Outputs text, data etc to the console.
-</td>
-<td style="text-align:left;">
-<a href="https://www.geeksforgeeks.org/printing-output-of-an-r-program/" style="     ">Print/Printout</a>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Return
-</td>
-<td style="text-align:left;">
-Colloquially similar to printout but when regarding a function.
-</td>
-<td style="text-align:left;">
-<a href="https://www.datamentor.io/r-programming/return-function/" style="     ">Return</a>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Script
-</td>
-<td style="text-align:left;">
-A text file containing code (a sequence of commands) that can be edited and saved. Code runs in the console.
-</td>
-<td style="text-align:left;">
-<a href="http://mercury.webster.edu/aleshunas/R_learning_infrastructure/R%20scripts.html" style="     ">Script</a>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Syntax
-</td>
-<td style="text-align:left;">
-Akin to a languages grammar. A fancy way of saying how something in the code is written to get it to do what you want. The rules of writing code. Differs across different programming languages.
-</td>
-<td style="text-align:left;">
-<a href="https://www.computerworld.com/article/2497319/business-intelligence-beginner-s-guide-to-r-syntax-quirks-you-ll-want-to-know.html" style="     ">Syntax</a>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Terminal
-</td>
-<td style="text-align:left;">
-Provides access to the system shell (command line interface with things like file explorer, Git).
-</td>
-<td style="text-align:left;">
-<a href="https://support.posit.co/hc/en-us/articles/115010737148-Using-the-RStudio-Terminal-in-the-RStudio-IDE" style="     ">Terminal</a>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Variable assignment, Assign a variable
-</td>
-<td style="text-align:left;">
-Save something (data, value, function etc) to a variable, primarily using &lt;- or =, so that it is availble in the environment to be used in the code.
-</td>
-<td style="text-align:left;">
-<a href="https://www.tutorialspoint.com/r/r_variables.htm" style="     ">Variable assignment, Assign a variable</a>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Working directory
-</td>
-<td style="text-align:left;">
-Folder where you are working. It’s the place (the environment) where you have to store your files of your project in order to load them or where your R objects will be saved.
-</td>
-<td style="text-align:left;">
-<a href="https://r-coder.com/working-directory-r/" style="     ">Working directory</a>
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-<p><em><strong>Poll:</strong> What words come to mind when I say “Functions”?</em></p>
 <h1 id="intro">What are Functions?</h1>
 <p>Collection of statements orchestrated together to perform a specific operation.<br />
 A function takes input (arguments), applies a method (code) to those arguments and returns the output.<br />
@@ -2402,56 +2218,48 @@ E.g. <code>sum()</code> or <code>mean()</code>.<br />
 <li>Time-saving</li>
 <li>Quality</li>
 </ul>
+<h2 id="repetitive-vs-functionalised-code">Repetitive vs functionalised code</h2>
+<p>We want the average Petal Length/Petal Width ratio for the Sepal Lengths of less than 5, for each species separately (setosa, versicolor, virginica).</p>
+<div class="panelset">
+<section id="without-functions" class="panel-name panel">
+<h3 class="panel-name">Without functions</h3>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'>##### We want the average Petal Length/Petal Width ratio for the Sepal Lengths</span></span>
-<span>  <span class='co'># of less than 5</span></span>
-<span>  <span class='co'>##### For each species separately (setosa, versicolor, virginica)</span></span>
-<span></span>
-<span><span class='co'>### Example of repetitive code</span></span>
-<span></span>
-<span><span class='va'>setosa</span> <span class='op'>&lt;-</span> <span class='va'>iris</span><span class='op'>[</span><span class='va'>iris</span><span class='op'>$</span><span class='va'>Species</span> <span class='op'>==</span> <span class='st'>"setosa"</span>, <span class='op'>]</span></span>
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>setosa</span> <span class='op'>&lt;-</span> <span class='va'>iris</span><span class='op'>[</span><span class='va'>iris</span><span class='op'>$</span><span class='va'>Species</span> <span class='op'>==</span> <span class='st'>"setosa"</span>, <span class='op'>]</span></span>
 <span><span class='va'>setosa</span> <span class='op'>&lt;-</span> <span class='va'>setosa</span><span class='op'>[</span><span class='va'>setosa</span><span class='op'>$</span><span class='va'>Sepal.Length</span> <span class='op'>&lt;</span> <span class='fl'>7</span>, <span class='op'>]</span></span>
 <span><span class='va'>setosa</span><span class='op'>$</span><span class='va'>petal_length_width_ratio</span> <span class='op'>&lt;-</span> <span class='va'>setosa</span><span class='op'>$</span><span class='va'>Petal.Length</span> <span class='op'>/</span> <span class='va'>setosa</span><span class='op'>$</span><span class='va'>Petal.Width</span></span>
-<span><span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>setosa</span><span class='op'>$</span><span class='va'>petal_length_width_ratio</span><span class='op'>)</span></span></code></pre>
-</div>
-<pre><code>[1] 6.908</code></pre>
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>versicolor</span> <span class='op'>&lt;-</span> <span class='va'>iris</span><span class='op'>[</span><span class='va'>iris</span><span class='op'>$</span><span class='va'>Species</span> <span class='op'>==</span> <span class='st'>"versicolor"</span>, <span class='op'>]</span></span>
+<span><span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>setosa</span><span class='op'>$</span><span class='va'>petal_length_width_ratio</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>versicolor</span> <span class='op'>&lt;-</span> <span class='va'>iris</span><span class='op'>[</span><span class='va'>iris</span><span class='op'>$</span><span class='va'>Species</span> <span class='op'>==</span> <span class='st'>"versicolor"</span>, <span class='op'>]</span></span>
 <span><span class='va'>versicolor</span> <span class='op'>&lt;-</span> <span class='va'>versicolor</span><span class='op'>[</span><span class='va'>versicolor</span><span class='op'>$</span><span class='va'>Sepal.Length</span> <span class='op'>&lt;</span> <span class='fl'>7</span>, <span class='op'>]</span></span>
 <span><span class='va'>versicolor</span><span class='op'>$</span><span class='va'>petal_length_width_ratio</span> <span class='op'>&lt;-</span></span>
-<span>  <span class='va'>versicolor</span><span class='op'>$</span><span class='va'>Petal.Length</span> <span class='op'>/</span> <span class='va'>versicolor</span><span class='op'>$</span><span class='va'>Petal.Width</span></span>
-<span><span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>versicolor</span><span class='op'>$</span><span class='va'>petal_length_width_ratio</span><span class='op'>)</span></span></code></pre>
-</div>
-<pre><code>[1] 3.240504</code></pre>
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>virginica</span> <span class='op'>&lt;-</span> <span class='va'>iris</span><span class='op'>[</span><span class='va'>iris</span><span class='op'>$</span><span class='va'>Species</span> <span class='op'>==</span> <span class='st'>"virginica"</span>, <span class='op'>]</span></span>
+<span><span class='va'>versicolor</span><span class='op'>$</span><span class='va'>Petal.Length</span> <span class='op'>/</span> <span class='va'>versicolor</span><span class='op'>$</span><span class='va'>Petal.Width</span></span>
+<span><span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>versicolor</span><span class='op'>$</span><span class='va'>petal_length_width_ratio</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>virginica</span> <span class='op'>&lt;-</span> <span class='va'>iris</span><span class='op'>[</span><span class='va'>iris</span><span class='op'>$</span><span class='va'>Species</span> <span class='op'>==</span> <span class='st'>"virginica"</span>, <span class='op'>]</span></span>
 <span><span class='va'>virginica</span> <span class='op'>&lt;-</span> <span class='va'>virginica</span><span class='op'>[</span><span class='va'>virginica</span><span class='op'>$</span><span class='va'>Sepal.Length</span> <span class='op'>&lt;</span> <span class='fl'>7</span>, <span class='op'>]</span></span>
 <span><span class='va'>virginica</span><span class='op'>$</span><span class='va'>petal_length_width_ratio</span> <span class='op'>&lt;-</span></span>
-<span>  <span class='va'>virginica</span><span class='op'>$</span><span class='va'>Petal.Length</span> <span class='op'>/</span> <span class='va'>virginica</span><span class='op'>$</span><span class='va'>Petal.Width</span></span>
+<span><span class='va'>virginica</span><span class='op'>$</span><span class='va'>Petal.Length</span> <span class='op'>/</span> <span class='va'>virginica</span><span class='op'>$</span><span class='va'>Petal.Width</span></span>
 <span><span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>virginica</span><span class='op'>$</span><span class='va'>petal_length_width_ratio</span><span class='op'>)</span></span></code></pre>
 </div>
-<pre><code>[1] 2.676954</code></pre>
+</div>
+</section>
+<section id="with-functions" class="panel-name panel">
+<h3 class="panel-name">With functions</h3>
+<div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'>### Example of functionalised code</span></span>
-<span></span>
-<span><span class='va'>iris_function</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>species</span><span class='op'>)</span> <span class='op'>{</span></span>
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>iris_function</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>species</span><span class='op'>)</span> <span class='op'>{</span></span>
 <span>  <span class='va'>data</span> <span class='op'>&lt;-</span> <span class='va'>data</span><span class='op'>[</span><span class='op'>(</span><span class='va'>data</span><span class='op'>$</span><span class='va'>Species</span> <span class='op'>==</span> <span class='va'>species</span><span class='op'>)</span> <span class='op'>&amp;</span> <span class='op'>(</span><span class='va'>data</span><span class='op'>$</span><span class='va'>Sepal.Length</span> <span class='op'>&lt;</span> <span class='fl'>7</span><span class='op'>)</span>, <span class='op'>]</span></span>
 <span>  <span class='va'>data</span><span class='op'>$</span><span class='va'>petal_length_width_ratio</span> <span class='op'>&lt;-</span> <span class='va'>data</span><span class='op'>$</span><span class='va'>Petal.Length</span> <span class='op'>/</span> <span class='va'>data</span><span class='op'>$</span><span class='va'>Petal.Width</span></span>
 <span>  <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>data</span><span class='op'>$</span><span class='va'>petal_length_width_ratio</span><span class='op'>)</span></span>
 <span><span class='op'>}</span></span>
 <span></span>
-<span><span class='fu'>iris_function</span><span class='op'>(</span><span class='va'>iris</span>, <span class='st'>"setosa"</span><span class='op'>)</span></span></code></pre>
+<span><span class='fu'>iris_function</span><span class='op'>(</span><span class='va'>iris</span>, <span class='st'>"setosa"</span><span class='op'>)</span></span>
+<span><span class='fu'>iris_function</span><span class='op'>(</span><span class='va'>iris</span>, <span class='st'>"versicolor"</span><span class='op'>)</span></span>
+<span><span class='fu'>iris_function</span><span class='op'>(</span><span class='va'>iris</span>, <span class='st'>"virginica"</span><span class='op'>)</span></span></code></pre>
 </div>
-<pre><code>[1] 6.908</code></pre>
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'>iris_function</span><span class='op'>(</span><span class='va'>iris</span>, <span class='st'>"versicolor"</span><span class='op'>)</span></span></code></pre>
 </div>
-<pre><code>[1] 3.240504</code></pre>
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'>iris_function</span><span class='op'>(</span><span class='va'>iris</span>, <span class='st'>"virginica"</span><span class='op'>)</span></span></code></pre>
-</div>
-<pre><code>[1] 2.676954</code></pre>
+</section>
 </div>
 <h2 id="three-elements-of-a-function">Three Elements of a Function</h2>
 <p><strong>Arguments</strong></p>
@@ -2474,9 +2282,9 @@ Can check it with: <code>environment(function_name)</code></p>
 <li>The <strong>method</strong> of creaming the ingredients using the tools you need is the <strong>code body</strong>.</li>
 <li>The <strong>output</strong> is <strong>creamed butter and sugar</strong>. This might not be the final product/exactly what you want if you are baking a cake but it is what you need for the next stage in the process.</li>
 </ul>
-<h2 id="two-main-types-of-function">Two main types of function:</h2>
+<h2 id="two-main-types-of-functions">Two main types of functions:</h2>
 <ol type="1">
-<li>Sub-functions
+<li>Nested functions (sub-functions)
 <ul>
 <li>Single, modular units of code (collection of statements) that do a single isolated process.</li>
 </ul></li>
@@ -2553,7 +2361,7 @@ Can check it with: <code>environment(function_name)</code></p>
 <p>We recommend using <code>package_name::function_name()</code> because it keeps your environment clearer and there is no potential confusion if there are multiple functions with the same name.</p>
 <p>Plus, it makes it easier for someone reading the code and to look into the correct documentation if necessary.</p>
 <p>This works for existing/published packages or your own custom packages. However, for this training, as the functions aren’t packaged, we will rarely use that notation.</p>
-<h2 id="simplesub-functions">Simple/Sub-Functions</h2>
+<h2 id="nested-functions">Nested functions</h2>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'>## Example 1: Addition</span></span>
@@ -2596,7 +2404,7 @@ Can check it with: <code>environment(function_name)</code></p>
 <pre><code>[1] 273.15</code></pre>
 </div>
 <h2 id="wrapper-functions">Wrapper Functions</h2>
-Most functions will be wrapper functions of some sort. They will use existing published functions and/or custom functions to do more complex operations.<br />
+<p>Most functions will be wrapper functions of some sort. They will use existing published functions and/or custom functions to do more complex operations.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'>## Example 1: Addition</span></span>
@@ -2757,14 +2565,45 @@ Most functions will be wrapper functions of some sort. They will use existing pu
 </div>
 <pre><code>[1] 273.15</code></pre>
 </div>
-<p><em><strong>Poll:</strong> Which of these function toplines has a default argument?</em></p>
-<ul>
-<li><code>function(first_name, surname) {</code></li>
-<li><code>function(age) {</code></li>
-<li><code>function(film_name, year = NA) {</code></li>
-<li><code>function(first_arg, default) {</code></li>
-</ul>
-<p><a href="#answers">Answer</a></p>
+<h2 id="quiz-1">Quiz 1</h2>
+<div class="panelset">
+<section id="question" class="panel-name panel">
+<h3 class="panel-name">Question</h3>
+<p>Which of these functions has a default argument?</p>
+<ol type="A">
+<li>
+<code>function(first_name, surname) {</code>
+</li>
+<li>
+<code>function(age) {</code>
+</li>
+<li>
+<code>function(film_name, year = NA) {</code>
+</li>
+<li>
+<code>function(first_arg, default) {</code>
+</li>
+</ol>
+</section>
+<section id="see-answer" class="panel-name panel">
+<h3 class="panel-name">See Answer</h3>
+<p>Which of these functions has a default argument?</p>
+<ol type="A">
+<li>
+<code>function(first_name, surname) {</code>
+</li>
+<li>
+<code>function(age) {</code>
+</li>
+<li>
+<b><code>function(film_name, year = NA) {</code></b>
+</li>
+<li>
+<code>function(first_arg, default) {</code>
+</li>
+</ol>
+</section>
+</div>
 <h2 id="assignment">Assignment</h2>
 <p>When assigning something inside a function, the object will not be saved to the external environment, so you cannot access it after the function has finished running.<br />
 Only the final printout of the function (or <code>return()</code>) or anything that is run in <code>print()</code> is run.</p>
@@ -2806,19 +2645,167 @@ When writing your own (and is seen in most published functions), first should al
 <p>This is especially important when using in <code>dplyr</code> pipes.<br />
 Unfortunately, there are some older cases where that may not be the case, so it may be worth checking before you use them.</p>
 <p>More information about this can be found in the <a href="#piping">piping section</a>.</p>
-<h1 id="intro-breakout-rooms">INTRO BREAKOUT ROOMS</h1>
-<p>We will now go into breakout rooms to try some exercises.</p>
-<ul>
-<li>Function syntax (how its written)<br />
-</li>
-<li>Default arguments</li>
-</ul>
-<h1 id="best-practice-style-of-function">Best Practice <strong>Style</strong> of Function</h1>
+<h2 id="functions-intro-excercises">Functions intro excercises</h2>
+<div class="panelset">
+<section id="exercises" class="panel-name panel">
+<h3 class="panel-name">Exercises</h3>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'>##### Exercise 1 -</span></span>
+<span></span>
+<span><span class='co'># Create a function that will divide any number by 15</span></span>
+<span></span>
+<span></span>
+<span><span class='co'>##### Exercise 2 -</span></span>
+<span></span>
+<span><span class='co'># Create a function that will divide any vector, by any number, with the</span></span>
+<span><span class='co'># default denominator value as 10.</span></span>
+<span></span>
+<span><span class='co'># Try assigning within the function and outside the function</span></span>
+<span><span class='co'># to cause the output to be printed vs just being assigned</span></span>
+<span><span class='co'># Hint: Think about the "Environment"</span></span>
+<span></span>
+<span><span class='co'>##### Exercise 3 -</span></span>
+<span></span>
+<span><span class='co'># Create a function that computes weighted average using a vector containing</span></span>
+<span><span class='co'># all values and a second vector containing their respective weights.</span></span>
+<span><span class='co'># * there is already function in R that does it, but create your own</span></span>
+<span></span>
+<span><span class='va'>data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>15</span>, <span class='fl'>35</span>, <span class='fl'>50</span>, <span class='fl'>10</span><span class='op'>)</span></span>
+<span><span class='va'>weighting</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>3</span>, <span class='fl'>5</span>, <span class='fl'>3</span>, <span class='fl'>9</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='co'># Hint: the formula for weighted average is:</span></span>
+<span>  <span class='co'># divide the sum of (data times weighting) by the sum of the weights</span></span>
+<span></span>
+<span><span class='co'>##### Exercise 4 -</span></span>
+<span></span>
+<span><span class='co'># Create a function that will multiply selected column name by a given number.</span></span>
+<span><span class='co'># This should return just the multiplied dataframe column.</span></span>
+<span><span class='co'># Default multiplier should be 5.</span></span>
+<span></span>
+<span><span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span></span>
+<span>  a <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span>,</span>
+<span>  b <span class='op'>=</span> <span class='fl'>4</span><span class='op'>:</span><span class='fl'>6</span>,</span>
+<span>  c <span class='op'>=</span> <span class='fl'>7</span><span class='op'>:</span><span class='fl'>9</span><span class='op'>)</span></span></code></pre>
+</div>
+</div>
+</section>
+<section id="example-solutions" class="panel-name panel">
+<h3 class="panel-name">Example solutions</h3>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dplyr.tidyverse.org'>dplyr</a></span><span class='op'>)</span></span>
+<span></span>
+<span><span class='co'>##### Answer 1 -----</span></span>
+<span></span>
+<span><span class='co'>#' Divide any number/numeric vector by 15</span></span>
+<span><span class='co'>#'</span></span>
+<span><span class='co'>#' @description Takes input of single number or vector of numbers and divides</span></span>
+<span><span class='co'>#' each element by 15.</span></span>
+<span><span class='co'>#'</span></span>
+<span><span class='co'>#' @param x numeric vector</span></span>
+<span><span class='co'>#'</span></span>
+<span><span class='co'>#' @return numeric vector</span></span>
+<span><span class='va'>divide_15</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span>  <span class='va'>x</span> <span class='op'>/</span> <span class='fl'>15</span></span>
+<span><span class='op'>}</span></span>
+<span></span>
+<span><span class='fu'>divide_15</span><span class='op'>(</span><span class='fl'>150</span><span class='op'>)</span></span>
+<span><span class='fu'>divide_15</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>15</span>, <span class='fl'>45</span><span class='op'>)</span><span class='op'>)</span></span>
+<span></span>
+<span></span>
+<span><span class='co'>##### Answer 2 -----</span></span>
+<span></span>
+<span><span class='co'>#' Divide any numeric vector by any number.</span></span>
+<span><span class='co'>#'</span></span>
+<span><span class='co'>#' @description Divides a numeric vector by any number, default is 10.</span></span>
+<span><span class='co'>#'</span></span>
+<span><span class='co'>#' @param x numeric vector</span></span>
+<span><span class='co'>#' @param denominator numeric, default is 10</span></span>
+<span><span class='co'>#'</span></span>
+<span><span class='co'>#' @return numeric vector</span></span>
+<span><span class='va'>divide</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>denominator</span> <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span>  <span class='va'>x</span> <span class='op'>/</span> <span class='va'>denominator</span></span>
+<span><span class='op'>}</span></span>
+<span></span>
+<span><span class='fu'>divide</span><span class='op'>(</span><span class='fl'>150</span><span class='op'>)</span></span>
+<span><span class='fu'>divide</span><span class='op'>(</span>x <span class='op'>=</span> <span class='fl'>150</span>, denominator <span class='op'>=</span> <span class='fl'>15</span><span class='op'>)</span></span>
+<span><span class='fu'>divide</span><span class='op'>(</span><span class='fl'>150</span>, <span class='fl'>15</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='co'># Output does not print to console when this is used - AVOID</span></span>
+<span><span class='va'>divide</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>denominator</span> <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span>  <span class='va'>divided_num</span> <span class='op'>&lt;-</span> <span class='va'>x</span> <span class='op'>/</span> <span class='va'>denominator</span></span>
+<span><span class='op'>}</span></span>
+<span></span>
+<span><span class='co'># Can save it as an intermediate and then return it but this is not best</span></span>
+<span>  <span class='co'># practice</span></span>
+<span><span class='va'>divide</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>denominator</span> <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span>  <span class='va'>divided_num</span> <span class='op'>&lt;-</span> <span class='va'>x</span> <span class='op'>/</span> <span class='va'>denominator</span></span>
+<span>  <span class='va'>divided_num</span></span>
+<span><span class='op'>}</span></span>
+<span></span>
+<span><span class='co'># When the output of a function is saved as a variable</span></span>
+<span>  <span class='co'># the output is not printed to the console</span></span>
+<span><span class='va'>divided</span> <span class='op'>&lt;-</span> <span class='fu'>divide</span><span class='op'>(</span><span class='fl'>450</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='co'># But you can now retrieve it with the variable name</span></span>
+<span><span class='va'>divided</span></span>
+<span></span>
+<span><span class='co'>##### Answer 3 -----</span></span>
+<span></span>
+<span><span class='co'>#' Computes weighted average.</span></span>
+<span><span class='co'>#'</span></span>
+<span><span class='co'>#' @description Computes weighted average from a vector of values,</span></span>
+<span><span class='co'>#' using a vector of respective weights.</span></span>
+<span><span class='co'>#'</span></span>
+<span><span class='co'>#' @param values numeric vector of values/data to be weighted</span></span>
+<span><span class='co'>#' @param weights numeric vector of weights</span></span>
+<span><span class='co'>#'</span></span>
+<span><span class='co'>#' @return numeric weighted average</span></span>
+<span><span class='va'>compute_weighted_avg</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>values</span>, <span class='va'>weights</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span>  <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='va'>values</span> <span class='op'>*</span> <span class='va'>weights</span><span class='op'>)</span> <span class='op'>/</span> <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='va'>weights</span><span class='op'>)</span></span>
+<span><span class='op'>}</span></span>
+<span></span>
+<span><span class='fu'>compute_weighted_avg</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>30</span>, <span class='fl'>50</span>, <span class='fl'>110</span>, <span class='fl'>40</span><span class='op'>)</span>, weights <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>9</span>, <span class='fl'>8</span>, <span class='fl'>7</span>, <span class='fl'>6</span><span class='op'>)</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>15</span>, <span class='fl'>35</span>, <span class='fl'>50</span>, <span class='fl'>10</span><span class='op'>)</span></span>
+<span><span class='va'>weighting</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>3</span>, <span class='fl'>5</span>, <span class='fl'>3</span>, <span class='fl'>9</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='fu'>compute_weighted_avg</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>weighting</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='co'>##### Answer 4 -----</span></span>
+<span></span>
+<span><span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span></span>
+<span>  a <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span>,</span>
+<span>  b <span class='op'>=</span> <span class='fl'>4</span><span class='op'>:</span><span class='fl'>6</span>,</span>
+<span>  c <span class='op'>=</span> <span class='fl'>7</span><span class='op'>:</span><span class='fl'>9</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='co'>#' Multiply selected dataframe column by given number</span></span>
+<span><span class='co'>#'</span></span>
+<span><span class='co'>#' @description Multiply selected column by a given number.</span></span>
+<span><span class='co'>#' Default multiplier is 5.</span></span>
+<span><span class='co'>#'</span></span>
+<span><span class='co'>#' @param df dataframe with column to multiply</span></span>
+<span><span class='co'>#' @param col_name string name of column to multiply</span></span>
+<span><span class='co'>#' @param multiply_by numeric of magnitude to multiply column by, default is 5</span></span>
+<span><span class='co'>#'</span></span>
+<span><span class='co'>#' @return selected dataframe column multiplied by the given number</span></span>
+<span><span class='va'>select_col_multiply</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>df</span>, <span class='va'>col_name</span>, <span class='va'>multiply_by</span> <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span>  <span class='va'>df</span><span class='op'>[</span><span class='va'>col_name</span><span class='op'>]</span> <span class='op'>*</span> <span class='va'>multiply_by</span></span>
+<span><span class='op'>}</span></span>
+<span></span>
+<span><span class='fu'>select_col_multiply</span><span class='op'>(</span><span class='va'>df</span>, col_name <span class='op'>=</span> <span class='st'>"b"</span><span class='op'>)</span></span>
+<span><span class='fu'>select_col_multiply</span><span class='op'>(</span><span class='va'>df</span>, <span class='st'>"c"</span>, <span class='fl'>9</span><span class='op'>)</span></span></code></pre>
+</div>
+</div>
+</section>
+</div>
+<h1 id="best-practice-style-for-functions">Best Practice <strong>Style</strong> for functions</h1>
 <p>There are many ways that you could write a function that technically would work.
 Code within a function should follow standard best practice style (see <a href="https://style.tidyverse.org/">Tidyverse Style Guide</a>).</p>
 <p>However, there are some best practice guidance to follow.<br />
 Key point regardless of style you choose to follow: <strong>Consistency</strong>.</p>
-<p><em>Note:</em> Packages exist to help you adhere to best style.<br />
+<p><em>Note:</em> There are packages available to help you adhere to good style:<br />
 We recommend <a href="https://lintr.r-lib.org/articles/lintr.html"><code>lintr</code></a>. It doesn’t edit your code directly (as some others do, e.g. <a href="https://www.tidyverse.org/blog/2017/12/styler-1.0.0/"><code>styler</code></a>) but makes a descriptive list of where it recommends style improvements.<br />
 This package may not be perfect and is not a replacement for writing good code in the first place, or being critical about style in general.</p>
 <div class="layout-chunk" data-layout="l-body">
@@ -2905,14 +2892,45 @@ If docstrings are not used, should still add general comments on the function. A
 3 virginica          6.9         2.3
 4 virginica          6.7         2.0</code></pre>
 </div>
-<p><em><strong>Poll:</strong> R best practice function and argument names?</em></p>
-<ul>
-<li><code>DoctorHouse(Patient1, Patient2)</code></li>
-<li><code>doctorHouse(1stpatient, 2ndpatient)</code></li>
-<li><code>doctorhouse(patientone, patienttwo)</code></li>
-<li><code>doctor_house(first_patient, second_patient)</code></li>
-</ul>
-<p><a href="#answers">Answer</a></p>
+<h2 id="quiz-2">Quiz 2</h2>
+<div class="panelset">
+<section id="question-1" class="panel-name panel">
+<h3 class="panel-name">Question</h3>
+<p>What are good function and argument names?</p>
+<ol type="A">
+<li>
+<code>DoctorHouse(Patient1, Patient2)</code>
+</li>
+<li>
+<code>doctorHouse(1stpatient, 2ndpatient)</code>
+</li>
+<li>
+<code>doctorhouse(patientone, patienttwo)</code>
+</li>
+<li>
+<code>doctor_house(first_patient, second_patient)</code>
+</li>
+</ol>
+</section>
+<section id="see-answer-1" class="panel-name panel">
+<h3 class="panel-name">See Answer</h3>
+<p>What are good function and argument names?</p>
+<ol type="A">
+<li>
+<code>DoctorHouse(Patient1, Patient2)</code>
+</li>
+<li>
+<code>doctorHouse(1stpatient, 2ndpatient)</code>
+</li>
+<li>
+<code>doctorhouse(patientone, patienttwo)</code>
+</li>
+<li>
+<b><code>doctor_house(first_patient, second_patient)</code></b>
+</li>
+</ol>
+</section>
+</div>
 <h1 id="docstrings">Documentation (docstrings)</h1>
 <p>Even if you don’t do technical <strong>Roxygen</strong> headers, you should still have correct level of comments describing what the function does: a title, description, any parameters and what is returned.<br />
 However, we recommend giving any custom function the below <strong>Roxygen</strong> structure as it adds consistency, readability and can save time if you decide to package in the future.</p>
@@ -3023,18 +3041,45 @@ In RStudio, put the cursor inside the function and either:</p>
 <span><span class='op'>}</span></span></code></pre>
 </div>
 </div>
-<figure>
-<img src="Screenshots/pic_help.PNG" alt="Roxygen creates the standard help documentation" />
-<figcaption aria-hidden="true"><strong>Roxygen creates the standard help documentation</strong></figcaption>
-</figure>
-<p><em><strong>Poll:</strong> Which are the required parts of Roxygen header?</em></p>
-<ul>
-<li>Title, description, parameters, return</li>
-<li>Title, example, return</li>
-<li>Title, parameters, return, example</li>
-<li>Description, parameters, example</li>
-</ul>
-<p><a href="#answers">Answer</a></p>
+<h2 id="quiz-3">Quiz 3</h2>
+<div class="panelset">
+<section id="question-2" class="panel-name panel">
+<h3 class="panel-name">Question</h3>
+<p>What parts of Roxygen header you should ALWAYS include?</p>
+<ol type="A">
+<li>
+Title, parameters, return
+</li>
+<li>
+Title, example, return
+</li>
+<li>
+Title, parameters, return, example
+</li>
+<li>
+Description, parameters, example
+</li>
+</ol>
+</section>
+<section id="see-answer-2" class="panel-name panel">
+<h3 class="panel-name">See Answer</h3>
+<p>What parts of Roxygen header you should ALWAYS include?</p>
+<ol type="A">
+<li>
+<b>Title, parameters, return</b>
+</li>
+<li>
+Title, example, return
+</li>
+<li>
+Title, parameters, return, example
+</li>
+<li>
+Description, parameters, example
+</li>
+</ol>
+</section>
+</div>
 <h1 id="piping">Piping <code>%&gt;%</code></h1>
 <p>The pipe operator <code>%&gt;%</code> (originally found in package <code>magrittr</code>) can be used as “and then” to call functions sequentially. It is most commonly found connecting <code>dplyr</code> functions together.</p>
 <p>This replaces the need to save out intermediate results or nest functions.</p>
@@ -3049,12 +3094,12 @@ In RStudio, put the cursor inside the function and either:</p>
 <span><span class='va'>out</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>out</span><span class='op'>)</span></span>
 <span><span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>sqrt</a></span><span class='op'>(</span><span class='va'>out</span><span class='op'>)</span></span></code></pre>
 </div>
-<pre><code>[1] 0.5179677</code></pre>
+<pre><code>[1] 0.5446485</code></pre>
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'># Nesting - Can get complicated when there are multiple arguments and brackets</span></span>
 <span><span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>sqrt</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/sd.html'>sd</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
 </div>
-<pre><code>[1] 0.5179677</code></pre>
+<pre><code>[1] 0.5446485</code></pre>
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'># Piping - Best Practice</span></span>
 <span><span class='va'>x</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
@@ -3062,7 +3107,7 @@ In RStudio, put the cursor inside the function and either:</p>
 <span>  <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
 <span>  <span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>sqrt</a></span><span class='op'>(</span><span class='op'>)</span></span></code></pre>
 </div>
-<pre><code>[1] 0.5179677</code></pre>
+<pre><code>[1] 0.5446485</code></pre>
 </div>
 <p>As mentioned in a previous section, the order of arguments for <code>dplyr</code> piping is quite important. Data should be the first.</p>
 <p>When the functions are called in a pipe, it is assumed that the data from the previous level of the pipe is the default first argument, so it doesn’t need to be specified in each function.</p>
@@ -3163,471 +3208,164 @@ In RStudio, put the cursor inside the function and either:</p>
 </div>
 <pre><code>Error in degree_F_to_C(&quot;200&quot;): Provided temperature in fahrenheit is not numeric. It is a character object.</code></pre>
 </div>
-<p><em><strong>Poll:</strong> What are the correct functions to create a warning and an error? (click 2 answers)</em></p>
-<ul>
-<li><code>error()</code></li>
-<li><code>stop()</code></li>
-<li><code>warnings()</code></li>
-<li><code>SOMETHING_IS_VERY_WRONG()</code></li>
-<li><code>halt()</code></li>
-<li><code>warning()</code></li>
-</ul>
-<p><a href="#answers">Answer</a></p>
-<h1 id="intro-breakout-rooms-1">INTRO BREAKOUT ROOMS</h1>
-<p>We will now go into breakout rooms to try some exercises.</p>
-<ul>
-<li>Good style and naming-conventions</li>
-<li><code>Roxygen</code> documentation</li>
-</ul>
-<h1 id="advanced-breakout-rooms">ADVANCED BREAKOUT ROOMS</h1>
-<ul>
-<li>Style</li>
-<li>Default arguments</li>
-<li>Roxygen doc</li>
-</ul>
-<p>Exercises 1 and 2 from part 2.</p>
-<h1 id="advanced">Intermediate/Advanced Functions</h1>
-<p>Click here to return to <a href="#intro">Intro</a>.</p>
-<h1 id="lists-of-functions">Lists of functions</h1>
-<p>The best way to group functions together is using packages.</p>
-<p>If you are not going to build a package for your functions, a simple way to group similar/related functions together is to combine them into a list (remember, functions are objects).<br />
-You then call them the same way that you would call a list element.</p>
-<p>This is <strong>not</strong> generally recommended.</p>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>function_list</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span></span>
-<span>  half_num <span class='op'>=</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='va'>x</span> <span class='op'>/</span> <span class='fl'>2</span>,</span>
-<span>  double_num <span class='op'>=</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='va'>x</span> <span class='op'>*</span> <span class='fl'>2</span></span>
-<span><span class='op'>)</span></span>
-<span></span>
-<span><span class='va'>function_list</span><span class='op'>$</span><span class='fu'>double_num</span><span class='op'>(</span><span class='fl'>10</span><span class='op'>)</span></span></code></pre>
-</div>
-<pre><code>[1] 20</code></pre>
-</div>
-<h1 id="functionals">Functionals</h1>
-<p>The <code>apply</code> family of functions (<code>lapply()</code>, <code>sapply()</code>, <code>vapply()</code>) can be used within bespoke functions or used to apply bespoke functions, not just regular functions.</p>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>vector</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='cn'>NA</span>, <span class='fl'>3</span>, <span class='fl'>4</span>, <span class='fl'>5</span><span class='op'>)</span></span>
-<span><span class='va'>dataframe</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>col1 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='cn'>NA</span>, <span class='cn'>NA</span>, <span class='fl'>6</span>, <span class='fl'>8</span><span class='op'>)</span>,</span>
-<span>                        col2 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>4</span>, <span class='cn'>NA</span>, <span class='fl'>9</span><span class='op'>)</span><span class='op'>)</span></span>
-<span></span>
-<span><span class='va'>data_list</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='va'>vector</span>, <span class='va'>dataframe</span><span class='op'>)</span></span>
-<span></span>
-<span><span class='co'>## lapply for a bespoke function</span></span>
-<span></span>
-<span><span class='va'>cut_in_half</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>data</span><span class='op'>)</span> <span class='op'>{</span></span>
-<span>  <span class='va'>data</span> <span class='op'>/</span> <span class='fl'>2</span></span>
-<span><span class='op'>}</span></span>
-<span></span>
-<span><span class='fu'>cut_in_half</span><span class='op'>(</span><span class='va'>vector</span><span class='op'>)</span></span></code></pre>
-</div>
-<pre><code>[1] 0.5  NA 1.5 2.0 2.5</code></pre>
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'>cut_in_half</span><span class='op'>(</span><span class='va'>dataframe</span><span class='op'>)</span></span></code></pre>
-</div>
-<pre><code>  col1 col2
-1   NA  1.0
-2   NA  2.0
-3    3   NA
-4    4  4.5</code></pre>
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span><span class='va'>data_list</span>, <span class='va'>cut_in_half</span><span class='op'>)</span></span></code></pre>
-</div>
-<pre><code>[[1]]
-[1] 0.5  NA 1.5 2.0 2.5
-
-[[2]]
-  col1 col2
-1   NA  1.0
-2   NA  2.0
-3    3   NA
-4    4  4.5</code></pre>
-</div>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'>## lapply inside function</span></span>
-<span></span>
-<span><span class='va'>cut_list_in_half</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>list</span><span class='op'>)</span> <span class='op'>{</span></span>
-<span>  <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span><span class='va'>list</span>, <span class='va'>cut_in_half</span><span class='op'>)</span></span>
-<span><span class='op'>}</span></span>
-<span></span>
-<span><span class='fu'>cut_list_in_half</span><span class='op'>(</span><span class='va'>data_list</span><span class='op'>)</span></span></code></pre>
-</div>
-<pre><code>[[1]]
-[1] 0.5  NA 1.5 2.0 2.5
-
-[[2]]
-  col1 col2
-1   NA  1.0
-2   NA  2.0
-3    3   NA
-4    4  4.5</code></pre>
-</div>
-<h1 id="anonymous-functions">Anonymous functions</h1>
-<p>Not all functions need to be named. Small (one-line) functions that are not worth naming are called anonymous functions.</p>
-<p>A good rule of thumb is that an anonymous function should fit on one line and shouldn’t need to use <code>{}</code>.</p>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>sapply</a></span><span class='op'>(</span><span class='va'>starwars</span>, <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/unique.html'>unique</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
-</div>
-<pre><code>      name     height       mass hair_color skin_color  eye_color 
-        87         46         39         13         31         15 
-birth_year        sex     gender  homeworld    species      films 
-        37          5          3         49         38         24 
-  vehicles  starships 
-        11         17 </code></pre>
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'># Keeps only non-numeric columns</span></span>
-<span><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/funprog.html'>Filter</a></span><span class='op'>(</span><span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>is.numeric</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>, <span class='va'>starwars</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
-</div>
-<pre><code># A tibble: 6 x 11
-  name      hair_~1 skin_~2 eye_c~3 sex   gender homew~4 species films
-  &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;   &lt;lis&gt;
-1 Luke Sky~ blond   fair    blue    male  mascu~ Tatooi~ Human   &lt;chr&gt;
-2 C-3PO     &lt;NA&gt;    gold    yellow  none  mascu~ Tatooi~ Droid   &lt;chr&gt;
-3 R2-D2     &lt;NA&gt;    white,~ red     none  mascu~ Naboo   Droid   &lt;chr&gt;
-4 Darth Va~ none    white   yellow  male  mascu~ Tatooi~ Human   &lt;chr&gt;
-5 Leia Org~ brown   light   brown   fema~ femin~ Aldera~ Human   &lt;chr&gt;
-6 Owen Lars brown,~ light   blue    male  mascu~ Tatooi~ Human   &lt;chr&gt;
-# ... with 2 more variables: vehicles &lt;list&gt;, starships &lt;list&gt;, and
-#   abbreviated variable names 1: hair_color, 2: skin_color,
-#   3: eye_color, 4: homeworld
-# i Use `colnames()` to see all variable names</code></pre>
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'># Integrates x to the power of 2 using limits of 0 and 10</span></span>
-<span><span class='fu'><a href='https://rdrr.io/r/stats/integrate.html'>integrate</a></span><span class='op'>(</span><span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='va'>x</span> <span class='op'>^</span> <span class='fl'>2</span>, <span class='fl'>0</span>, <span class='fl'>10</span><span class='op'>)</span></span></code></pre>
-</div>
-<pre><code>333.3333 with absolute error &lt; 3.7e-12</code></pre>
-</div>
-<h1 id="functions-with-dynamic-arguments">Functions with Dynamic Arguments</h1>
-<p><strong>Using <code>base r</code> and <code>dplyr</code> Function Tidy Evaluation</strong></p>
-<p>Some variables, commonly column names, can be dependent on some external factor (e.g. user input, data values) and you may want to manipulate them in a generic way in using function arguments. This can commonly happen when you want to choose the column of interest manually in a function or when iterating/looping through.</p>
-<p>This can be done with <code>base r</code>, using variable selection such as square brackets <code>[]</code> and double square brackets <code>[[]]</code>.</p>
-<strong>For example, using <code>base r</code>:</strong>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>colour_data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>red <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>3</span><span class='op'>)</span>,</span>
-<span>                          blue <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>5</span>, <span class='fl'>7</span>, <span class='fl'>3</span><span class='op'>)</span>,</span>
-<span>                          green <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>9</span>, <span class='fl'>8</span>, <span class='fl'>7</span><span class='op'>)</span><span class='op'>)</span></span>
-<span></span>
-<span><span class='co'># I want to get the mean of one column of my choice.</span></span>
-<span></span>
-<span><span class='va'>col_mean</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>col</span><span class='op'>)</span> <span class='op'>{</span></span>
-<span>  <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='va'>col</span>, <span class='st'>": "</span>, <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>data</span><span class='op'>[[</span><span class='va'>col</span><span class='op'>]</span><span class='op'>]</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span></span>
-<span><span class='op'>}</span></span>
-<span></span>
-<span><span class='fu'>col_mean</span><span class='op'>(</span><span class='va'>colour_data</span>, <span class='st'>"blue"</span><span class='op'>)</span></span></code></pre>
-</div>
-<pre><code>[1] &quot;blue: 5&quot;</code></pre>
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'># I want to iterate through the columns using a vector</span></span>
-<span></span>
-<span><span class='va'>col_vector</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"green"</span>, <span class='st'>"blue"</span>, <span class='st'>"red"</span><span class='op'>)</span></span>
-<span></span>
-<span><span class='kw'>for</span> <span class='op'>(</span><span class='va'>colour</span> <span class='kw'>in</span> <span class='va'>col_vector</span><span class='op'>)</span> <span class='op'>{</span></span>
-<span>  <span class='fu'>col_mean</span><span class='op'>(</span><span class='va'>colour_data</span>, <span class='va'>colour</span><span class='op'>)</span></span>
-<span><span class='op'>}</span></span></code></pre>
-</div>
-<pre><code>[1] &quot;green: 8&quot;
-[1] &quot;blue: 5&quot;
-[1] &quot;red: 2&quot;</code></pre>
-</div>
-<p>Some people prefer to structure their code following <code>tidyverse</code> styling.<br />
-<code>dplyr</code> provides a way to dynamically manipulate columns, but it makes writing functions containing <code>dplyr</code> functions a bit more complicated.</p>
-<h3 id="environmental-variables-vs-data-variables">Environmental variables vs data variables</h3>
-<p>To determine the syntax to use, you need to remember the distinction between data and environmental variables and which <code>dplyr</code> function uses which.</p>
-<ul>
-<li><strong>Env-variables</strong> are “programming” variables that live in an environment, usually created with <code>&lt;-</code>, can be seen in the RStudio Environment window.<br />
+<h2 id="quiz-3-1">Quiz 3</h2>
+<div class="panelset">
+<section id="question-3" class="panel-name panel">
+<h3 class="panel-name">Question</h3>
+<p>What are the correct functions to create a warning and an error? (select 2 answers)</p>
+<ol type="A">
+<li>
+<code>error()</code>
 </li>
-<li><strong>Data-variables</strong> are “statistical” variables that live in a data frame (generally columns).</li>
-</ul>
-<p>Use <code>?dplyr::function()</code> to see which type of formatting the variable uses: data masking or tidy selection.</p>
-<h3 id="quoted-vs-unquoted-variables">Quoted vs unquoted variables</h3>
-<p>The syntax for dynamic arguments in <code>dplyr</code> are dependent on if the variable (column name) is quoted (a string) or unquoted (not a string).</p>
-<p>It is possible to convert between the two but that gets even more complicated.</p>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>column_one <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>5</span>, <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>,</span>
-<span>                 column_two <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='fl'>6</span>, <span class='fl'>10</span>, <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span></span>
-<span><span class='va'>colname</span> <span class='op'>&lt;-</span> <span class='st'>"column_one"</span></span>
-<span></span>
-<span><span class='co'>## Base using the known column name unquoted and quoted</span></span>
-<span><span class='va'>df</span><span class='op'>$</span><span class='va'>column_one</span></span></code></pre>
-</div>
-<pre><code>[1] 1 2 3 4 5</code></pre>
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>df</span><span class='op'>$</span><span class='st'>"column_one"</span></span></code></pre>
-</div>
-<pre><code>[1] 1 2 3 4 5</code></pre>
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>df</span><span class='op'>[</span>, <span class='st'>"column_one"</span><span class='op'>]</span></span></code></pre>
-</div>
-<pre><code>[1] 1 2 3 4 5</code></pre>
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'>## Base with a variable column name</span></span>
-<span><span class='va'>df</span><span class='op'>[[</span><span class='va'>colname</span><span class='op'>]</span><span class='op'>]</span></span></code></pre>
-</div>
-<pre><code>[1] 1 2 3 4 5</code></pre>
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>df</span><span class='op'>[</span>, <span class='va'>colname</span><span class='op'>]</span></span></code></pre>
-</div>
-<pre><code>[1] 1 2 3 4 5</code></pre>
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'># Doesn't work</span></span>
-<span><span class='va'>df</span><span class='op'>$</span><span class='va'>colname</span></span></code></pre>
-</div>
-<pre><code>NULL</code></pre>
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>df</span><span class='op'>$</span><span class='st'>"colname"</span></span></code></pre>
-</div>
-<pre><code>NULL</code></pre>
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>df</span><span class='op'>[[</span><span class='st'>"colname"</span><span class='op'>]</span><span class='op'>]</span></span></code></pre>
-</div>
-<pre><code>NULL</code></pre>
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'>## dplyr can use unquoted and quoted column names</span></span>
-<span><span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/pull.html'>pull</a></span><span class='op'>(</span><span class='va'>df</span>, <span class='va'>column_one</span><span class='op'>)</span></span></code></pre>
-</div>
-<pre><code>[1] 1 2 3 4 5</code></pre>
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/pull.html'>pull</a></span><span class='op'>(</span><span class='va'>df</span>, <span class='va'>colname</span><span class='op'>)</span></span></code></pre>
-</div>
-<pre><code>[1] 1 2 3 4 5</code></pre>
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'>## But when you use dplyr functions inside bespoke functions</span></span>
-<span>  <span class='co'># It works like normal if you statically define the column name</span></span>
-<span><span class='va'>pull_col_one</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>data</span><span class='op'>)</span> <span class='op'>{</span></span>
-<span>  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/pull.html'>pull</a></span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>column_one</span><span class='op'>)</span></span>
-<span><span class='op'>}</span></span>
-<span><span class='fu'>pull_col_one</span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span></span></code></pre>
-</div>
-<pre><code>[1] 1 2 3 4 5</code></pre>
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>pull_col_one</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>data</span><span class='op'>)</span> <span class='op'>{</span></span>
-<span>  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/pull.html'>pull</a></span><span class='op'>(</span><span class='va'>data</span>, <span class='st'>"column_one"</span><span class='op'>)</span></span>
-<span><span class='op'>}</span></span>
-<span><span class='fu'>pull_col_one</span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span></span></code></pre>
-</div>
-<pre><code>[1] 1 2 3 4 5</code></pre>
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'># It becomes more complicated when you want to chose the column with an argument</span></span>
-<span>  <span class='co'># This doesn't work</span></span>
-<span><span class='va'>pull_colname</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>column_name</span><span class='op'>)</span> <span class='op'>{</span></span>
-<span>  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/pull.html'>pull</a></span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>column_name</span><span class='op'>)</span></span>
-<span><span class='op'>}</span></span>
-<span><span class='fu'>pull_colname</span><span class='op'>(</span><span class='va'>df</span>, <span class='va'>column_one</span><span class='op'>)</span></span></code></pre>
-</div>
-<pre><code>Error in `dplyr::pull()`:
-Caused by error:
-! object &#39;column_one&#39; not found</code></pre>
-</div>
-<p><strong>Unquoted</strong><br />
-The variable is generally unquoted when you know what the column name is (i.e. you aren’t pulling it from somewhere else or creating it somehow). This requires external knowledge of the data.</p>
-<p>This is how we use <code>dplyr</code> functions to access column names.</p>
-<p><strong>Quoted</strong><br />
-Quoted/string variables are generally useful for when the column name is derived from something else in an automated way (e.g. using <code>paste()</code>, <code>colnames()</code> e.t.c.). Column names as strings are much easier to work with than unquoted, but the syntax for creating dynamic arguments is a bit more complicated. These string column names are more flexible as they can be manipulated with normal string manipulation.</p>
-<h3 id="arguments-2">Arguments</h3>
-<p>When creating <code>dplyr</code> tidy evaluation functions, the first argument should be data.</p>
-<p>Then when you are piping with your custom functions, you do not need to give the data argument.</p>
-<p>Further information can be found in <a href="https://dplyr.tidyverse.org/articles/programming.html"><code>dplyr</code> documentation</a>.</p>
-<h2 id="data-masking">Data Masking</h2>
-<p>Applies to:</p>
-<ul>
-<li><code>filter()</code></li>
-<li><code>group_by()</code></li>
-<li><code>mutate()</code></li>
-<li><code>summarise()</code></li>
-<li><code>arrange()</code></li>
-<li><code>count()</code></li>
-</ul>
-<p>Can use column names (i.e. data variables) as if they were variables in the environment, similar to how <code>dplyr</code> variables are called.</p>
-<p>i.e. you write <code>column_name</code>, not <code>df$column_name</code> or <code>df[[column_name]]</code></p>
-<h3 id="if-the-variable-is-unquotednot-a-string">If the variable is unquoted/not a string:</h3>
-<p>Need to double-embrace it with curly brackets <code>{{variable}}</code> where it is used in the body of the function.<br />
-Also, can use glue syntax with <code>:=</code> to name the resulting variables after the unquoted argument variable contained in double curly brackets <code>{{}}</code>.</p>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>group_count_min_max</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>df</span>, <span class='va'>group_var</span>, <span class='va'>summ_var</span><span class='op'>)</span> <span class='op'>{</span></span>
-<span>  <span class='va'>df</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
-<span>    <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='op'>{</span><span class='op'>{</span><span class='va'>group_var</span><span class='op'>}</span><span class='op'>}</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
-<span>    <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span><span class='op'>(</span><span class='st'>"n_{{summ_var}}"</span> <span class='op'>:=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/context.html'>n</a></span><span class='op'>(</span><span class='op'>)</span>,</span>
-<span>                     <span class='st'>"min_{{summ_var}}"</span> <span class='op'>:=</span> <span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>min</a></span><span class='op'>(</span><span class='op'>{</span><span class='op'>{</span><span class='va'>summ_var</span><span class='op'>}</span><span class='op'>}</span><span class='op'>)</span>,</span>
-<span>                     <span class='st'>"max_{{summ_var}}"</span> <span class='op'>:=</span> <span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span><span class='op'>(</span><span class='op'>{</span><span class='op'>{</span><span class='va'>summ_var</span><span class='op'>}</span><span class='op'>}</span><span class='op'>)</span><span class='op'>)</span></span>
-<span><span class='op'>}</span></span>
-<span></span>
-<span><span class='fu'>group_count_min_max</span><span class='op'>(</span>df <span class='op'>=</span> <span class='va'>mtcars</span>, group_var <span class='op'>=</span> <span class='va'>cyl</span>, summ_var <span class='op'>=</span> <span class='va'>mpg</span><span class='op'>)</span></span></code></pre>
-</div>
-<pre><code># A tibble: 3 x 4
-    cyl n_mpg min_mpg max_mpg
-  &lt;dbl&gt; &lt;int&gt;   &lt;dbl&gt;   &lt;dbl&gt;
-1     4    11    21.4    33.9
-2     6     7    17.8    21.4
-3     8    14    10.4    19.2</code></pre>
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'># If piping, so long as your first argument of your custom function is the data,</span></span>
-<span>  <span class='co'># you don't need to specify the data using a full-stop</span></span>
-<span><span class='co'># Can pipe the custom function along with other dplyr functions</span></span>
-<span><span class='va'>mtcars</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
-<span>  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='op'>-</span><span class='va'>gear</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
-<span>  <span class='fu'>group_count_min_max</span><span class='op'>(</span>group_var <span class='op'>=</span> <span class='va'>cyl</span>, summ_var <span class='op'>=</span> <span class='va'>mpg</span><span class='op'>)</span></span></code></pre>
-</div>
-<pre><code># A tibble: 3 x 4
-    cyl n_mpg min_mpg max_mpg
-  &lt;dbl&gt; &lt;int&gt;   &lt;dbl&gt;   &lt;dbl&gt;
-1     4    11    21.4    33.9
-2     6     7    17.8    21.4
-3     8    14    10.4    19.2</code></pre>
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'>## This is much more complicated to do in base</span></span></code></pre>
-</div>
-</div>
-<h3 id="if-the-variable-is-quoteda-string">If the variable is quoted/a string:</h3>
-<p>If a variable exists as a character string (i.e. as an env-variable), need to indirectly select it from <code>.data</code> in the body of the function where it is used using <code>[[]]</code>.</p>
-<p>The <code>.data</code> bit does not vary with different argument names, it is always the <code>.data</code> as it refers to the data within the pipe level above.</p>
-<p>Can also use glue syntax with <code>:=</code> to name the resulting variables after the quoted argument variable (embraced by single curly brackets <code>{}</code>).</p>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>group_count_min_max</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>df</span>, <span class='va'>group_var</span>, <span class='va'>summ_var</span><span class='op'>)</span> <span class='op'>{</span></span>
-<span>  <span class='va'>df</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
-<span>    <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>.data</span><span class='op'>[[</span><span class='va'>group_var</span><span class='op'>]</span><span class='op'>]</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
-<span>    <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span><span class='op'>(</span><span class='st'>"n_{summ_var}"</span> <span class='op'>:=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/context.html'>n</a></span><span class='op'>(</span><span class='op'>)</span>,</span>
-<span>                     <span class='st'>"min_{summ_var}"</span> <span class='op'>:=</span> <span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>min</a></span><span class='op'>(</span><span class='va'>.data</span><span class='op'>[[</span><span class='va'>summ_var</span><span class='op'>]</span><span class='op'>]</span><span class='op'>)</span>,</span>
-<span>                     <span class='st'>"max_{summ_var}"</span> <span class='op'>:=</span> <span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span><span class='op'>(</span><span class='va'>.data</span><span class='op'>[[</span><span class='va'>summ_var</span><span class='op'>]</span><span class='op'>]</span><span class='op'>)</span><span class='op'>)</span></span>
-<span><span class='op'>}</span></span>
-<span></span>
-<span><span class='va'>mtcars</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
-<span>  <span class='fu'>group_count_min_max</span><span class='op'>(</span>group_var <span class='op'>=</span> <span class='st'>"cyl"</span>, summ_var <span class='op'>=</span> <span class='st'>"mpg"</span><span class='op'>)</span></span></code></pre>
-</div>
-<pre><code># A tibble: 3 x 4
-    cyl n_mpg min_mpg max_mpg
-  &lt;dbl&gt; &lt;int&gt;   &lt;dbl&gt;   &lt;dbl&gt;
-1     4    11    21.4    33.9
-2     6     7    17.8    21.4
-3     8    14    10.4    19.2</code></pre>
-</div>
-<h2 id="tidy-selection">Tidy Selection</h2>
-<p>Applies to:</p>
-<ul>
-<li><code>select()</code></li>
-<li><code>across()</code></li>
-<li><code>rename()</code></li>
-<li><code>relocate()</code></li>
-<li><code>pull()</code></li>
-</ul>
-<p>Can easily choose variables based on their position, name or type.
-e.g. <code>starts_with("x")</code> or <code>is.numeric()</code></p>
-<h3 id="if-the-variable-is-unquoted">If the variable is unquoted:</h3>
-<p>Similar to data masking, you can use embracing with double curly brackets <code>{{}}</code>.</p>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>drop_rename_iris</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>drop_var</span>, <span class='va'>chosen_var</span><span class='op'>)</span> <span class='op'>{</span></span>
-<span>  <span class='va'>data</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
-<span>    <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='op'>-</span><span class='op'>{</span><span class='op'>{</span><span class='va'>drop_var</span><span class='op'>}</span><span class='op'>}</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
-<span>    <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/rename.html'>rename</a></span><span class='op'>(</span>var_of_interest <span class='op'>=</span> <span class='op'>{</span><span class='op'>{</span><span class='va'>chosen_var</span><span class='op'>}</span><span class='op'>}</span><span class='op'>)</span></span>
-<span><span class='op'>}</span></span>
-<span></span>
-<span><span class='va'>iris</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
-<span>  <span class='fu'>drop_rename_iris</span><span class='op'>(</span>drop_var <span class='op'>=</span> <span class='va'>Sepal.Length</span>,</span>
-<span>                   chosen_var <span class='op'>=</span> <span class='va'>Species</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
-<span>  <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='op'>)</span></span></code></pre>
-</div>
-<pre><code>  Sepal.Width Petal.Length Petal.Width var_of_interest
-1         3.5          1.4         0.2          setosa
-2         3.0          1.4         0.2          setosa
-3         3.2          1.3         0.2          setosa
-4         3.1          1.5         0.2          setosa
-5         3.6          1.4         0.2          setosa
-6         3.9          1.7         0.4          setosa</code></pre>
-</div>
-<h3 id="if-the-variable-is-quoted">If the variable is quoted:</h3>
-<p>Similar to data masking, can use indirect selection from <code>.data</code> using <code>[[]]</code>.</p>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>drop_rename_iris</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>drop_var</span>, <span class='va'>chosen_var</span><span class='op'>)</span> <span class='op'>{</span></span>
-<span>  <span class='va'>data</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
-<span>    <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='op'>-</span><span class='va'>.data</span><span class='op'>[[</span><span class='va'>drop_var</span><span class='op'>]</span><span class='op'>]</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
-<span>    <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/rename.html'>rename</a></span><span class='op'>(</span>var_of_interest <span class='op'>=</span> <span class='va'>.data</span><span class='op'>[[</span><span class='va'>chosen_var</span><span class='op'>]</span><span class='op'>]</span><span class='op'>)</span></span>
-<span><span class='op'>}</span></span>
-<span></span>
-<span><span class='va'>iris</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
-<span>  <span class='fu'>drop_rename_iris</span><span class='op'>(</span>drop_var <span class='op'>=</span> <span class='st'>"Sepal.Length"</span>,</span>
-<span>                   chosen_var <span class='op'>=</span> <span class='st'>"Species"</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
-<span>  <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='op'>)</span></span></code></pre>
-</div>
-<pre><code>  Sepal.Width Petal.Length Petal.Width var_of_interest
-1         3.5          1.4         0.2          setosa
-2         3.0          1.4         0.2          setosa
-3         3.2          1.3         0.2          setosa
-4         3.1          1.5         0.2          setosa
-5         3.6          1.4         0.2          setosa
-6         3.9          1.7         0.4          setosa</code></pre>
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'># As seen in the warning above, it appears that .data[[var]] </span></span>
-<span>  <span class='co'># has now been depreciated</span></span>
-<span></span>
-<span><span class='va'>drop_rename_iris</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>drop_var</span>, <span class='va'>chosen_var</span><span class='op'>)</span> <span class='op'>{</span></span>
-<span>  <span class='va'>data</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
-<span>    <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='op'>-</span><span class='fu'><a href='https://tidyselect.r-lib.org/reference/all_of.html'>all_of</a></span><span class='op'>(</span><span class='va'>drop_var</span><span class='op'>)</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
-<span>    <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/rename.html'>rename</a></span><span class='op'>(</span>var_of_interest <span class='op'>=</span> <span class='va'>.data</span><span class='op'>[[</span><span class='va'>chosen_var</span><span class='op'>]</span><span class='op'>]</span><span class='op'>)</span></span>
-<span><span class='op'>}</span></span>
-<span></span>
-<span><span class='va'>iris</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
-<span>  <span class='fu'>drop_rename_iris</span><span class='op'>(</span>drop_var <span class='op'>=</span> <span class='st'>"Sepal.Length"</span>,</span>
-<span>                   chosen_var <span class='op'>=</span> <span class='st'>"Species"</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
-<span>  <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='op'>)</span></span></code></pre>
-</div>
-<pre><code>  Sepal.Width Petal.Length Petal.Width var_of_interest
-1         3.5          1.4         0.2          setosa
-2         3.0          1.4         0.2          setosa
-3         3.2          1.3         0.2          setosa
-4         3.1          1.5         0.2          setosa
-5         3.6          1.4         0.2          setosa
-6         3.9          1.7         0.4          setosa</code></pre>
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'>## More advanced example</span></span>
-<span></span>
-<span><span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>index_partial <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span><span class='op'>(</span><span class='fl'>0</span><span class='op'>:</span><span class='fl'>1</span>, size <span class='op'>=</span> <span class='fl'>100</span>, replace <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>,</span>
-<span>                 index_all <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span><span class='op'>(</span><span class='fl'>0</span><span class='op'>:</span><span class='fl'>1</span>, size <span class='op'>=</span> <span class='fl'>100</span>, replace <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>,</span>
-<span>                 days_partial <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='fl'>0</span><span class='op'>:</span><span class='fl'>100</span>, size <span class='op'>=</span> <span class='fl'>100</span><span class='op'>)</span>,</span>
-<span>                 days_all <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='fl'>0</span><span class='op'>:</span><span class='fl'>100</span>, size <span class='op'>=</span> <span class='fl'>100</span><span class='op'>)</span><span class='op'>)</span></span>
-<span></span>
-<span><span class='va'>mean_day</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>var_name</span><span class='op'>)</span> <span class='op'>{</span></span>
-<span>  <span class='va'>df</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
-<span>    <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>.data</span><span class='op'>[[</span><span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='st'>"index_"</span>, <span class='va'>var_name</span><span class='op'>)</span><span class='op'>]</span><span class='op'>]</span> <span class='op'>==</span> <span class='fl'>1</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
-<span>    <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span><span class='op'>(</span><span class='st'>"mean_days_{ var_name }"</span> <span class='op'>:=</span> </span>
-<span>                       <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>.data</span><span class='op'>[[</span><span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='st'>"days_"</span>, <span class='va'>var_name</span><span class='op'>)</span><span class='op'>]</span><span class='op'>]</span>, na.rm <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span></span>
-<span><span class='op'>}</span></span>
-<span></span>
-<span><span class='fu'>mean_day</span><span class='op'>(</span><span class='st'>"partial"</span><span class='op'>)</span></span></code></pre>
-</div>
-<pre><code>  mean_days_partial
-1          50.98113</code></pre>
-</div>
-<p><em><strong>Poll:</strong> How do you select a variable in a function with data masking?</em></p>
-<ul>
-<li>unquoted: <code>{var}</code> quoted: <code>[var]</code></li>
-<li>quoted: <code>{var}</code> unquoted: <code>[var]</code></li>
-<li>unquoted: <code>{{var}}</code> quoted: <code>.data[[var]]</code></li>
-<li>quoted: <code>{{var}}</code> unquoted: <code>.data[[var]]</code></li>
-</ul>
-<h1 id="advanced-breakout-rooms-1">ADVANCED BREAKOUT ROOMS</h1>
-<p>Base vs dplyr dynamic data selection.<br />
-Exercises 3 and 4.</p>
-<h1 id="answers">Poll Answers</h1>
-<p><strong>Which of these function top lines has a default argument?</strong><br />
-<code>function(film_name, year = NA) {</code></p>
-<p><strong>R best practice function and argument names?</strong><br />
-<code>doctor_house(first_patient, second_patient)</code></p>
-<p><strong>Which are the required parts of Roxygen header?</strong><br />
-Title, description, parameters, return</p>
-<p><strong>What are the correct functions to create a warning and an error?</strong>
+<li>
 <code>stop()</code>
-<code>warning()</code></p>
-<p><strong>How do you select a variable in a function with data masking?</strong></p>
-<p>unquoted: <code>{{var}}</code> quoted: <code>.data[[var]]</code></p>
-<div class="sourceCode" id="cb73"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+</li>
+<li>
+<code>warnings()</code>
+</li>
+<li>
+<code>SOMETHING_IS_VERY_WRONG()</code>
+</li>
+<li>
+<code>halt()</code>
+</li>
+<li>
+<code>warning()</code>
+</li>
+</ol>
+</section>
+<section id="see-answer-3" class="panel-name panel">
+<h3 class="panel-name">See Answer</h3>
+<p>What are the correct functions to create a warning and an error? (select 2 answers)</p>
+<ol type="A">
+<li>
+<code>error()</code>
+</li>
+<li>
+<b><code>stop()</code></b>
+</li>
+<li>
+<code>warnings()</code>
+</li>
+<li>
+<code>SOMETHING_IS_VERY_WRONG()</code>
+</li>
+<li>
+<code>halt()</code>
+</li>
+<li>
+<b><code>warning()</code></b>
+</li>
+</ol>
+</section>
+</div>
+<h2 id="function-exercises-cd">Function exercises cd</h2>
+<div class="panelset">
+<section id="exercises-1" class="panel-name panel">
+<h3 class="panel-name">Exercises</h3>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'>##### Exercise 5 -</span></span>
+<span></span>
+<span><span class='co'># Create a function that will add a new column to existing data frame by</span></span>
+<span><span class='co'># multiplying another column of that data frame by 3. Default name for the new</span></span>
+<span><span class='co'># column should be "multiplied".</span></span>
+<span></span>
+<span></span>
+<span><span class='co'>##### Exercise 6 -</span></span>
+<span></span>
+<span><span class='co'># Create a function that will compute average speed for each car brand in the</span></span>
+<span><span class='co'># data frame based on distance driven and time it took. You can assume that</span></span>
+<span><span class='co'># column names will be always the same for this dataset.</span></span>
+<span></span>
+<span><span class='va'>cars</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span></span>
+<span>  brand <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Audi"</span>, <span class='st'>"BMW"</span>, <span class='st'>"Toyota"</span><span class='op'>)</span>,</span>
+<span>  distance <span class='op'>=</span> <span class='fl'>4</span><span class='op'>:</span><span class='fl'>6</span>, <span class='co'># in miles</span></span>
+<span>  travel_time <span class='op'>=</span> <span class='fl'>7</span><span class='op'>:</span><span class='fl'>9</span><span class='op'>)</span> <span class='co'># in hours</span></span>
+<span></span>
+<span><span class='co'># Hint: speed equals distance over time</span></span>
+<span></span>
+<span><span class='co'># EXTRA: Create a function that will tell which car is the fastest?</span></span>
+<span></span>
+<span><span class='co'># Try adding a warning and an error to your functions</span></span></code></pre>
+</div>
+</div>
+</section>
+<section id="example-solutions-1" class="panel-name panel">
+<h3 class="panel-name">Example solutions</h3>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'>#' Add new column to dataframe which is 3x multiplication of an existing column</span></span>
+<span><span class='co'>#'</span></span>
+<span><span class='co'>#' @description Adds a new column to existing data frame by multiplying another</span></span>
+<span><span class='co'>#' column of that data frame by 3.</span></span>
+<span><span class='co'>#' Default name for the new column should be "multiplied".</span></span>
+<span><span class='co'>#'</span></span>
+<span><span class='co'>#' @param df dataframe with at least one numeric column to be multiplied</span></span>
+<span><span class='co'>#' @param col_name string name of numeric column to be multiplied</span></span>
+<span><span class='co'>#' @param new_col_name string name of new column, default is "multiplied"</span></span>
+<span><span class='co'>#'</span></span>
+<span><span class='co'>#' @return dataframe with extra column</span></span>
+<span><span class='va'>new_col_mulitplied</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>df</span>, <span class='va'>col_name</span>, <span class='va'>new_col_name</span> <span class='op'>=</span> <span class='st'>"multiplied"</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span>  <span class='va'>df</span><span class='op'>[</span><span class='va'>new_col_name</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='va'>df</span><span class='op'>[</span><span class='va'>col_name</span><span class='op'>]</span> <span class='op'>*</span> <span class='fl'>3</span></span>
+<span>  <span class='va'>df</span></span>
+<span><span class='op'>}</span></span>
+<span></span>
+<span><span class='fu'>new_col_mulitplied</span><span class='op'>(</span><span class='va'>df</span>, col_name <span class='op'>=</span> <span class='st'>"b"</span><span class='op'>)</span></span>
+<span><span class='fu'>new_col_mulitplied</span><span class='op'>(</span><span class='va'>df</span>, col_name <span class='op'>=</span> <span class='st'>"a"</span>, <span class='st'>"any_colname"</span><span class='op'>)</span></span>
+<span></span>
+<span></span>
+<span><span class='co'>##### Extra - Answer 6 -----</span></span>
+<span></span>
+<span><span class='va'>cars</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span></span>
+<span>  brand <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Audi"</span>, <span class='st'>"BMW"</span>, <span class='st'>"Toyota"</span><span class='op'>)</span>,</span>
+<span>  distance <span class='op'>=</span> <span class='fl'>4</span><span class='op'>:</span><span class='fl'>6</span>, <span class='co'># in miles</span></span>
+<span>  travel_time <span class='op'>=</span> <span class='fl'>7</span><span class='op'>:</span><span class='fl'>9</span><span class='op'>)</span> <span class='co'># in hours</span></span>
+<span></span>
+<span><span class='co'>#' Calculate car speed</span></span>
+<span><span class='co'>#'</span></span>
+<span><span class='co'>#' @description Calculates speed of car from distance and travel time</span></span>
+<span><span class='co'>#'</span></span>
+<span><span class='co'>#' @param df dataframe of cars with at least columns of distance and travel_time</span></span>
+<span><span class='co'>#'</span></span>
+<span><span class='co'>#' @return dataframe with new column for speed</span></span>
+<span><span class='va'>car_speed</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span>  <span class='va'>df</span><span class='op'>$</span><span class='va'>speed</span> <span class='op'>&lt;-</span> <span class='va'>df</span><span class='op'>$</span><span class='va'>distance</span> <span class='op'>/</span> <span class='va'>df</span><span class='op'>$</span><span class='va'>travel_time</span></span>
+<span>  <span class='va'>df</span></span>
+<span><span class='op'>}</span></span>
+<span></span>
+<span><span class='fu'>car_speed</span><span class='op'>(</span><span class='va'>cars</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='co'># EXTRA</span></span>
+<span></span>
+<span><span class='co'>#' Find the name of the fastest car</span></span>
+<span><span class='co'>#' </span></span>
+<span><span class='co'>#' @description Using variables of distance and travel_time, speed is calculated</span></span>
+<span><span class='co'>#' and car brand name of the fastest speed is returned.</span></span>
+<span><span class='co'>#'</span></span>
+<span><span class='co'>#' @param df dataframe with columns called distance, travel_time and brand</span></span>
+<span><span class='co'>#'</span></span>
+<span><span class='co'>#' @return name of fastest car as a string</span></span>
+<span><span class='co'>#' @export</span></span>
+<span><span class='va'>find_fastest_car</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span>  <span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'>car_speed</span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span></span>
+<span>  <span class='va'>df</span><span class='op'>$</span><span class='va'>brand</span><span class='op'>[</span><span class='va'>df</span><span class='op'>$</span><span class='va'>speed</span> <span class='op'>==</span> <span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>$</span><span class='va'>speed</span><span class='op'>)</span><span class='op'>]</span></span>
+<span><span class='op'>}</span></span>
+<span></span>
+<span><span class='fu'>find_fastest_car</span><span class='op'>(</span><span class='va'>cars</span><span class='op'>)</span></span></code></pre>
+</div>
+</div>
+</section>
+</div>
+<h1 id="additional-resources">Additional resources</h1>
+<p>For more information see:</p>
+<ul>
+<li><a href="https://rapid-ons.github.io/training/advanced_functions.html">Advanced functions</a> - next tutorial</li>
+<li><a href="https://learninghub.ons.gov.uk/course/view.php?id=635">R Control Flow, Loops and Functions</a> - course on LearningHub</li>
+<li><a href="https://learninghub.ons.gov.uk/course/view.php?id=574">Modular programming in R and Python</a> - course on LearningHub</li>
+</ul>
+<p>Note that LearningHub resources are only available for colleagues from ONS and other government departments.</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
