@@ -2116,6 +2116,7 @@ RAP training in R
 <div class="nav-dropdown-content">
 <a href="control_flow.html">Control Flow</a>
 <a href="functions.html">Functions</a>
+<a href="projects.html">Project structure</a>
 <a href="packages.html">Packages and unit tests</a>
 </div>
 </div>
@@ -2906,7 +2907,7 @@ Or we could add the two objects together:
 <span></span>
 <span><span class='fu'><a href='https://rdrr.io/pkg/tictoc/man/tic.html'>toc</a></span><span class='op'>(</span><span class='op'>)</span></span></code></pre>
 </div>
-<pre><code>Rounding 20,000 random values in x to 2 d.p. using for loop: 23.48 sec elapsed</code></pre>
+<pre><code>Rounding 20,000 random values in x to 2 d.p. using for loop: 17.9 sec elapsed</code></pre>
 </div>
 <p>Timing the same code may vary on each run (due other computer processes), so repeating this will ensure accurate results.</p>
 <p>This is the simplest way to time tasks, however there are better packages for measuring performance and <a href="https://adv-r.hadley.nz/perf-measure.html">profiling</a> such as <a href="https://cran.r-project.org/web/packages/profvis/profvis.pdf"><code>profvis</code></a> and <a href="https://cran.r-project.org/web/packages/bench/index.html"><code>bench</code></a>.</p>
@@ -2958,7 +2959,7 @@ The task is to fill the <code>even_odd</code> column based on value of <code>x</
 <span><span class='op'>}</span></span>
 <span><span class='fu'><a href='https://rdrr.io/pkg/tictoc/man/tic.html'>toc</a></span><span class='op'>(</span><span class='op'>)</span></span></code></pre>
 </div>
-<pre><code>for loop- even/odd: 90.68 sec elapsed</code></pre>
+<pre><code>for loop- even/odd: 76.58 sec elapsed</code></pre>
 </div>
 <p><br></p>
 <p>We will reset the data frame every time, to ensure that the timing is fair for each method.</p>
@@ -2976,7 +2977,7 @@ The task is to fill the <code>even_odd</code> column based on value of <code>x</
 <span><span class='va'>df</span><span class='op'>$</span><span class='va'>even_odd</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span><span class='op'>(</span><span class='va'>x</span> <span class='op'><a href='https://rdrr.io/r/base/Arithmetic.html'>%%</a></span> <span class='fl'>2</span> <span class='op'>==</span> <span class='fl'>0</span>, <span class='st'>"even"</span>, <span class='st'>"odd"</span><span class='op'>)</span></span>
 <span><span class='fu'><a href='https://rdrr.io/pkg/tictoc/man/tic.html'>toc</a></span><span class='op'>(</span><span class='op'>)</span></span></code></pre>
 </div>
-<pre><code>ifelse - even/odd: 0.09 sec elapsed</code></pre>
+<pre><code>ifelse - even/odd: 0.07 sec elapsed</code></pre>
 </div>
 <p><br></p>
 <p>Resetting the <code>even_odd</code> column of the data frame:</p>
@@ -3006,7 +3007,7 @@ The task is to fill the <code>even_odd</code> column based on value of <code>x</
 <span><span class='va'>df</span><span class='op'>$</span><span class='va'>even_odd</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>sapply</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>$</span><span class='va'>x</span>, <span class='va'>func_even_odd</span><span class='op'>)</span></span>
 <span><span class='fu'><a href='https://rdrr.io/pkg/tictoc/man/tic.html'>toc</a></span><span class='op'>(</span><span class='op'>)</span></span></code></pre>
 </div>
-<pre><code>sapply - even/odd: 0.22 sec elapsed</code></pre>
+<pre><code>sapply - even/odd: 0.17 sec elapsed</code></pre>
 </div>
 <p><br></p>
 <h3 id="vectorisation-1"><code>Vectorisation</code></h3>
@@ -3020,7 +3021,7 @@ The task is to fill the <code>even_odd</code> column based on value of <code>x</
 <span><span class='va'>df</span><span class='op'>$</span><span class='va'>even_odd</span><span class='op'>[</span><span class='va'>df</span><span class='op'>$</span><span class='va'>x</span> <span class='op'><a href='https://rdrr.io/r/base/Arithmetic.html'>%%</a></span> <span class='fl'>2</span> <span class='op'>!=</span> <span class='fl'>0</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='st'>"odd"</span></span>
 <span><span class='fu'><a href='https://rdrr.io/pkg/tictoc/man/tic.html'>toc</a></span><span class='op'>(</span><span class='op'>)</span></span></code></pre>
 </div>
-<pre><code>vectorised - even/odd: 0.01 sec elapsed</code></pre>
+<pre><code>vectorised - even/odd: 0.02 sec elapsed</code></pre>
 </div>
 <p><br></p>
 <h3 id="dplyr"><code>dplyr</code></h3>

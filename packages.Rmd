@@ -1,5 +1,5 @@
 ---
-title: "Project structure, packages and unit testing in R"
+title: "Packages and unit testing"
 output:
   distill::distill_article:
     toc: true
@@ -8,6 +8,7 @@ output:
 ---
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+xaringanExtra::use_panelset()
 ```
 # What is a package and when do we need one?
 
@@ -23,91 +24,59 @@ source("functions.R")
 ```
 3. You can create a package that will contain all your functions. Benefits of that solution include good dependency management (using other packages, requiring specific versions etc.), simple implementation of unit tests and good documentation solutions that make it easier for other people to use your functions. Package is often the best solution for more complex analyses.
 
-#### Q1
+## Quiz 1
 
-# Code structure
+::::: {.panelset}
 
-Optimal code structure will depend on volume and complexity of analysis. We'll cover small, medium and big projects.
+::: {.panel}
 
-## Small project
+### Question {.panel-name}
 
-### Structure
-For a small project it might be sufficient to have a single script that does all the work. In this case, the code should be structured as follows:
+What do you class as a small project?
+
+<ol type="A">
+  <li>Project with less than 10 bespoke functions</li>
+  <li>Project that comfortable fits in a single script</li>
+  <li>Project producing less than 10 tables</li>
+  <li>Project that uses no more than 3 scripts for analysis</li>
+</ol>
+
+:::
+
+::: {.panel}
+
+### See Answer {.panel-name}
+
+What do you class as a small project?
+
+<ol type="A">
+  <li>Project with less than 10 bespoke functions</li>
+  <li><b>Project that comfortable fits in a single script</b></li>
+  <li>Project producing less than 10 tables</li>
+  <li>Project that uses no more than 3 scripts for analysis</li>
+</ol>
+ 
+Our guidance for small projects is aproppriate for projects that would fit in a single script.
+:::
+
+:::::
+
+# Prerequisities
+
+You will need devtools and roxygen packages installed for this tutorial.
 
 ```{r eval = FALSE}
-# Config ----
-# specify all the variables that require user input at the top. All variables that might change from
-# run to run should be here: e.g. locations where to load data from, where to save the outputs, analytical parameters etc.
-
-# Load packages ----
-# library in all the required packages
-
-# Body of the script ----
-# Whatever the code actually does - you can have multiple sections here to make it easy to read.
-
+install.packages(c("devtools", "roxygen"), dependencies = TRUE, type = "win.binary")
 ```
 
-Even for small projects, contained within one script we should have a README file that contains the necessary documentation/instructions. README should ensure that another person can easily run the project.
 
-### Quality assurance
-For a small project any tests should be implemented in the body of the script - this can be simple sanity checks i.e. if statements printing a message or can use testthat "expect" functions. Some sanity checks might be useful, but for small projects most important part of QA will be for another analyst to quality assurance your code to check if it works as expected.
+# Package structure and setup
 
-##### Q2
- 
-## Medium project
-### Structure
-In a medium size project you will likely need to have multiple scripts. First, you'll need a README file that will explain to any future users how to run the code, which parameters need to be updated and where. If there is no other documentation this is also the place to specify any dependencies, versions, authors etc. README should generally be in .txt format.
+##  Package name
 
-You should have a separate config file with all the variables that require user input. Config file can be e.g. in yaml or R script format. This way you are less likely to introduce errors into the analytical part of the project and it is easy to modify parameters.
-
-For medium size projects, you should make your code modular and avoid repetition. This means employing functions to do the heavy lifting for you. Therefore, you'll need another R script where all the functions are stored.
-
-Finally, you'll have a "main" script (it doesn't have to be called main, but it should be clear which one to run), that does all the work. To take advantage of the config and functions you created you can simply use the source() function to call these into your environment.
-```
-project/
-  README.txt
-  config.yaml OR config.R
-  functions.R
-  main.R
-```
-
-### Quality assurance
-For a medium project you should consider creating unit tests for your functions. This can be done in a simple fashion e.g. by creating another R script that will source all the functions and run tests for them. You should still have another analyst QA your code.
-
-## Big project
-### Structure
-Usually, best way to structure large or complex projects is going to be putting it in a package (see next section). Alternatively you could adopt a structure similar to a package, that will help you manage the abundance of code and tests you'll need to produce.
-```
-project/
-
-  functions/
-    analytical_functions.R
-    data_processing_functions.R
-    super_complex_modelling_functions.R
-    
-  tests/
-    test_function_F.R
-    ...
-  
-  README.txt
-  config.yaml OR config.R
-  main.R
-```
-### Quality assurance
-For a big project, you should really unit test your functions. As always code should be quality assured by another analyst. Ideally you should produce logs each time your code is run with outcomes of your sanity checks and any parameters specified in the config.
-
-#### Q3,4
-
-# Building R packages
-
-You will need devtools and roxygen packages installed to run these functions.
-
-## Package structure and setup
-
-###  Package name
 Package name should consist of letters and numbers and be informative. You can't use underscores in a package name, but . are allowed. Make sure that your name is unique to avoid conflicts with existing packages.
 
-### Creating basic structure
+## Creating basic structure
 
 Devtools create() function creates package folders in current directory.
 
@@ -148,9 +117,9 @@ This is the basic package structure, there will be few more things in the packag
 
 #### Q5
 
-## Functions and installing/testing your package
+# Functions and installing/testing your package
 
-### Adding functions to your package
+## Adding functions to your package
 
 Functions need to be stored in R/ folder inside the package. You can have individual files for each function or store multiple functions in a single file. Files containing a single function should have the same name as that function. When you store couple of functions together they should be grouped with similar functions (e.g. import functions) and files should have informative names (e.g. data_import.R). The easiest way to add functions to a package is to create an R script and save it in the project/pckgname/R folder. 
 
@@ -171,7 +140,7 @@ add_3 <- function(x) {
 }
 ```
 
-### Trying out functions from your package
+## Trying out functions from your package
 
 Now that we have something in our package, let's try installing it. To do so you need to be in your project directory (e.g. "D:/project/") if you aren't use setwd("D:/project/") in R console to change your working directory.
 
@@ -201,16 +170,89 @@ add_3(1)
 Worked as a charm! Using load_all is the fastest way to try out the functionality of your new functions, so you're likely to be using it often while building your package.
 
 Ok, but what do you need to do for it to work properly? You'll have to add proper documentation to your functions.
-## Breakout rooms
+
+## Package exercises - building a package
+
+These were designed for small group/paired coding, but you should ba able to complete these on your own based on the information from above sections.
+
+::::: {.panelset}
+
+::: {.panel}
+
+### Exercises {.panel-name}
+
+```{r eval = FALSE}
+# 1. Create your own package ----
+# Create your own package and inspect the directory created in win explorer or
+# in R "files" window on the bottom right. 
 
 
-## Roxygen documentation
+# 2. Add an .R script to the R folder of the package, that will store your 
+# functions. You can do it manually or using usethis package.
+
+
+# 3. Add a simple function to your package.
+
+
+# 4. Install and library in your package and try calling the function.
+
+
+# 5. Use appropriate devtools:: function (which one?) to load the package and
+# try calling your function.
+```
+
+:::
+
+::: {.panel}
+
+### Solutions {.panel-name}
+
+```{r eval = FALSE}
+# 1. Create your own package ----
+# Create your own package and inspect the directory created in win explorer or
+# in R "files" window on the bottom right. 
+devtools::create("my.awesome.package")
+
+# 2. Add an .R script to the R folder of the package, that will store your 
+# functions. You can do it manually or using usethis package.
+setwd("my.awesome.package") 
+usethis::use_r("my_functions") 
+
+# 3. Add a simple function to your package. 
+add_3 <- function(x) {
+  x + 3
+}
+
+# You can simply copy/paste the above into my_functions script OR run:
+dump("add_3", file = "my.awesome.package/R/my_functions.R")
+
+# 4. Install and library in your package and try calling the function.
+# make sure to remove add_3 from global environment if you can see it there (Environment tab in R Studio)
+devtools::install("my.awesome.package")
+library(my.awesome.package)
+
+add_3(1)
+# this should give you an error!
+
+# 5. Use appropriate devtools:: function (which one?) to load the package and
+# try calling your function.
+devtools::load_all("my.awesome.package")
+
+add_3(1)
+# this should work!
+```
+
+:::
+
+:::::
+
+# Package documentation
 
 Individual functions in a package need their own documentation. You should also include some documentation for functions even for smaller projects, but for packages they need to follow a specific format. For R packages roxygen allows us to build clean documentation. For functions these "comments" are called docstrings.
 
 The roxygen headers are included in the same script as the function code. You use roxygen comments #' to identify a line as part of the roxygen header.
 
-### Minimum functionality and installing your package
+## Minimum functionality and installing your package
 
 As a bare minimum your functions need an @export tag to work. Try adding the following line above your function in the "test_functions.R" script:
 
@@ -239,7 +281,7 @@ library(pckgname)
 add_3(1)
 ```
 
-### Functions' docstrings
+## Functions' docstrings
 The first three lines of the header have special meaning and you don't need to use tags to identify them. The first three lines are title, description and details. Since you don't use any tags to identify the first three lines, it is necessary that you separate them by a new line. For example:
 
 ```{r eval = FALSE}
@@ -268,7 +310,7 @@ Only exported functions will be loaded and directly accessible to users when the
 #' @export
 ```
 
-### Example roxygen docstrings
+## Example roxygen docstrings
 
 This is minimal documentation that each function should have:
 * title
@@ -294,7 +336,7 @@ Another tag that you'll likely use often is @import tag, which will attach other
 #' @import dplyr
 ```
 
-### Optional roxygen tags (optional content)
+## Optional roxygen tags (advanced content)
 
 You can also include examples in roxygen header
 
@@ -365,7 +407,7 @@ The script should be saved in R directory in file with package name, e.g. pckgna
 
 ```
 
-### Produce documentation
+## Produce documentation
 
 Once you created roxygen headers you can create documentation for your package.
 
@@ -387,15 +429,73 @@ Using roxygen comments will help you build code documentation when you run
 devtools::document function and will update NAMESPACE file, but not the 
 DESCRIPTION file. You can update the description file manually. For instance, roxygen won't update the Dependencies or Imports in the DESCRIPTION file.
 
+## Documentation exercises
 
-## Unit testing and Quality Assurance
+::::: {.panelset}
 
-### What are unit tests?
+::: {.panel}
+
+### Exercises {.panel-name}
+
+```{r eval = FALSE}
+# 6. Add roxygen comments to your .R script, above the function definition. 
+# Then document and update the package loaded into your environment with load_all.
+
+devtools::document("")
+devtools::load_all("")
+# Now see what happens if you try finding help on your function.
+
+?your_function_name
+
+# 7. Add one of the functions from the previous session to your package and 
+# create roxygen documentation for it.
+```
+
+:::
+
+::: {.panel}
+
+### Example solutions {.panel-name}
+
+```{r eval = FALSE}
+# 6. Add roxygen comments to your .R script, above the function definition. 
+# Then document and update the package loaded into your environment with load_all.
+
+#' Add three
+#'
+#' @param x numeric vector
+#'
+#' @return numeric vetor with values increased by 3
+#' @export
+
+add_3 <- function(x) {
+  x + 3
+}
+
+devtools::document("my.awesome.package")
+devtools::load_all("my.awesome.package")
+# Now see what happens if you try finding help on your function.
+
+?add_3
+
+# 7. Add one of the functions from the previous session to your package and 
+# create roxygen documentation for it.
+
+
+```
+
+:::
+
+:::::
+
+# Unit testing and Quality Assurance
+
+## What are unit tests?
 Unit tests check whether functions do what is expected of them. No more no less. Ideally, you would like a 100% of test coverage, which means that every functions has tests that check for every eventuality. More realistically 60-70% test coverage is very good.
 
 To create unit tests, you'll produce dummy data and run your function using this data to check if it produces expected output. Not as difficult as it sounds is it?
 
-### Where to put unit tests in a package?
+## Where to put unit tests in a package?
 Setting up folder for unit tests
 
 ```{r}
@@ -413,7 +513,7 @@ You can see a folder called tests - let's see what's inside.
 dir("pckgname/tests")
 ```
 
-### How to write unit tests with testthat?
+## How to write unit tests with testthat?
 
 For each function you'll need a separate .R file named test-function_name.R. Inside you create test data and output that function should produce for the test data you create within the test script. Then you compare the expected output (that is hardcoded) with output of the function.
 
@@ -449,7 +549,7 @@ testthat::test_that("Checking expected outcome matches outcome for add_3 functio
 
 ```
 
-### What should you be testing?
+## What should you be testing?
 Everything that is crucial for the function to work. It is not possible to test for every possibility, but checking how function will handle various combination of arguments, extra columns or different types of values (e.g. 0, NaNs, empty cells) can be useful. You can also check if function will throw an error or a warning when it shoud:
 
 ```{r}
@@ -467,7 +567,7 @@ testthat::expect_s4_class()
 testthat::expect_type()
 ```
 
-### How many tests for a function? (optional)
+## How many tests for a function? (optional)
 Each function needs to have a single file for unit tests, but there can be multiple unit tests inside. For instance, if your function includes conditional statements, you should tests all of the conditions (e.g. TRUE/FALSE). 
 
 ```{r}
@@ -517,14 +617,14 @@ testthat::test_that("Checking data frame column types are as expected", {
 })
 ```
 
-### Testing your package
+## Testing your package
 It is good to run unit tests on the package whenever you change functionality. There is a simple way to do it:
 
 ```{r eval = FALSE}
 devtools::test("pckgname")
 ```
 
-### UnExported functions (optional)
+## UnExported functions (optional)
 
 Testing non exported functions:
 
@@ -541,21 +641,64 @@ However it is possible to access non exported functions of a package:
 pckgname:::nonExpfun(arg1)
 ```
 
-### Quality Assurance
+## Quality Assurance
 Complex pipelines should contain unit tests that cover most functions. However, you still should have your code peer reviewed and quality assured by another analyst.
 
-### Testing excercises
+## Testing excercises
 
-### How to share your package?
-Upload the package folder on git, then people can clone 0it and run devtools::install :D You can also ask for your package to be added to ONS artifactory.
+::::: {.panelset}
+
+::: {.panel}
+
+### Exercises {.panel-name}
+
+```{r eval = FALSE}
+# 8. Create unit tests for both functions in your package.
+
+
+# 9. Run unit tests for the package.
+
+```
+
+:::
+
+::: {.panel}
+
+### Example solutions {.panel-name}
+
+```{r eval = FALSE}
+# 8. Create unit tests for both functions in your package.
+usethis::use_testthat() # create folder for tests in your package
+usethis::use_test("add_3") # this can be also created manually
+
+# copy the below into my.awesome.package/tests/testthat/test-add_3.R
+testthat::testthat("Function adds 3 to a vector", {
+  output <- add_3(1)
+  expected_output <- 4
+  testthat::expect_equal(output, expected_output)
+})
+
+
+# 9. Run unit tests for the package.
+devtools::test("my.awesome.package")
+
+```
+
+:::
+
+:::::
+
+# How to share your package?
+Upload the package folder on git, then people can simmply clone it and run devtools::install() ! 
 
 You can also add on cran, but we won't cover that here - see more advanced resources below.
 
-## Additional resources
+# Additional resources
 
 For more information see:
 
-* [Packages in R and Python](https://learninghub.ons.gov.uk/course/view.php?id=1165) - course on LearningHub
 * [Packaging your code in R](https://r-pkgs.org/) - book
-* [Packaging your code in R in DAP](https://learninghub.ons.gov.uk/enrol/index.php?id=796) - screencast by DAPCATS
+* [Packages in R and Python](https://learninghub.ons.gov.uk/course/view.php?id=1165) - course on LearningHub
 * [Introduction to Unit Testing](https://learninghub.ons.gov.uk/course/view.php?id=539) - course on LearningHub
+
+Note that LearningHub resources are only available for colleagues from ONS and other government departments.

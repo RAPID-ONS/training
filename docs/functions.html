@@ -2116,6 +2116,7 @@ RAP training in R
 <div class="nav-dropdown-content">
 <a href="control_flow.html">Control Flow</a>
 <a href="functions.html">Functions</a>
+<a href="projects.html">Project structure</a>
 <a href="packages.html">Packages and unit tests</a>
 </div>
 </div>
@@ -3048,12 +3049,12 @@ In RStudio, put the cursor inside the function and either:</p>
 <span><span class='va'>out</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>out</span><span class='op'>)</span></span>
 <span><span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>sqrt</a></span><span class='op'>(</span><span class='va'>out</span><span class='op'>)</span></span></code></pre>
 </div>
-<pre><code>[1] 0.5439865</code></pre>
+<pre><code>[1] 0.5179677</code></pre>
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'># Nesting - Can get complicated when there are multiple arguments and brackets</span></span>
 <span><span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>sqrt</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/sd.html'>sd</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
 </div>
-<pre><code>[1] 0.5439865</code></pre>
+<pre><code>[1] 0.5179677</code></pre>
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'># Piping - Best Practice</span></span>
 <span><span class='va'>x</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
@@ -3061,7 +3062,7 @@ In RStudio, put the cursor inside the function and either:</p>
 <span>  <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
 <span>  <span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>sqrt</a></span><span class='op'>(</span><span class='op'>)</span></span></code></pre>
 </div>
-<pre><code>[1] 0.5439865</code></pre>
+<pre><code>[1] 0.5179677</code></pre>
 </div>
 <p>As mentioned in a previous section, the order of arguments for <code>dplyr</code> piping is quite important. Data should be the first.</p>
 <p>When the functions are called in a pipe, it is assumed that the data from the previous level of the pipe is the default first argument, so it doesn’t need to be specified in each function.</p>
@@ -3602,7 +3603,7 @@ e.g. <code>starts_with("x")</code> or <code>is.numeric()</code></p>
 <span><span class='fu'>mean_day</span><span class='op'>(</span><span class='st'>"partial"</span><span class='op'>)</span></span></code></pre>
 </div>
 <pre><code>  mean_days_partial
-1          45.46154</code></pre>
+1          50.98113</code></pre>
 </div>
 <p><em><strong>Poll:</strong> How do you select a variable in a function with data masking?</em></p>
 <ul>

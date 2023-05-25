@@ -14,6 +14,8 @@ navbar:
         href: control_flow.html
       - text: "Functions"
         href: functions.html
+      - text: "Project structure"
+        href: projects.html        
       - text: "Packages and unit tests"
         href: packages.html
 output: distill::distill_article

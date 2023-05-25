@@ -1,0 +1,130 @@
+---
+title: "Structure for analytical projects"
+output:
+  distill::distill_article:
+    toc: true
+    toc_depth: 2
+    number_sections: true
+---
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+xaringanExtra::use_panelset()
+```
+# Code structure
+
+There is no one good solution to structuring your RAP projects. There is a lot of flexibility in how you do it and it will depend on the type of work you do. Nevertheless, especially when you start with RAP it can be really helpful to have a template to use. What is the best practice for structuring a project is one of the most common questions when we start working on RAP with a new team. The examples below are one good way to do this, but not the only way. Some of advice here is universal though - you should always have a README file and it should be clear which script you need to run.
+
+Optimal code structure will depend on volume and complexity of analysis. We'll cover small, medium and big projects.
+
+# Small project
+
+## Structure
+For a small project it might be sufficient to have a single script that does all the work. In this case, the code should be structured as follows:
+
+```{r eval = FALSE}
+# Config ----
+# specify all the variables that require user input at the top. All variables that might change from
+# run to run should be here: e.g. locations where to load data from, where to save the outputs, analytical parameters etc.
+
+# Load packages ----
+# library in all the required packages
+
+# Body of the script ----
+# Whatever the code actually does - you can have multiple sections here to make it easy to read.
+
+```
+
+Even for small projects, contained within one script we should have a README file that contains the necessary documentation/instructions. README should ensure that another person can easily run the project.
+
+## Quality assurance of code
+
+For a small project any tests should be implemented in the body of the script - this can be simple sanity checks i.e. if statements printing a message or can use testthat "expect" functions. Some sanity checks might be useful, but for small projects most important part of QA will be for another analyst to quality assurance your code to check if it works as expected.
+
+## Quiz 1
+
+::::: {.panelset}
+
+::: {.panel}
+
+### Question {.panel-name}
+
+What do you class as a small project?
+
+<ol type="A">
+  <li>Project with less than 10 bespoke functions</li>
+  <li>Project that comfortable fits in a single script</li>
+  <li>Project producing less than 10 tables</li>
+  <li>Project that uses no more than 3 scripts for analysis</li>
+</ol>
+
+:::
+
+::: {.panel}
+
+### See Answer {.panel-name}
+
+What do you class as a small project?
+
+<ol type="A">
+  <li>Project with less than 10 bespoke functions</li>
+  <li><b>Project that comfortable fits in a single script</b></li>
+  <li>Project producing less than 10 tables</li>
+  <li>Project that uses no more than 3 scripts for analysis</li>
+</ol>
+ 
+Our guidance for small projects is aproppriate for projects that would fit in a single script.
+:::
+
+:::::
+ 
+# Medium project
+
+## Structure
+
+In a medium size project you will likely need to have multiple scripts. First, you'll need a README file that will explain to any future users how to run the code, which parameters need to be updated and where. If there is no other documentation this is also the place to specify any dependencies, versions, authors etc. README should generally be in .txt format.
+
+You should have a separate config file with all the variables that require user input. Config file can be e.g. in yaml or R script format. This way you are less likely to introduce errors into the analytical part of the project and it is easy to modify parameters.
+
+For medium size projects, you should make your code modular and avoid repetition. This means employing functions to do the heavy lifting for you. Therefore, you'll need another R script where all the functions are stored.
+
+Finally, you'll have a "main" script (it doesn't have to be called main, but it should be clear which one to run), that does all the work. To take advantage of the config and functions you created you can simply use the source() function to call these into your environment.
+```
+project/
+  README.txt
+  config.yaml OR config.R
+  functions.R
+  main.R
+```
+
+## Quality assurance
+
+For a medium project you should consider creating unit tests for your functions. This can be done in a simple fashion e.g. by creating another R script that will source all the functions and run tests for them. You should still have another analyst QA your code.
+
+# Large project
+
+## Structure
+
+Usually, best way to structure large or complex projects is going to be putting it in a package (see the [packages page](https://rapid-ons.github.io/training/packages.html)). Alternatively you could adopt a structure similar to a package, that will help you manage the abundance of code and tests you'll need to produce.
+
+```
+project/
+
+  functions/
+    analytical_functions.R
+    data_processing_functions.R
+    super_complex_modelling_functions.R
+    
+  tests/
+    test_function_F.R
+    ...
+  
+  README.txt
+  config.yaml OR config.R
+  main.R
+```
+## Quality assurance
+
+For a big project, you should really unit test your functions. As always code should be quality assured by another analyst. Ideally you should produce logs each time your code is run with outcomes of your sanity checks and any parameters specified in the config.
+
+### Q3,4
+
