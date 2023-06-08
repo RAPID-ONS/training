@@ -454,7 +454,7 @@ dir("pckgname/man")
 help("pckgname")
 
 # Update the package loaded in your workspace
-devtools::load_all("pckgnmme")
+devtools::load_all("pckgname")
 ```
 
 Using roxygen comments will help you build code documentation when you run 
