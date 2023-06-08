@@ -393,21 +393,21 @@ When you write documentation you may want to format the text to look like code, 
 
 For code you use:
 
-\code{text to format}
+`\code{text to format}`
 
 To link to other functions you use:
 
-\link[packageName]{functionName}
+`\link[packageName]{functionName}`
 
 Note the package name is only required if the function is not in your package.
 
 To include an unordered list you use:
 
-\itemize{}
+`\itemize{}`
 
 Inside the brackets you mark new items with 
 
-\item 
+`\item`
 
 followed by the item text.
 
