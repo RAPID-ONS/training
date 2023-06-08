@@ -18,6 +18,10 @@ You will need devtools and roxygen packages installed for this tutorial.
 install.packages(c("devtools", "roxygen"), dependencies = TRUE, type = "win.binary")
 ```
 
+```{r, include = FALSE}
+proj_dir <- getwd()
+```
+
 # What is a package and when do we need one?
 
 To put simply a package is a collection of functions that we can load into our workspace and use. Base R contains many functions already, but loading packages extends R functionality. Some of the most popular packages in HAPI include dplyr for data manipulation and ggplot2 for creating charts.
@@ -292,7 +296,7 @@ As a bare minimum your functions need an @export tag to work. Try adding the fol
 #' @export
 ```
 
-For the package to work you need to create documentation with devtools::document() and then install your package using devtools::install. Note that without the export tag devtools::document() the package would not export any functions, so you still wouldn't be able to use them.
+For the package to work you need to create documentation with `devtools::document()` and then install your package using `devtools::install`. Note that without the export tag `devtools::document()` the package would not export any functions, so you still wouldn't be able to use them.
 
 ```{r eval = FALSE}
 devtools::document("pckgname")
@@ -301,7 +305,11 @@ devtools::document("pckgname")
 You should see the message "Writing NAMESPACE". Open the NAMESPACE file and see what changed.
 
 ```{r include = FALSE}
-read.csv("D:/RAP/Building_capability/packages/pckgname/NAMESPACE", header = FALSE)
+namespace <- read.csv(paste0(proj_dir, "/NAMESPACE_export"), header = FALSE)
+```
+
+```{r}
+namespace
 ```
 
 First line has not changed, but now there is a new line telling the package to export add_3 function. All the functions you want users to get from your package need to be exported and appear in the NAMESPACE.
