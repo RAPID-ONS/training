@@ -18,9 +18,6 @@ You will need devtools and roxygen packages installed for this tutorial.
 install.packages(c("devtools", "roxygen"), dependencies = TRUE, type = "win.binary")
 ```
 
-```{r, include = FALSE}
-proj_dir <- getwd()
-```
 
 # What is a package and when do we need one?
 
@@ -307,7 +304,7 @@ devtools::document("pckgname")
 You should see the message "Writing NAMESPACE". Open the NAMESPACE file and see what changed.
 
 ```{r include = FALSE}
-namespace <- read.csv(paste0(proj_dir, "/NAMESPACE_export"), header = FALSE)
+namespace <- read.csv("NAMESPACE_export", header = FALSE)
 ```
 
 ```{r}
