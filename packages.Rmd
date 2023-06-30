@@ -32,44 +32,6 @@ source("functions.R")
 ```
 3. You can create a package that will contain all your functions. Benefits of that solution include good dependency management (using other packages, requiring specific versions etc.), simple implementation of unit tests and good documentation solutions that make it easier for other people to use your functions. Package is often the best solution for more complex analyses.
 
-## Quiz 1
-
-::::: {.panelset}
-
-::: {.panel}
-
-### Question {.panel-name}
-
-What do you class as a small project?
-
-<ol type="A">
-  <li>Project with less than 10 bespoke functions</li>
-  <li>Project that comfortable fits in a single script</li>
-  <li>Project producing less than 10 tables</li>
-  <li>Project that uses no more than 3 scripts for analysis</li>
-</ol>
-
-:::
-
-::: {.panel}
-
-### See Answer {.panel-name}
-
-What do you class as a small project?
-
-<ol type="A">
-  <li>Project with less than 10 bespoke functions</li>
-  <li><b>Project that comfortable fits in a single script</b></li>
-  <li>Project producing less than 10 tables</li>
-  <li>Project that uses no more than 3 scripts for analysis</li>
-</ol>
- 
-Our guidance for small projects is aproppriate for projects that would fit in a single script.
-:::
-
-:::::
-
-
 # Package structure and setup
 
 ##  Package name
