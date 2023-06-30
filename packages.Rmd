@@ -56,6 +56,8 @@ if (dir.exists("pckgname/tests")){
 ```{r}
 dir("pckgname")
 ```
+You can view both DESCRIPTION and NAMESPACE files either in RStudio or in text editor.
+
 DESCRIPTION file can be edited manually (e.g. using notepad) and should contain:
 
 * Title of the package
@@ -63,12 +65,17 @@ DESCRIPTION file can be edited manually (e.g. using notepad) and should contain:
 * License
 * Authors@R field should include details of authors, contributors, and copyright holders
 
+If you open DESCRIPTION file of your newly created package you should see:
+![DECSRIPTION](images/Description_1.png) 
 
 NAMESPACE file should not be edited manually, it will be updated automatically when you document your package.
 
-You can view the contenct of these files
+If you open NAMESPACE file of your newly created package you should see:
+![NAMESPACE](images/Namespace_1.png) 
+It will remind you that you should not edit it manually.
 
-This a basic structure of a package. In analytical pipeline, your package is something that stores all the functions (can store few more things as you will see later), but does not include the main pipeline itself. Your overall project structure will look as follows:
+
+Below is a basic structure of a package. In analytical pipeline, your package is something that stores all the functions (can store few more things as you will see later), but does not include the main pipeline itself. Your overall project structure will look as follows:
 ```
 project/
   pckgname/
@@ -83,9 +90,9 @@ project/
   config.yaml OR config.R
   main.R
 ```
-This is the basic package structure, there will be few more things in the package that you'll learn about in the further sections.
+This is the basic structure, there will be few more things in the package that you will learn about in the further sections.
 
-## Quiz 2
+## Quiz
 
 ::::: {.panelset}
 
