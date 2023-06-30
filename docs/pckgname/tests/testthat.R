@@ -1,4 +1,4 @@
 library(testthat)
-library(pckgname)
+library(web_raptraining)
 
-test_check("pckgname")
+test_check("web_raptraining")
