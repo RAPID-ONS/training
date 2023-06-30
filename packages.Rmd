@@ -85,6 +85,11 @@ devtools::create("pckgname")
 ```
 
 The structure created this way includes folder called R (for all your functions) and DESCRIPTION and NAMESPACE files.
+```{r include = FALSE}
+if (dir.exists("pckgname/tests")){
+  unlink("pckgname/tests", recursive = TRUE)
+}
+```
 
 ```{r}
 dir("pckgname")
@@ -96,7 +101,10 @@ DESCRIPTION file can be edited manually (e.g. using notepad) and should contain:
 * License
 * Authors@R field should include details of authors, contributors, and copyright holders
 
+
 NAMESPACE file should not be edited manually, it will be updated automatically when you document your package.
+
+You can view the contenct of these files
 
 This a basic structure of a package. In analytical pipeline, your package is something that stores all the functions (can store few more things as you will see later), but does not include the main pipeline itself. Your overall project structure will look as follows:
 ```
@@ -171,6 +179,7 @@ add_3 <- function(x) {
   x + 3
 }
 ```
+
 
 ## Trying out functions from your package
 
