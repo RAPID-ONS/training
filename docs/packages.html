@@ -2143,15 +2143,12 @@ RAP training in R
 <nav class="l-text toc figcaption" id="TOC">
 <h3>Contents</h3>
 <ul>
-<li><a href="#what-is-a-package-and-when-do-we-need-one">What is a package and when do we need one?</a>
-<ul>
-<li><a href="#quiz-1">Quiz 1</a></li>
-</ul></li>
+<li><a href="#what-is-a-package-and-when-do-we-need-one">What is a package and when do we need one?</a></li>
 <li><a href="#package-structure-and-setup">Package structure and setup</a>
 <ul>
 <li><a href="#package-name">Package name</a></li>
 <li><a href="#creating-basic-structure">Creating basic structure</a></li>
-<li><a href="#quiz-2">Quiz 2</a></li>
+<li><a href="#quiz">Quiz</a></li>
 </ul></li>
 <li><a href="#functions-and-installingtesting-your-package">Functions and installing/testing your package</a>
 <ul>
@@ -2162,7 +2159,7 @@ RAP training in R
 <li><a href="#package-documentation">Package documentation</a>
 <ul>
 <li><a href="#minimum-functionality-and-installing-your-package">Minimum functionality and installing your package</a></li>
-<li><a href="#functions-docstrings">Functions’ docstrings</a></li>
+<li><a href="#functions-documentation">Functions’ documentation</a></li>
 <li><a href="#example-roxygen-docstrings">Example roxygen docstrings</a></li>
 <li><a href="#optional-roxygen-tags-advanced-content">Optional roxygen tags (advanced content)</a></li>
 <li><a href="#produce-documentation">Produce documentation</a></li>
@@ -2193,11 +2190,11 @@ RAP training in R
 </div>
 </div>
 <h1 id="what-is-a-package-and-when-do-we-need-one">What is a package and when do we need one?</h1>
-<p>To put simply a package is a collection of functions that we can load into our workspace and use. Base R contains many functions already, but loading packages extends R functionality. Some of the most popular packages in HAPI include dplyr for data manipulation and ggplot2 for creating charts.</p>
+<p>To put simply a package is a collection of functions that we can load into our workspace and use. Base R contains many functions already, but loading packages extends R functionality. Some of the most popular packages used include <code>dplyr</code> for data manipulation and <code>ggplot2</code> for creating charts.</p>
 <p>Is a package only way to store and load your functions? No. Depending on the size and complexity of your project you should select one of the following options to store your functions.</p>
 <ol type="1">
 <li>Simplest option is to have functions stored in the body of your scipt, load them into the global environment (you’ll see them in the top right corner in R Studio) and use. This will only be good solution for a very small project.</li>
-<li>You can save all of your functions in a single .R script (e.g. “functions.R”) and load them in into analytical script using source() function e.g.:</li>
+<li>You can save all of your functions in a single .R script (e.g. <code>functions.R</code>) and load them in into analytical script using <code>source()</code> function e.g.:</li>
 </ol>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
@@ -2207,51 +2204,11 @@ RAP training in R
 <ol start="3" type="1">
 <li>You can create a package that will contain all your functions. Benefits of that solution include good dependency management (using other packages, requiring specific versions etc.), simple implementation of unit tests and good documentation solutions that make it easier for other people to use your functions. Package is often the best solution for more complex analyses.</li>
 </ol>
-<h2 id="quiz-1">Quiz 1</h2>
-<div class="panelset">
-<section id="question" class="panel-name panel">
-<h3 class="panel-name">Question</h3>
-<p>What do you class as a small project?</p>
-<ol type="A">
-<li>
-Project with less than 10 bespoke functions
-</li>
-<li>
-Project that comfortable fits in a single script
-</li>
-<li>
-Project producing less than 10 tables
-</li>
-<li>
-Project that uses no more than 3 scripts for analysis
-</li>
-</ol>
-</section>
-<section id="see-answer" class="panel-name panel">
-<h3 class="panel-name">See Answer</h3>
-<p>What do you class as a small project?</p>
-<ol type="A">
-<li>
-Project with less than 10 bespoke functions
-</li>
-<li>
-<b>Project that comfortable fits in a single script</b>
-</li>
-<li>
-Project producing less than 10 tables
-</li>
-<li>
-Project that uses no more than 3 scripts for analysis
-</li>
-</ol>
-<p>Our guidance for small projects is aproppriate for projects that would fit in a single script.</p>
-</section>
-</div>
 <h1 id="package-structure-and-setup">Package structure and setup</h1>
 <h2 id="package-name">Package name</h2>
 <p>Package name should consist of letters and numbers and be informative. You can’t use underscores in a package name, but . are allowed. Make sure that your name is unique to avoid conflicts with existing packages.</p>
 <h2 id="creating-basic-structure">Creating basic structure</h2>
-<p>Devtools create() function creates package folders in current directory.</p>
+<p>Devtools <code>create()</code> function creates package folders in current directory.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'>devtools</span><span class='fu'>::</span><span class='fu'><a href='https://devtools.r-lib.org/reference/create.html'>create</a></span><span class='op'>(</span><span class='st'>"pckgname"</span><span class='op'>)</span></span></code></pre>
@@ -2262,8 +2219,9 @@ Project that uses no more than 3 scripts for analysis
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/base/list.files.html'>dir</a></span><span class='op'>(</span><span class='st'>"pckgname"</span><span class='op'>)</span></span></code></pre>
 </div>
-<pre><code>[1] &quot;DESCRIPTION&quot; &quot;NAMESPACE&quot;   &quot;R&quot;           &quot;tests&quot;      </code></pre>
+<pre><code>[1] &quot;DESCRIPTION&quot; &quot;NAMESPACE&quot;   &quot;R&quot;          </code></pre>
 </div>
+<p>You can view both DESCRIPTION and NAMESPACE files either in RStudio or in text editor.</p>
 <p>DESCRIPTION file can be edited manually (e.g. using notepad) and should contain:</p>
 <ul>
 <li>Title of the package</li>
@@ -2271,8 +2229,13 @@ Project that uses no more than 3 scripts for analysis
 <li>License</li>
 <li><a href="mailto:Authors@R" class="email">Authors@R</a> field should include details of authors, contributors, and copyright holders</li>
 </ul>
+<p>If you open DESCRIPTION file of your newly created package you should see:
+<img src="images/Description_1.png" alt="DECSRIPTION" /></p>
 <p>NAMESPACE file should not be edited manually, it will be updated automatically when you document your package.</p>
-<p>This a basic structure of a package. In analytical pipeline, your package is something that stores all the functions (can store few more things as you will see later), but does not include the main pipeline itself. Your overall project structure will look as follows:</p>
+<p>If you open NAMESPACE file of your newly created package you should see:
+<img src="images/Namespace_1.png" alt="NAMESPACE" />
+It will remind you that you should not edit it manually.</p>
+<p>Below is a basic structure of a package. In analytical pipeline, your package is something that stores all the functions (can store few more things as you will see later), but does not include the main pipeline itself. Your overall project structure will look as follows:</p>
 <pre><code>project/
   pckgname/
     DESCRIPTION
@@ -2285,10 +2248,10 @@ Project that uses no more than 3 scripts for analysis
   README.txt
   config.yaml OR config.R
   main.R</code></pre>
-<p>This is the basic package structure, there will be few more things in the package that you’ll learn about in the further sections.</p>
-<h2 id="quiz-2">Quiz 2</h2>
+<p>This is the basic structure, there will be few more things in the package that you will learn about in the further sections.</p>
+<h2 id="quiz">Quiz</h2>
 <div class="panelset">
-<section id="question-1" class="panel-name panel">
+<section id="question" class="panel-name panel">
 <h3 class="panel-name">Question</h3>
 <p>What would be a good name for your new package?</p>
 <ol type="A">
@@ -2303,7 +2266,7 @@ qrt.birth
 </li>
 </ol>
 </section>
-<section id="see-answer-1" class="panel-name panel">
+<section id="see-answer" class="panel-name panel">
 <h3 class="panel-name">See Answer</h3>
 <p>What would be a good name for your new package?</p>
 <ol type="A">
@@ -2321,15 +2284,15 @@ quarterly_births
 </div>
 <h1 id="functions-and-installingtesting-your-package">Functions and installing/testing your package</h1>
 <h2 id="adding-functions-to-your-package">Adding functions to your package</h2>
-<p>Functions need to be stored in R/ folder inside the package. You can have individual files for each function or store multiple functions in a single file. Files containing a single function should have the same name as that function. When you store couple of functions together they should be grouped with similar functions (e.g. import functions) and files should have informative names (e.g. data_import.R). The easiest way to add functions to a package is to create an R script and save it in the project/pckgname/R folder.</p>
-<p>You can simply open a new R script, name it cool_functions.R and save in your /R subfolder inside the package folder. You can also create new R script using:</p>
+<p>Functions need to be stored in <code>/R</code> folder inside the package. You can have individual files for each function or store multiple functions in a single file. Files containing a single function should have the same name as that function. When you store couple of functions together they should be grouped with similar functions (e.g. import functions) and files should have informative names (e.g. <code>data_import.R</code>). The easiest way to add functions to a package is to create an R script and save it in the <code>project/pckgname/R</code> folder.</p>
+<p>You can simply open a new R script, name it <code>cool_functions.R</code> and save in your <code>/R</code> folder inside the package folder. You can also create new R script using:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>setwd</a></span><span class='op'>(</span><span class='st'>"pckgname"</span><span class='op'>)</span> <span class='co'># you need to be in the package folder -&gt; so first we move into the package</span></span>
 <span><span class='fu'>usethis</span><span class='fu'>::</span><span class='fu'><a href='https://usethis.r-lib.org/reference/use_r.html'>use_r</a></span><span class='op'>(</span><span class='st'>"cool_functions"</span><span class='op'>)</span>    <span class='co'># creates and opens R/cool_functions.R</span></span></code></pre>
 </div>
 </div>
-<p>*Note that using setwd() in a chunk only works within that chunk. So your wd outside the chunk stays the same - and other chunks are going to use the global working directory instead.</p>
+<p>*Note that using <code>setwd()</code> in a chunk only works within that chunk. So your wd outside the chunk stays the same - and other chunks are going to use the global working directory instead.</p>
 <p>You can paste in the following function or create your own.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
@@ -2339,41 +2302,12 @@ quarterly_births
 </div>
 </div>
 <h2 id="trying-out-functions-from-your-package">Trying out functions from your package</h2>
-<p>Now that we have something in our package, let’s try installing it. To do so you need to be in your project directory (e.g. “D:/project/”) if you aren’t use setwd(“D:/project/”) in R console to change your working directory.</p>
+<p>Now that we have something in our package, let’s try installing it. To do so you need to be in your project directory (e.g. “D:/project/”) if you aren’t use <code>setwd("D:/project/")</code> in R console to change your working directory.</p>
 <p>To install your package:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'>devtools</span><span class='fu'>::</span><span class='fu'><a href='https://devtools.r-lib.org/reference/install.html'>install</a></span><span class='op'>(</span><span class='st'>"pckgname"</span><span class='op'>)</span></span></code></pre>
 </div>
-<pre><code>* checking for file &#39;D:\github\web_raptraining\pckgname/DESCRIPTION&#39; ... OK
-* preparing &#39;pckgname&#39;:
-* checking DESCRIPTION meta-information ... OK
-* checking for LF line-endings in source and make files and shell scripts
-* checking for empty or unneeded directories
-Removed empty directory &#39;pckgname/tests/testthat&#39;
-* building &#39;pckgname_0.0.0.9000.tar.gz&#39;
-
-Running &quot;C:/MY_RST~1/R-41~1.3/bin/x64/Rcmd.exe&quot; INSTALL \
-  &quot;C:\Users\delonp\AppData\Local\Temp\RtmpsJYU42/pckgname_0.0.0.9000.tar.gz&quot; \
-  --install-tests 
-* installing to library &#39;C:/My_RStudio/pckgs&#39;
-* installing *source* package &#39;pckgname&#39; ...
-** using staged installation
-** R
-** tests
-** byte-compile and prepare package for lazy loading
-** help
-No man pages found in package  &#39;pckgname&#39; 
-*** installing help indices
-** building package indices
-** testing if installed package can be loaded from temporary location
-*** arch - i386
-*** arch - x64
-** testing if installed package can be loaded from final location
-*** arch - i386
-*** arch - x64
-** testing if installed package keeps a record of temporary installation path
-* DONE (pckgname)</code></pre>
 </div>
 <p>Once the package is installed, library it in to use its functions (as with any package!).</p>
 <div class="layout-chunk" data-layout="l-body">
@@ -2462,25 +2396,37 @@ No man pages found in package  &#39;pckgname&#39;
 </section>
 </div>
 <h1 id="package-documentation">Package documentation</h1>
-<p>Individual functions in a package need their own documentation. You should also include some documentation for functions even for smaller projects, but for packages they need to follow a specific format. For R packages roxygen allows us to build clean documentation. For functions these “comments” are called docstrings.</p>
-<p>The roxygen headers are included in the same script as the function code. You use roxygen comments #’ to identify a line as part of the roxygen header.</p>
+<p>Individual functions in a package need their own documentation. You should also include some documentation for functions even for smaller projects, but for packages they need to follow a specific format. For R packages roxygen allows us to build clean documentation. In Python these “comments” (function documentation) are called docstrings.</p>
+<p>The roxygen headers are included in the same script as the function code. You use roxygen comments <code>#'</code> to identify a line as part of the roxygen header.</p>
 <h2 id="minimum-functionality-and-installing-your-package">Minimum functionality and installing your package</h2>
-<p>As a bare minimum your functions need an <span class="citation" data-cites="export">@export</span> tag to work. Try adding the following line above your function in the “test_functions.R” script:</p>
+<p>As a bare minimum your functions need an <code>@export</code> tag to work. Try adding the following line above your function in the <code>cool_functions.R</code> script:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'>#' @export</span></span></code></pre>
 </div>
 </div>
-<p>For the package to work you need to create documentation with devtools::document() and then install your package using devtools::install. Note that without the export tag devtools::document() the package would not export any functions, so you still wouldn’t be able to use them.</p>
+<p>For the package to work you need to create documentation with <code>devtools::document()</code> and then install your package using <code>devtools::install()</code>. Note that without the export tag <code>devtools::document()</code> the package would not export any functions, so you still wouldn’t be able to use them.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'>devtools</span><span class='fu'>::</span><span class='fu'><a href='https://devtools.r-lib.org/reference/document.html'>document</a></span><span class='op'>(</span><span class='st'>"pckgname"</span><span class='op'>)</span></span></code></pre>
 </div>
+<pre><code>i Updating pckgname documentation
+i Loading pckgname
+Writing &#39;NAMESPACE&#39;</code></pre>
 </div>
-<p>You should see the message “Writing NAMESPACE”. Open the NAMESPACE file and see what changed.</p>
-<p>First line has not changed, but now there is a new line telling the package to export add_3 function. All the functions you want users to get from your package need to be exported and appear in the NAMESPACE.</p>
+<p>You should see the message “Writing NAMESPACE”.</p>
+<p>If you open the NAMESPACE file after documenting you package you should see:
+<img src="images/Namespace_2.png" alt="NAMESPACE_updated" /></p>
+<p>First line has not changed, but now there is a new line telling the package to export <code>add_3()</code> function. All the functions you want users to be able to use need to be exported and appear in the NAMESPACE.</p>
 <p>Now, when you install your package you can library it in and use it’s functions.</p>
-<h2 id="functions-docstrings">Functions’ docstrings</h2>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'>pckgname</span><span class='op'>)</span></span>
+<span><span class='fu'>add_3</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>[1] 4</code></pre>
+</div>
+<h2 id="functions-documentation">Functions’ documentation</h2>
 <p>The first three lines of the header have special meaning and you don’t need to use tags to identify them. The first three lines are title, description and details. Since you don’t use any tags to identify the first three lines, it is necessary that you separate them by a new line. For example:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
@@ -2491,7 +2437,7 @@ No man pages found in package  &#39;pckgname&#39;
 <span><span class='co'>#' Details</span></span></code></pre>
 </div>
 </div>
-<p>One of the most important aspects of a function to document are the arguments. With roxygen you specify them with the <span class="citation" data-cites="param">@param</span> tag. You follow the tag with the argument name and then any details the user needs to know. If there is a lot of information that you need to provide about an argument you might want to consider putting this in the details section instead.</p>
+<p>One of the most important aspects of a function to document are the arguments. With roxygen you specify them with the <code>@param</code> tag. You follow the tag with the argument name and then any details the user needs to know. If there is a lot of information that you need to provide about an argument you might want to consider putting this in the details section instead.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'>#' @param x Description of the x argument</span></span></code></pre>
@@ -2527,7 +2473,7 @@ No man pages found in package  &#39;pckgname&#39;
 <span><span class='co'>#' @return Numeric vector with values increased by 3</span></span></code></pre>
 </div>
 </div>
-<p>Another tag that you’ll likely use often is <span class="citation" data-cites="import">@import</span> tag, which will attach other packages that your functions use and make sure they are installed when your package is installed.</p>
+<p>Another tag that you’ll likely use often is <code>@import</code> tag, which will attach other packages that your functions use and make sure they are installed when your package is installed.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'>#' @import purrr</span></span>
@@ -2545,12 +2491,17 @@ No man pages found in package  &#39;pckgname&#39;
 </div>
 </div>
 <p>When you write documentation you may want to format the text to look like code, link to other functions or, particularly for return objects, format as a bulleted list. You can do this using special formatting:</p>
-<p>For code you use:</p>
-<p>To link to other functions you use:</p>
-<p>Note the package name is only required if the function is not in your package.</p>
-<p>To include an unordered list you use:</p>
-<p>Inside the brackets you mark new items with</p>
-<p>followed by the item text.</p>
+<p>For code you use:
+<code>\code{text to format}</code></p>
+<p>To link to other functions you use:
+<code>\link[packageName]{functionName}</code><br />
+Note the package name is only required if the function is not in your package.</p>
+<p>To include an unordered list you use:
+<code>\itemize{}</code><br />
+Inside the brackets you mark new items using:
+<code>\item</code>
+followed by the item text.</p>
+<p>For instance:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'>#' @return This function returns a \code{data.frame} including columns:</span></span>
@@ -2560,21 +2511,21 @@ No man pages found in package  &#39;pckgname&#39;
 <span><span class='co'>#' }</span></span></code></pre>
 </div>
 </div>
-<p>add author</p>
+<p>You can also add author:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'>#' @author My Name &lt;myemail@example.com&gt;</span></span></code></pre>
 </div>
 </div>
-<p>if you want to link to other functions</p>
+<p>or link to other functions:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'>#' @seealso \code{\link[packagename]{functioname}}</span></span></code></pre>
 </div>
 </div>
 <p>In addition to the individual functions you can also document the whole package.</p>
-<p>When you document a package you can use all of the same tags as for functions but the problem that you have is that there is no R code to document. Instead you put the keyword “_PACKAGE” underneath your package header.</p>
-<p>The script should be saved in R directory in file with package name, e.g. pckgname.R</p>
+<p>When you document a package you can use all of the same tags as for functions but the problem that you have is that there is no R code to document. Instead you put the keyword <code>_PACKAGE</code> underneath your package header.</p>
+<p>The script should be saved in R directory in file with package name, e.g. <code>pckgname.R</code></p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'>#' Title</span></span>
@@ -2585,7 +2536,6 @@ No man pages found in package  &#39;pckgname&#39;
 <span><span class='co'>#' @name pckgname</span></span>
 <span><span class='st'>"_PACKAGE"</span></span></code></pre>
 </div>
-<pre><code>[1] &quot;_PACKAGE&quot;</code></pre>
 </div>
 <h2 id="produce-documentation">Produce documentation</h2>
 <p>Once you created roxygen headers you can create documentation for your package.</p>
@@ -2605,7 +2555,7 @@ No man pages found in package  &#39;pckgname&#39;
 </div>
 </div>
 <p>Using roxygen comments will help you build code documentation when you run
-devtools::document function and will update NAMESPACE file, but not the
+<code>devtools::document()</code> function and will update NAMESPACE file, but not the
 DESCRIPTION file. You can update the description file manually. For instance, roxygen won’t update the Dependencies or Imports in the DESCRIPTION file.</p>
 <h2 id="documentation-exercises">Documentation exercises</h2>
 <div class="panelset">
@@ -2659,7 +2609,7 @@ DESCRIPTION file. You can update the description file manually. For instance, ro
 </div>
 <h1 id="unit-testing-and-quality-assurance">Unit testing and Quality Assurance</h1>
 <h2 id="what-are-unit-tests">What are unit tests?</h2>
-<p>Unit tests check whether functions do what is expected of them. No more no less. Ideally, you would like a 100% of test coverage, which means that every functions has tests that check for every eventuality. More realistically 60-70% test coverage is very good.</p>
+<p>Unit tests check whether functions do what is expected of them. No more no less. Ideally, you would like a 100% of test coverage, which means that every functions has tests that check for every eventuality. More realistically 60-70% test coverage is good.</p>
 <p>To create unit tests, you’ll produce dummy data and run your function using this data to check if it produces expected output. Not as difficult as it sounds is it?</p>
 <h2 id="where-to-put-unit-tests-in-a-package">Where to put unit tests in a package?</h2>
 <p>Setting up folder for unit tests</p>
@@ -2673,7 +2623,8 @@ DESCRIPTION file. You can update the description file manually. For instance, ro
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/base/list.files.html'>dir</a></span><span class='op'>(</span><span class='st'>"pckgname"</span><span class='op'>)</span></span></code></pre>
 </div>
-<pre><code>[1] &quot;DESCRIPTION&quot; &quot;NAMESPACE&quot;   &quot;R&quot;           &quot;tests&quot;      </code></pre>
+<pre><code>[1] &quot;DESCRIPTION&quot; &quot;man&quot;         &quot;NAMESPACE&quot;   &quot;R&quot;          
+[5] &quot;tests&quot;      </code></pre>
 </div>
 <p>You can see a folder called tests - let’s see what’s inside.</p>
 <div class="layout-chunk" data-layout="l-body">
@@ -2682,25 +2633,26 @@ DESCRIPTION file. You can update the description file manually. For instance, ro
 </div>
 <pre><code>[1] &quot;testthat&quot;   &quot;testthat.R&quot;</code></pre>
 </div>
+<p>You should see a folder called <code>testthat</code> - this is where you will need t save scripts with unit tests. The <code>testthat.R</code> script ensures the tests run as expected within package structure (e.g. with various devtools functions), so you should not edit that one.</p>
 <h2 id="how-to-write-unit-tests-with-testthat">How to write unit tests with testthat?</h2>
-<p>For each function you’ll need a separate .R file named test-function_name.R. Inside you create test data and output that function should produce for the test data you create within the test script. Then you compare the expected output (that is hardcoded) with output of the function.</p>
+<p>For each function you’ll need a separate .R file named <code>test-function_name.R</code>. Inside you create test data and output that function should produce for the test data you create within the test script. Then you compare the expected output (that is hardcoded) with output of the function.</p>
 <p>You can create testing scripts manually - just as describe above or for function called “function_name” you can use:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'>usethis</span><span class='fu'>::</span><span class='fu'><a href='https://usethis.r-lib.org/reference/use_r.html'>use_test</a></span><span class='op'>(</span><span class='st'>"function_name"</span><span class='op'>)</span> <span class='co'># creates and opens tests/testthat/test-function_name.R</span></span></code></pre>
 </div>
 </div>
-<p>If your functions are grouped in an R script together e.g. pckgname/R/data_processing.R your test files should be named the same as the function files, e.g.:</p>
+<p>If your functions are grouped in an R script together e.g. <code>pckgname/R/data_processing.R</code> your test files should be named the same as the function files, e.g.:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'>usethis</span><span class='fu'>::</span><span class='fu'><a href='https://usethis.r-lib.org/reference/use_r.html'>use_test</a></span><span class='op'>(</span><span class='st'>"data_processing"</span><span class='op'>)</span> <span class='co'># creates and opens tests/testthat/test-data_processing.R</span></span></code></pre>
 </div>
 </div>
-<p>You can use expect_equal(), expect_equivalent() and expect_identical() in order to test whether the output of a function is as expected. These three functions all have slightly different functionality:</p>
+<p>You can use <code>expect_equal()</code>, <code>expect_equivalent()</code> and <code>expect_identical()</code> in order to test whether the output of a function is as expected. These three functions all have slightly different functionality:</p>
 <ul>
-<li>testthat::expect_identical() checks that the values, attributes, and type of both objects are the same.</li>
-<li>testthat::expect_equal() checks that the values, and attributes of both objects are the same. You can adjust how testthat::strict expect_equal() is by adjusting the tolerance parameter.</li>
-<li>testthat::expect_equivalent() checks that the values, of both objects are the same.</li>
+<li><code>testthat::expect_identical()</code> checks that the values, attributes, and type of both objects are the same.</li>
+<li><code>testthat::expect_equal()</code> checks that the values, and attributes of both objects are the same. You can adjust how strict <code>testthat::expect_equal()</code> is by adjusting the tolerance parameter.</li>
+<li><code>testthat::expect_equivalent()</code> checks that the values, of both objects are the same.</li>
 </ul>
 <p>See example of what test script should contain:</p>
 <div class="layout-chunk" data-layout="l-body">
@@ -2763,7 +2715,7 @@ DESCRIPTION file. You can update the description file manually. For instance, ro
 </div>
 <pre><code>Test passed </code></pre>
 </div>
-<p>You can also have multiple “expect” functions inside one “test_that” statement. This could be useful when checking multiple properties of the output. For instance:</p>
+<p>You can also have multiple <code>expect</code> functions inside one <code>test_that</code> statement. This could be useful when checking multiple properties of the output. For instance:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>change_col_to_factor</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>df</span>, <span class='va'>col_name</span><span class='op'>)</span> <span class='op'>{</span></span>
@@ -2845,7 +2797,7 @@ DESCRIPTION file. You can update the description file manually. For instance, ro
 </section>
 </div>
 <h1 id="how-to-share-your-package">How to share your package?</h1>
-<p>Upload the package folder on git, then people can simmply clone it and run devtools::install().
+<p>Upload the package folder on git, then people can simmply clone it and run <code>devtools::install()</code>.
 You can also add it on cran, but we won’t cover that here - see more advanced resources below.</p>
 <h1 id="additional-resources">Additional resources</h1>
 <p>For more information see:</p>

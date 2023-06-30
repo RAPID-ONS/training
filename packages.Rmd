@@ -20,12 +20,12 @@ install.packages(c("devtools", "roxygen"), dependencies = TRUE, type = "win.bina
 
 # What is a package and when do we need one?
 
-To put simply a package is a collection of functions that we can load into our workspace and use. Base R contains many functions already, but loading packages extends R functionality. Some of the most popular packages in HAPI include dplyr for data manipulation and ggplot2 for creating charts.
+To put simply a package is a collection of functions that we can load into our workspace and use. Base R contains many functions already, but loading packages extends R functionality. Some of the most popular packages used include `dplyr` for data manipulation and `ggplot2` for creating charts.
 
 Is a package only way to store and load your functions? No. Depending on the size and complexity of your project you should select one of the following options to store your functions.
 
 1.  Simplest option is to have functions stored in the body of your scipt, load them into the global environment (you'll see them in the top right corner in R Studio) and use. This will only be good solution for a very small project.
-2.  You can save all of your functions in a single .R script (e.g. "functions.R") and load them in into analytical script using source() function e.g.:
+2.  You can save all of your functions in a single .R script (e.g. `functions.R`) and load them in into analytical script using `source()` function e.g.:
 
 ```{r eval = FALSE}
 source("functions.R")
@@ -40,7 +40,7 @@ Package name should consist of letters and numbers and be informative. You can't
 
 ## Creating basic structure
 
-Devtools create() function creates package folders in current directory.
+Devtools `create()` function creates package folders in current directory.
 
 ```{r eval=FALSE}
 devtools::create("pckgname")
@@ -48,12 +48,16 @@ devtools::create("pckgname")
 
 The structure created this way includes folder called R (for all your functions) and DESCRIPTION and NAMESPACE files.
 ```{r include = FALSE}
+# this is to ensure that the page renders correctly even if rerun
 if (dir.exists("pckgname/tests")){
   unlink("pckgname/tests", recursive = TRUE)
 }
+if (dir.exists("pckgname/man")){
+  unlink("pckgname/man", recursive = TRUE)
+}
 ```
 
-```{r}
+```{r basic_dir}
 dir("pckgname")
 ```
 You can view both DESCRIPTION and NAMESPACE files either in RStudio or in text editor.
@@ -130,16 +134,16 @@ What would be a good name for your new package?
 
 ## Adding functions to your package
 
-Functions need to be stored in R/ folder inside the package. You can have individual files for each function or store multiple functions in a single file. Files containing a single function should have the same name as that function. When you store couple of functions together they should be grouped with similar functions (e.g. import functions) and files should have informative names (e.g. data_import.R). The easiest way to add functions to a package is to create an R script and save it in the project/pckgname/R folder. 
+Functions need to be stored in `/R` folder inside the package. You can have individual files for each function or store multiple functions in a single file. Files containing a single function should have the same name as that function. When you store couple of functions together they should be grouped with similar functions (e.g. import functions) and files should have informative names (e.g. `data_import.R`). The easiest way to add functions to a package is to create an R script and save it in the `project/pckgname/R` folder. 
 
-You can simply open a new R script, name it cool_functions.R and save in your /R subfolder inside the package folder. You can also create new R script using:
+You can simply open a new R script, name it `cool_functions.R` and save in your `/R` folder inside the package folder. You can also create new R script using:
 
 ```{r eval = FALSE}
 setwd("pckgname") # you need to be in the package folder -> so first we move into the package
 usethis::use_r("cool_functions")    # creates and opens R/cool_functions.R
 ```
 
-*Note that using setwd() in a chunk only works within that chunk. So your wd outside the chunk stays the same - and other chunks are going to use the global working directory instead.
+*Note that using `setwd()` in a chunk only works within that chunk. So your wd outside the chunk stays the same - and other chunks are going to use the global working directory instead.
 
 You can paste in the following function or create your own.
 
@@ -152,11 +156,15 @@ add_3 <- function(x) {
 
 ## Trying out functions from your package
 
-Now that we have something in our package, let's try installing it. To do so you need to be in your project directory (e.g. "D:/project/") if you aren't use setwd("D:/project/") in R console to change your working directory.
+Now that we have something in our package, let's try installing it. To do so you need to be in your project directory (e.g. "D:/project/") if you aren't use `setwd("D:/project/")` in R console to change your working directory.
 
 To install your package:
+```{r include = FALSE}
+devtools::install("pckgname", quiet = TRUE)
 
-```{r}
+```
+
+```{r eval = FALSE}
 devtools::install("pckgname")
 
 ```
@@ -258,40 +266,46 @@ add_3(1)
 
 # Package documentation
 
-Individual functions in a package need their own documentation. You should also include some documentation for functions even for smaller projects, but for packages they need to follow a specific format. For R packages roxygen allows us to build clean documentation. For functions these "comments" are called docstrings.
+Individual functions in a package need their own documentation. You should also include some documentation for functions even for smaller projects, but for packages they need to follow a specific format. For R packages roxygen allows us to build clean documentation. In Python these "comments" (function documentation) are called docstrings.
 
-The roxygen headers are included in the same script as the function code. You use roxygen comments #' to identify a line as part of the roxygen header.
+The roxygen headers are included in the same script as the function code. You use roxygen comments `#'` to identify a line as part of the roxygen header.
 
 ## Minimum functionality and installing your package
 
-As a bare minimum your functions need an @export tag to work. Try adding the following line above your function in the "test_functions.R" script:
+As a bare minimum your functions need an `@export` tag to work. Try adding the following line above your function in the `cool_functions.R` script:
 
 ```{r eval = FALSE}
 #' @export
 ```
 
-For the package to work you need to create documentation with devtools::document() and then install your package using devtools::install. Note that without the export tag devtools::document() the package would not export any functions, so you still wouldn't be able to use them.
+For the package to work you need to create documentation with `devtools::document()` and then install your package using `devtools::install()`. Note that without the export tag `devtools::document()` the package would not export any functions, so you still wouldn't be able to use them.
 
-```{r eval = FALSE}
+```{r include = FALSE}
+# this is to ensure that the page renders correctly even if rerun
+if (file.exists("pckgname/NAMESPACE")){
+  unlink("pckgname/NAMESPACE", recursive = TRUE)
+}
+```
+
+```{r dev_document, message=TRUE}
 devtools::document("pckgname")
 ```
 
-You should see the message "Writing NAMESPACE". Open the NAMESPACE file and see what changed.
+You should see the message "Writing NAMESPACE".
 
-```{r include = FALSE}
-read.csv("D:/RAP/Building_capability/packages/pckgname/NAMESPACE", header = FALSE)
-```
+If you open the NAMESPACE file after documenting you package you should see:
+![NAMESPACE_updated](images/Namespace_2.png)
 
-First line has not changed, but now there is a new line telling the package to export add_3 function. All the functions you want users to get from your package need to be exported and appear in the NAMESPACE.
+First line has not changed, but now there is a new line telling the package to export `add_3()` function. All the functions you want users to be able to use need to be exported and appear in the NAMESPACE.
 
 Now, when you install your package you can library it in and use it's functions.
 
-```{r include = FALSE}
+```{r}
 library(pckgname)
 add_3(1)
 ```
 
-## Functions' docstrings
+## Functions' documentation
 The first three lines of the header have special meaning and you don't need to use tags to identify them. The first three lines are title, description and details. Since you don't use any tags to identify the first three lines, it is necessary that you separate them by a new line. For example:
 
 ```{r eval = FALSE}
@@ -302,7 +316,7 @@ The first three lines of the header have special meaning and you don't need to u
 #' Details
 ```
 
-One of the most important aspects of a function to document are the arguments. With roxygen you specify them with the @param tag. You follow the tag with the argument name and then any details the user needs to know. If there is a lot of information that you need to provide about an argument you might want to consider putting this in the details section instead.
+One of the most important aspects of a function to document are the arguments. With roxygen you specify them with the `@param` tag. You follow the tag with the argument name and then any details the user needs to know. If there is a lot of information that you need to provide about an argument you might want to consider putting this in the details section instead.
 
 ```{r eval = FALSE}
 #' @param x Description of the x argument
@@ -316,7 +330,7 @@ Return header will the users what to expect as an output of the function.
 
 Only exported functions will be loaded and directly accessible to users when they load a package, so make sure to add the export tags.
 
-```{r}
+```{r eval = FALSE}
 #' @export
 ```
 
@@ -329,7 +343,7 @@ This is minimal documentation that each function should have:
 * return
 * export tag (if exported)
 
-```{r}
+```{r eval = FALSE}
 #' Add three
 #' 
 #' Computes sum of given number and 3
@@ -339,9 +353,9 @@ This is minimal documentation that each function should have:
 #' @return Numeric vector with values increased by 3
 ```
 
-Another tag that you'll likely use often is @import tag, which will attach other packages that your functions use and make sure they are installed when your package is installed.
+Another tag that you'll likely use often is `@import` tag, which will attach other packages that your functions use and make sure they are installed when your package is installed.
 
-```{r}
+```{r eval = FALSE}
 #' @import purrr
 #' @import dplyr
 ```
@@ -350,7 +364,7 @@ Another tag that you'll likely use often is @import tag, which will attach other
 
 You can also include examples in roxygen header
 
-```{r}
+```{r eval = FALSE}
 #' @example
 #' \dontrun{
 #'   mean(5)
@@ -360,26 +374,21 @@ You can also include examples in roxygen header
 When you write documentation you may want to format the text to look like code, link to other functions or, particularly for return objects, format as a bulleted list. You can do this using special formatting:
 
 For code you use:
-
-\code{text to format}
+`\code{text to format}`
 
 To link to other functions you use:
-
-\link[packageName]{functionName}
-
+`\link[packageName]{functionName}`  
 Note the package name is only required if the function is not in your package.
 
 To include an unordered list you use:
+`\itemize{}`  
+Inside the brackets you mark new items using:
+`\item` 
+followed by the item text. 
 
-\itemize{}
+For instance:
 
-Inside the brackets you mark new items with 
-
-\item 
-
-followed by the item text.
-
-```{r}
+```{r eval = FALSE}
 #' @return This function returns a \code{data.frame} including columns:
 #' \itemize{
 #'  \item colname
@@ -387,25 +396,25 @@ followed by the item text.
 #' }
 ```
 
-add author
+You can also add author:
 
-```{r}
+```{r eval = FALSE}
 #' @author My Name <myemail@example.com>
 ```
 
-if you want to link to other functions
+or link to other functions:
 
-```{r}
+```{r eval = FALSE}
 #' @seealso \code{\link[packagename]{functioname}}
 ```
 
 In addition to the individual functions you can also document the whole package.
 
-When you document a package you can use all of the same tags as for functions but the problem that you have is that there is no R code to document. Instead you put the keyword "_PACKAGE" underneath your package header.
+When you document a package you can use all of the same tags as for functions but the problem that you have is that there is no R code to document. Instead you put the keyword `_PACKAGE` underneath your package header.
 
-The script should be saved in R directory in file with package name, e.g. pckgname.R
+The script should be saved in R directory in file with package name, e.g. `pckgname.R`
 
-```{r}
+```{r eval = FALSE}
 
 #' Title
 #'
@@ -436,7 +445,7 @@ devtools::load_all("pckgnmme")
 ```
 
 Using roxygen comments will help you build code documentation when you run 
-devtools::document function and will update NAMESPACE file, but not the 
+`devtools::document()` function and will update NAMESPACE file, but not the 
 DESCRIPTION file. You can update the description file manually. For instance, roxygen won't update the Dependencies or Imports in the DESCRIPTION file.
 
 ## Documentation exercises
@@ -501,18 +510,23 @@ devtools::load_all("my.awesome.package")
 # Unit testing and Quality Assurance
 
 ## What are unit tests?
-Unit tests check whether functions do what is expected of them. No more no less. Ideally, you would like a 100% of test coverage, which means that every functions has tests that check for every eventuality. More realistically 60-70% test coverage is very good.
+Unit tests check whether functions do what is expected of them. No more no less. Ideally, you would like a 100% of test coverage, which means that every functions has tests that check for every eventuality. More realistically 60-70% test coverage is good.
 
 To create unit tests, you'll produce dummy data and run your function using this data to check if it produces expected output. Not as difficult as it sounds is it?
 
 ## Where to put unit tests in a package?
 Setting up folder for unit tests
 
-```{r}
+```{r eval = FALSE}
 usethis::use_testthat() # your wd should be in the package
 ```
 
 You could also create these folders manually - let's have a look how it should look like.
+
+```{r include = FALSE}
+# copying test folder created earlier - so it all renders as intended
+file.copy("tests", "pckgname", recursive = TRUE)
+```
 
 ```{r}
 dir("pckgname")
@@ -522,10 +536,11 @@ You can see a folder called tests - let's see what's inside.
 ```{r}
 dir("pckgname/tests")
 ```
+You should see a folder called `testthat` - this is where you will need t save scripts with unit tests. The `testthat.R` script ensures the tests run as expected within package structure (e.g. with various devtools functions), so you should not edit that one.
 
 ## How to write unit tests with testthat?
 
-For each function you'll need a separate .R file named test-function_name.R. Inside you create test data and output that function should produce for the test data you create within the test script. Then you compare the expected output (that is hardcoded) with output of the function.
+For each function you'll need a separate .R file named `test-function_name.R`. Inside you create test data and output that function should produce for the test data you create within the test script. Then you compare the expected output (that is hardcoded) with output of the function.
 
 You can create testing scripts manually - just as describe above or for function called "function_name" you can use:
 
@@ -533,17 +548,17 @@ You can create testing scripts manually - just as describe above or for function
 usethis::use_test("function_name") # creates and opens tests/testthat/test-function_name.R
 ```
 
-If your functions are grouped in an R script together e.g. pckgname/R/data_processing.R your test files should be named the same as the function files, e.g.:
+If your functions are grouped in an R script together e.g. `pckgname/R/data_processing.R` your test files should be named the same as the function files, e.g.:
 
 ```{r eval = FALSE}
 usethis::use_test("data_processing") # creates and opens tests/testthat/test-data_processing.R
 ```
 
-You can use expect_equal(), expect_equivalent() and expect_identical() in order to test whether the output of a function is as expected. These three functions all have slightly different functionality:
+You can use `expect_equal()`, `expect_equivalent()` and `expect_identical()` in order to test whether the output of a function is as expected. These three functions all have slightly different functionality:
 
-* testthat::expect_identical() checks that the values, attributes, and type of both objects are the same.
-* testthat::expect_equal() checks that the values, and attributes of both objects are the same. You can adjust how testthat::strict expect_equal() is by adjusting the tolerance parameter.
-* testthat::expect_equivalent() checks that the values, of both objects are the same.
+* `testthat::expect_identical()` checks that the values, attributes, and type of both objects are the same.
+* `testthat::expect_equal()` checks that the values, and attributes of both objects are the same. You can adjust how strict `testthat::expect_equal()` is by adjusting the tolerance parameter.
+* `testthat::expect_equivalent()` checks that the values, of both objects are the same.
 
 See example of what test script should contain:
 
@@ -605,7 +620,7 @@ testthat::test_that("Checking expected outcome when x is FALSE", {
 })
 ```
 
-You can also have multiple "expect" functions inside one "test_that" statement. This could be useful when checking multiple properties of the output. For instance:
+You can also have multiple `expect` functions inside one `test_that` statement. This could be useful when checking multiple properties of the output. For instance:
 
 ```{r}
 change_col_to_factor <- function(df, col_name) {
@@ -700,7 +715,7 @@ devtools::test("my.awesome.package")
 
 # How to share your package?
 
-Upload the package folder on git, then people can simmply clone it and run devtools::install(). 
+Upload the package folder on git, then people can simmply clone it and run `devtools::install()`. 
 You can also add it on cran, but we won't cover that here - see more advanced resources below.
 
 # Additional resources
