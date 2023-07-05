@@ -455,8 +455,8 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
 
   <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-  <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet"/>
-  <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet"/>
+  <link href="site_libs/font-awesome-6.4.0/css/all.min.css" rel="stylesheet"/>
+  <link href="site_libs/font-awesome-6.4.0/css/v4-shims.min.css" rel="stylesheet"/>
   <script src="site_libs/headroom-0.9.4/headroom.min.js"></script>
   <script src="site_libs/autocomplete-0.37.1/autocomplete.min.js"></script>
   <script src="site_libs/fuse-6.4.1/fuse.min.js"></script>
@@ -2071,7 +2071,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </script>
 
   <!--/radix_placeholder_distill-->
-  <script src="site_libs/header-attrs-2.13/header-attrs.js"></script>
+  <script src="site_libs/header-attrs-2.23/header-attrs.js"></script>
   <link href="site_libs/panelset-0.2.6/panelset.css" rel="stylesheet" />
   <script src="site_libs/panelset-0.2.6/panelset.js"></script>
   <script src="site_libs/popper-2.6.0/popper.min.js"></script>
@@ -2119,6 +2119,7 @@ RAP training in R
 <a href="advanced_functions.html">Advanced Functions</a>
 <a href="projects.html">Project structure</a>
 <a href="packages.html">Packages and unit tests</a>
+<a href="rapid_spreadsheets.html">Reproducible spreasheets</a>
 <a href="glossary.html">Glossary</a>
 </div>
 </div>
@@ -2631,7 +2632,7 @@ DESCRIPTION file. You can update the description file manually. For instance, ro
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/base/list.files.html'>dir</a></span><span class='op'>(</span><span class='st'>"pckgname/tests"</span><span class='op'>)</span></span></code></pre>
 </div>
-<pre><code>[1] &quot;testthat&quot;   &quot;testthat.R&quot;</code></pre>
+<pre><code>[1] &quot;testthat.R&quot;</code></pre>
 </div>
 <p>You should see a folder called <code>testthat</code> - this is where you will need t save scripts with unit tests. The <code>testthat.R</code> script ensures the tests run as expected within package structure (e.g. with various devtools functions), so you should not edit that one.</p>
 <h2 id="how-to-write-unit-tests-with-testthat">How to write unit tests with testthat?</h2>

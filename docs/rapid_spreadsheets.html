@@ -88,29 +88,26 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 
 
   <!--radix_placeholder_meta_tags-->
-  <title>RAPID training</title>
+  <title>RAPID training: Reproducible spreadsheets</title>
 
-  <meta property="description" itemprop="description" content="Training materials created by RAP Implementation and Development team"/>
 
 
 
   <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
-  <meta property="og:title" content="RAPID training"/>
+  <meta property="og:title" content="RAPID training: Reproducible spreadsheets"/>
   <meta property="og:type" content="article"/>
-  <meta property="og:description" content="Training materials created by RAP Implementation and Development team"/>
   <meta property="og:locale" content="en_US"/>
   <meta property="og:site_name" content="RAPID training"/>
 
   <!--  https://dev.twitter.com/cards/types/summary -->
   <meta property="twitter:card" content="summary"/>
-  <meta property="twitter:title" content="RAPID training"/>
-  <meta property="twitter:description" content="Training materials created by RAP Implementation and Development team"/>
+  <meta property="twitter:title" content="RAPID training: Reproducible spreadsheets"/>
 
   <!--/radix_placeholder_meta_tags-->
   <!--radix_placeholder_rmarkdown_metadata-->
 
   <script type="text/json" id="radix-rmarkdown-metadata">
-  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","site"]}},"value":[{"type":"character","attributes":{},"value":["RAPID training"]},{"type":"character","attributes":{},"value":["Training materials created by RAP Implementation and Development team"]},{"type":"character","attributes":{},"value":["distill::distill_website"]}]}
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","output"]}},"value":[{"type":"character","attributes":{},"value":["Reproducible spreadsheets"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["toc","toc_depth","number_sections"]}},"value":[{"type":"logical","attributes":{},"value":[true]},{"type":"integer","attributes":{},"value":[2]},{"type":"logical","attributes":{},"value":[true]}]}]}]}
   </script>
   <!--/radix_placeholder_rmarkdown_metadata-->
   <!--radix_placeholder_navigation_in_header-->
@@ -2094,7 +2091,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"RAPID training","description":"Training materials created by RAP Implementation and Development team","authors":[]}
+{"title":"Reproducible spreadsheets","authors":[]}
 </script>
 
 <!--/radix_placeholder_front_matter-->
@@ -2133,39 +2130,266 @@ RAP training in R
 <!--/radix_placeholder_site_before_body-->
 
 <div class="d-title">
-<h1>RAPID training</h1>
+<h1>Reproducible spreadsheets</h1>
 <!--radix_placeholder_categories-->
 <!--/radix_placeholder_categories-->
-<p>Training materials created by RAP Implementation and Development team</p>
+
 </div>
 
 
 <div class="d-article">
-<h1 id="about-this-page">About this page</h1>
-<p>This page contains training resources for building Reproducible Analytical Pipelines. They are aimed at Government Analysts wanting to implement best practice into their work. Check out our <b>RAP training in R</b> resources on the top right of the page.
-<br><br>
-<b> Newly added in July ’23:</b></p>
+<div class="d-contents d-contents-float">
+<nav class="l-text toc figcaption" id="TOC">
+<h3>Contents</h3>
 <ul>
-<li>Spreadsheet automation in R</li>
-</ul>
-<p>In preparation:</p>
+<li><a href="#rapid.spreadsheets">rapid.spreadsheets</a></li>
+<li><a href="#installation">Installation</a></li>
+<li><a href="#example-reference-tables">Example reference tables</a>
 <ul>
-<li>Git training</li>
-<li>Advanced control flow in R</li>
-<li>How to write a good README and more!</li>
+<li><a href="#setup">Setup</a></li>
+<li><a href="#cover-sheet">Cover sheet</a></li>
+<li><a href="#contents-sheet">Contents sheet</a></li>
+<li><a href="#notes-sheet">Notes sheet</a></li>
+<li><a href="#data-table-sheets">Data table sheets</a></li>
+<li><a href="#saving-your-document">Saving your document</a></li>
+<li><a href="#additional-formatting-options">Additional formatting options</a></li>
+</ul></li>
 </ul>
-<h1 id="what-is-rap-and-why-you-should-implement-it">What is RAP and why you should implement it</h1>
-<p>Reproducible analytical pipelines (RAP) have a range of benefits – from increasing efficiency to improving business continuity.</p>
-<h3 id="how-implementing-rap-can-benefit-you-and-your-team">How implementing RAP can benefit you and your team?</h3>
-<p><strong>Reduced risks and improved quality</strong></p>
-<p>Lowers the risk of human error, automated checks and audit trail ensure mistakes are never repeated, all of which boost organisation’s trustworthiness and reputation.
-You can read more about RAP introduction in the civil service in <a href="https://analysisfunction.civilservice.gov.uk/policy-store/reproducible-analytical-pipelines-strategy/">Analysis Function strategy</a> and <a href="https://www.goldacrereview.org/">Goldacre review</a>.</p>
-<p><strong>Increased resilience and business continuity</strong></p>
-<p>Well-documented code stored in accessible location can be used by new analysts with minimal preparation, which makes the team more resilient when people move roles or fall ill. </p>
-<p><strong>Increased efficiency</strong></p>
-<p>More time to spend on exploring new ideas or personal development, and less time on copy/pasting and manual checks.</p>
-<p><strong>Increased collaboration</strong></p>
-<p>Sharing code on Git allows analysts to reuse code between projects, which reduces time to create new analytical pipelines and allows to quickly implement trusted solutions.</p>
+</nav>
+</div>
+<h1 id="rapid.spreadsheets">rapid.spreadsheets</h1>
+<p><code>rapid.spreadsheets</code> is an R package that was created to help government analysts create reproducible spreadsheets. It can simplify production of data tables/ reference tables in excel files. Tables produced using the package should meet accessibility guidelines*.</p>
+<p>Unlike some other packages available <code>rapid.spreadsheets</code> includes embeding both internal (to other tabs in the workbook) and external links. You can also easily build on it and change formatting using <code>openxlsx</code> package.</p>
+<h1 id="installation">Installation</h1>
+<p>You will need to install <code>openxlsx</code> package and <code>rapid.spreadsheets</code> package.
+<code>openxlsx</code> is available on Cran, so you just need to run:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/utils/install.packages.html'>install.packages</a></span><span class='op'>(</span><span class='st'>"openxlsx"</span><span class='op'>)</span></span></code></pre>
+</div>
+</div>
+<p>To install <code>rapid.spreadsheets</code> you will first need <code>devtools</code> package, that will allow you to install it directly from git:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'>devtools</span><span class='fu'>::</span><span class='fu'><a href='https://remotes.r-lib.org/reference/install_github.html'>install_github</a></span><span class='op'>(</span><span class='st'>"RAPID-ONS/rapid.spreadsheets"</span>, dependencies <span class='op'>=</span> <span class='cn'>TRUE</span>, build_vignettes <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></span></code></pre>
+</div>
+</div>
+<h1 id="example-reference-tables">Example reference tables</h1>
+<p>Below is and example of producing simple reference tables with Cover Sheet, Notes and a few tables.</p>
+<h2 id="setup">Setup</h2>
+<p>Start by loading in the necessary packages.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'>rapid.spreadsheets</span><span class='op'>)</span></span>
+<span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://ycphs.github.io/openxlsx/index.html'>openxlsx</a></span><span class='op'>)</span></span></code></pre>
+</div>
+</div>
+<p>First you need to create a standard openxlsx workbook and then you can use functions from rapid.spreadsheets package to add tables with appropriate formatting.</p>
+<ul>
+<li>Note that in this tutorial we will be creating new workbooks multiple times as we will want to overwrite tabs with the same names. You will only need to create it once for one xls file.</li>
+</ul>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>wb</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/openxlsx/man/createWorkbook.html'>createWorkbook</a></span><span class='op'>(</span><span class='op'>)</span></span></code></pre>
+</div>
+</div>
+<h2 id="cover-sheet">Cover sheet</h2>
+<p>Let’s start with cover sheet as this is often the first tab in data tables.</p>
+<p>We will use a .txt file to populate our example cover sheet, but you can also use a standard data.frame in R. It should only contain a single column. Name of the column is irrelevant as it won’t be used.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>cover_sheet_text</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/utils/read.table.html'>read.csv</a></span><span class='op'>(</span></span>
+<span>  <span class='st'>"cover_sheet.txt"</span>,</span>
+<span>  header <span class='op'>=</span> <span class='cn'>FALSE</span>,</span>
+<span>  sep <span class='op'>=</span> <span class='st'>"\t"</span>, </span>
+<span>  fileEncoding <span class='op'>=</span> <span class='st'>"UTF-8-BOM"</span><span class='op'>)</span></span></code></pre>
+</div>
+</div>
+<p>To create simple cover sheet tab you can use create_cover_sheet function. Using optional subheadings and rows_t_bold arguments you can specify which rows should be formatted as subheadings and which ones should be as bold text.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'>create_cover_sheet</span><span class='op'>(</span></span>
+<span>  wb <span class='op'>=</span> <span class='va'>wb</span>,</span>
+<span>  text_df <span class='op'>=</span> <span class='va'>cover_sheet_text</span>,</span>
+<span>  subheadings <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>5</span>, <span class='fl'>9</span>, <span class='fl'>16</span>, <span class='fl'>21</span>, <span class='fl'>30</span><span class='op'>)</span>, <span class='co'># rows with subheadings</span></span>
+<span>  rows_to_bold <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span><span class='op'>:</span><span class='fl'>4</span><span class='op'>)</span> <span class='co'># rows to apply bold font</span></span>
+<span><span class='op'>)</span></span></code></pre>
+</div>
+</div>
+<p>To have a peak on how our spreadsheet will look like we can use following openxlsx function:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/pkg/openxlsx/man/openXL.html'>openXL</a></span><span class='op'>(</span><span class='va'>wb</span><span class='op'>)</span></span></code></pre>
+</div>
+</div>
+<p>The information contained in cover sheets and notes is often static, but usually you need to update some parts of it - to help automate this you can use a replace argument in the function. In this example we change release date to a given date and insert publication year into row with copyright information.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>replacements</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span></span>
+<span>  replace <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"!release_date!"</span>, <span class='st'>"!copyright!"</span><span class='op'>)</span>,</span>
+<span>  with <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>" 5 September 2022"</span>, <span class='st'>"2022"</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
+</div>
+</div>
+<p>You can also easily add links to your cover sheet by creating a data.frame that contains rows and links column. Rows should indicate which row in the cover sheet data frame contains the corresponding link. Website urls need to be stored as characters. When you include email address simply add “mailto:” in front of email address.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>cover_sheet_links</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span></span>
+<span>  rows <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>15</span>, <span class='fl'>18</span><span class='op'>)</span>,</span>
+<span>  links <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"https://github.com/RAPID-ONS"</span>, <span class='st'>"mailto:email@email.uk"</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
+</div>
+</div>
+<p>Now you can create cover sheet with replacements and links using create_cover_sheet function.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>wb</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/openxlsx/man/createWorkbook.html'>createWorkbook</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span><span class='fu'>create_cover_sheet</span><span class='op'>(</span></span>
+<span>  wb <span class='op'>=</span> <span class='va'>wb</span>,</span>
+<span>  text_df <span class='op'>=</span> <span class='va'>cover_sheet_text</span>,</span>
+<span>  subheadings <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>5</span>, <span class='fl'>9</span>, <span class='fl'>16</span>, <span class='fl'>21</span>, <span class='fl'>30</span><span class='op'>)</span>,</span>
+<span>  rows_to_bold <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span><span class='op'>:</span><span class='fl'>4</span><span class='op'>)</span>,</span>
+<span>  hyperlinks <span class='op'>=</span> <span class='va'>cover_sheet_links</span>,</span>
+<span>  replacements <span class='op'>=</span> <span class='va'>replacements</span></span>
+<span><span class='op'>)</span></span>
+<span><span class='fu'><a href='https://rdrr.io/pkg/openxlsx/man/openXL.html'>openXL</a></span><span class='op'>(</span><span class='va'>wb</span><span class='op'>)</span></span></code></pre>
+</div>
+</div>
+<h2 id="contents-sheet">Contents sheet</h2>
+<p>Contents sheet contains a table linking to all the other tabs in the excel documents in one column and describing waht they are in the second column. It can also have a third column with links.</p>
+<p>Our example content .txt file has to columns. You can also create a data frame with two columns instead of using a .txt file. This time column names are important as we will use them in the table.</p>
+<p>As a minimum your contents data.frame should contain two columns and first column should contain the names of the worksheets in your workbook.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>contents_text</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/utils/read.table.html'>read.csv</a></span><span class='op'>(</span></span>
+<span>  <span class='st'>"contents_table.txt"</span>,</span>
+<span>  header <span class='op'>=</span> <span class='cn'>TRUE</span>,</span>
+<span>  sep <span class='op'>=</span> <span class='st'>"\t"</span>,</span>
+<span>  quote <span class='op'>=</span> <span class='st'>""</span>,</span>
+<span>  fileEncoding <span class='op'>=</span> <span class='st'>"UTF-8-BOM"</span>,</span>
+<span>  check.names <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></span>
+<span><span class='va'>contents_text</span></span></code></pre>
+</div>
+</div>
+<p>Optionally you can also have a third column with links. Again name of the column will be used directly in the table. It should contain text displayed for the urls in the rows in which you’d like to have links, rest of the rows should be NA. For instance:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>contents_text</span><span class='op'>$</span><span class='st'>"Related links"</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='cn'>NA</span>, <span class='cn'>NA</span>, <span class='st'>"More about X"</span>, <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='cn'>NA</span>, <span class='fl'>5</span><span class='op'>)</span>, <span class='st'>"link"</span><span class='op'>)</span></span>
+<span><span class='va'>contents_text</span></span></code></pre>
+</div>
+</div>
+<p>To add hyperlinks you will also need to specify which rows of the table they are and
+urls of the websites they should direct to. Here we want to add two links in rows 3 and 9. Note that you will need that third column in the contents data frame to add the hyperlinks.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>hyperlinks</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span></span>
+<span>  rows <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>3</span>, <span class='fl'>9</span><span class='op'>)</span>,</span>
+<span>  links <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"https://rapid-ons.github.io/training"</span>,</span>
+<span>            <span class='st'>"https://github.com/RAPID-ONS/rapid.spreadsheets"</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
+</div>
+</div>
+<p>We can also add additional subtitles to our contents sheet if we like to. To do so, create a character vector where each element will be changed into additional row of text and places under the sheet title.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>subtitles_vector</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"sub one"</span>, <span class='st'>"sub two"</span>, <span class='st'>"sub three"</span><span class='op'>)</span></span></code></pre>
+</div>
+</div>
+<p>To create contents worksheet we use create_content_notes function. Note only wb and df are required arguments, other are optional.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'>create_contents_notes</span><span class='op'>(</span></span>
+<span>  wb <span class='op'>=</span> <span class='va'>wb</span>,</span>
+<span>  df <span class='op'>=</span> <span class='va'>contents_text</span>,</span>
+<span>  additional_text <span class='op'>=</span> <span class='va'>subtitles_vector</span>,</span>
+<span>  hyperlinks <span class='op'>=</span> <span class='va'>hyperlinks</span></span>
+<span><span class='op'>)</span></span>
+<span><span class='fu'><a href='https://rdrr.io/pkg/openxlsx/man/openXL.html'>openXL</a></span><span class='op'>(</span><span class='va'>wb</span><span class='op'>)</span></span></code></pre>
+</div>
+</div>
+<h2 id="notes-sheet">Notes sheet</h2>
+<p>Most datasets are accompanied by a set of information providing users with details necessary to interpret the data such as information on data sources and/or methods. These are often brought together in a notes table.</p>
+<p>Notes table can be produced using create_content_notes function, and similarly to contents data.frame it can have two or three columns.</p>
+<p>Our example notes table has two columns, but you can add more and hyperlinks in the same way as for contents table.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>notes_text</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/utils/read.table.html'>read.csv</a></span><span class='op'>(</span></span>
+<span>  <span class='st'>"notes_table.txt"</span>,</span>
+<span>  header <span class='op'>=</span> <span class='cn'>TRUE</span>,</span>
+<span>  sep <span class='op'>=</span> <span class='st'>"\t"</span>,</span>
+<span>  quote <span class='op'>=</span> <span class='st'>""</span>,</span>
+<span>  fileEncoding <span class='op'>=</span> <span class='st'>"UTF-8-BOM"</span>,</span>
+<span>  check.names <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></span>
+<span><span class='va'>notes_text</span></span></code></pre>
+</div>
+</div>
+<p>When using create_content_notes for a sheet different than contents we need to change default tab_name to the sheet name we want to use and heading to the title we want to use. We also need to set content_links argument to FALSE - otherwise it will treat the values in the first column as names linking to respective tabs of the excel document.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'>create_contents_notes</span><span class='op'>(</span></span>
+<span>  wb <span class='op'>=</span> <span class='va'>wb</span>,</span>
+<span>  df <span class='op'>=</span> <span class='va'>notes_text</span>,</span>
+<span>  tab_name <span class='op'>=</span> <span class='st'>"Notes"</span>,</span>
+<span>  heading <span class='op'>=</span> <span class='st'>"Notes"</span>,</span>
+<span>  contents_links <span class='op'>=</span> <span class='cn'>FALSE</span>,</span>
+<span>  additional_text <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Important text on notes"</span>, <span class='st'>"Different important text"</span><span class='op'>)</span></span>
+<span><span class='op'>)</span></span>
+<span><span class='fu'><a href='https://rdrr.io/pkg/openxlsx/man/openXL.html'>openXL</a></span><span class='op'>(</span><span class='va'>wb</span><span class='op'>)</span></span></code></pre>
+</div>
+</div>
+<h2 id="data-table-sheets">Data table sheets</h2>
+<p>For sheets containing actual data tables we can use standard data.frames with all the data we want to publish. The function will use the column names in the data.frame directly - if you want to ensure that spaces are preserved you need to set check.names argument to FALSE when creating/adding colummns to your data.frame.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span></span>
+<span>  Sex <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='st'>"males"</span>, <span class='fl'>4</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='st'>"females"</span>, <span class='fl'>4</span><span class='op'>)</span><span class='op'>)</span>,</span>
+<span>  <span class='st'>"Age group"</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='st'>"10 to 14"</span>, <span class='fl'>8</span><span class='op'>)</span>,</span>
+<span>  Deaths <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>as.character</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='fl'>6.25</span>, <span class='fl'>7.75</span>, <span class='fl'>0.25</span><span class='op'>)</span>, <span class='fl'>2222.22</span><span class='op'>)</span><span class='op'>)</span>,</span>
+<span>  Rate <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>6</span>, <span class='fl'>1000</span>, <span class='st'>"[x]"</span><span class='op'>)</span>,</span>
+<span>  check.names <span class='op'>=</span> <span class='cn'>FALSE</span> <span class='co'># use this to retain spaces in column names</span></span>
+<span><span class='op'>)</span></span>
+<span><span class='va'>df</span></span></code></pre>
+</div>
+</div>
+<p>You can set up desired formatting styles for numeric columns. A For instance if you have columns that contain characters as well as numbers (e.g. [x]) you will get “Numbers stored as text” warning in your excel document. To avoid that, specify affected column numbers as a numeric vetor to num_char_cols argument. You can also specify column numbers that should be displayed with no docimal points, one decimal point etc. All styles will show thousands with a comma.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'>create_data_table_tab</span><span class='op'>(</span></span>
+<span>  wb <span class='op'>=</span> <span class='va'>wb</span>,</span>
+<span>  df <span class='op'>=</span> <span class='va'>df</span>,</span>
+<span>  tab_name <span class='op'>=</span> <span class='st'>"Table_1"</span>,</span>
+<span>  num_char_cols <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>3</span>, <span class='fl'>4</span><span class='op'>)</span>,</span>
+<span>  no_decimal <span class='op'>=</span> <span class='fl'>4</span>,</span>
+<span>  two_decimal <span class='op'>=</span> <span class='fl'>3</span></span>
+<span><span class='op'>)</span></span>
+<span><span class='fu'><a href='https://rdrr.io/pkg/openxlsx/man/openXL.html'>openXL</a></span><span class='op'>(</span><span class='va'>wb</span><span class='op'>)</span></span></code></pre>
+</div>
+</div>
+<h2 id="saving-your-document">Saving your document</h2>
+<p>To save the file use saveWorkbook function from openxlsx package.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/pkg/openxlsx/man/saveWorkbook.html'>saveWorkbook</a></span><span class='op'>(</span><span class='va'>wb</span>, <span class='st'>"filename.xlsx"</span><span class='op'>)</span></span></code></pre>
+</div>
+</div>
+<h2 id="additional-formatting-options">Additional formatting options</h2>
+<p>Check help pages for each function to see additional options. For instance:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='op'>?</span><span class='va'>create_cover_sheet</span></span></code></pre>
+</div>
+</div>
+<p>You can easily add additional styles to specific cells using openxlsx package and setting stack argument as TRUE. For instance:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>red_bold</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/openxlsx/man/createStyle.html'>createStyle</a></span><span class='op'>(</span>fontColour <span class='op'>=</span> <span class='st'>"#ff0000"</span>, textDecoration <span class='op'>=</span> <span class='st'>"Bold"</span><span class='op'>)</span></span>
+<span><span class='fu'><a href='https://rdrr.io/pkg/openxlsx/man/addStyle.html'>addStyle</a></span><span class='op'>(</span><span class='va'>wb</span>, </span>
+<span>         sheet <span class='op'>=</span> <span class='st'>"Contents"</span>,</span>
+<span>         style <span class='op'>=</span> <span class='va'>red_bold</span>,</span>
+<span>         rows <span class='op'>=</span> <span class='fl'>2</span>,</span>
+<span>         cols <span class='op'>=</span> <span class='fl'>1</span>,</span>
+<span>         stack <span class='op'>=</span> <span class='cn'>TRUE</span></span>
+<span><span class='op'>)</span></span>
+<span><span class='fu'><a href='https://rdrr.io/pkg/openxlsx/man/openXL.html'>openXL</a></span><span class='op'>(</span><span class='va'>wb</span><span class='op'>)</span></span></code></pre>
+</div>
+</div>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->

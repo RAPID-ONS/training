@@ -455,8 +455,8 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
 
   <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-  <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet"/>
-  <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet"/>
+  <link href="site_libs/font-awesome-6.4.0/css/all.min.css" rel="stylesheet"/>
+  <link href="site_libs/font-awesome-6.4.0/css/v4-shims.min.css" rel="stylesheet"/>
   <script src="site_libs/headroom-0.9.4/headroom.min.js"></script>
   <script src="site_libs/autocomplete-0.37.1/autocomplete.min.js"></script>
   <script src="site_libs/fuse-6.4.1/fuse.min.js"></script>
@@ -2071,7 +2071,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </script>
 
   <!--/radix_placeholder_distill-->
-  <script src="site_libs/header-attrs-2.13/header-attrs.js"></script>
+  <script src="site_libs/header-attrs-2.23/header-attrs.js"></script>
   <link href="site_libs/panelset-0.2.6/panelset.css" rel="stylesheet" />
   <script src="site_libs/panelset-0.2.6/panelset.js"></script>
   <script src="site_libs/popper-2.6.0/popper.min.js"></script>
@@ -2119,6 +2119,7 @@ RAP training in R
 <a href="advanced_functions.html">Advanced Functions</a>
 <a href="projects.html">Project structure</a>
 <a href="packages.html">Packages and unit tests</a>
+<a href="rapid_spreadsheets.html">Reproducible spreasheets</a>
 <a href="glossary.html">Glossary</a>
 </div>
 </div>
@@ -2238,18 +2239,15 @@ birth_year        sex     gender  homeworld    species      films
 <span><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/funprog.html'>Filter</a></span><span class='op'>(</span><span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>is.numeric</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>, <span class='va'>starwars</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
 </div>
 <pre><code># A tibble: 6 x 11
-  name      hair_~1 skin_~2 eye_c~3 sex   gender homew~4 species films
-  &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;   &lt;lis&gt;
-1 Luke Sky~ blond   fair    blue    male  mascu~ Tatooi~ Human   &lt;chr&gt;
-2 C-3PO     &lt;NA&gt;    gold    yellow  none  mascu~ Tatooi~ Droid   &lt;chr&gt;
-3 R2-D2     &lt;NA&gt;    white,~ red     none  mascu~ Naboo   Droid   &lt;chr&gt;
-4 Darth Va~ none    white   yellow  male  mascu~ Tatooi~ Human   &lt;chr&gt;
-5 Leia Org~ brown   light   brown   fema~ femin~ Aldera~ Human   &lt;chr&gt;
-6 Owen Lars brown,~ light   blue    male  mascu~ Tatooi~ Human   &lt;chr&gt;
-# ... with 2 more variables: vehicles &lt;list&gt;, starships &lt;list&gt;, and
-#   abbreviated variable names 1: hair_color, 2: skin_color,
-#   3: eye_color, 4: homeworld
-# i Use `colnames()` to see all variable names</code></pre>
+  name  hair_color skin_color eye_color sex   gender homeworld species
+  &lt;chr&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;     &lt;chr&gt;  
+1 Luke~ blond      fair       blue      male  mascu~ Tatooine  Human  
+2 C-3PO &lt;NA&gt;       gold       yellow    none  mascu~ Tatooine  Droid  
+3 R2-D2 &lt;NA&gt;       white, bl~ red       none  mascu~ Naboo     Droid  
+4 Dart~ none       white      yellow    male  mascu~ Tatooine  Human  
+5 Leia~ brown      light      brown     fema~ femin~ Alderaan  Human  
+6 Owen~ brown, gr~ light      blue      male  mascu~ Tatooine  Human  
+# i 3 more variables: films &lt;list&gt;, vehicles &lt;list&gt;, starships &lt;list&gt;</code></pre>
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'># Integrates x to the power of 2 using limits of 0 and 10</span></span>
 <span><span class='fu'><a href='https://rdrr.io/r/stats/integrate.html'>integrate</a></span><span class='op'>(</span><span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='va'>x</span> <span class='op'>^</span> <span class='fl'>2</span>, <span class='fl'>0</span>, <span class='fl'>10</span><span class='op'>)</span></span></code></pre>
@@ -2575,7 +2573,7 @@ e.g. <code>starts_with("x")</code> or <code>is.numeric()</code></p>
 <span><span class='fu'>mean_day</span><span class='op'>(</span><span class='st'>"partial"</span><span class='op'>)</span></span></code></pre>
 </div>
 <pre><code>  mean_days_partial
-1             52.24</code></pre>
+1           47.1087</code></pre>
 </div>
 <h2 id="quiz">Quiz</h2>
 <div class="panelset">
