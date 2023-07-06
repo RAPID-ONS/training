@@ -55,7 +55,7 @@ wb <- createWorkbook()
 ## Cover sheet
 Let's start with cover sheet as this is often the first tab in data tables.
 
-We will use a .txt file to populate our example cover sheet, but you can also use a standard data.frame in R. It should only contain a single column. Name of the column is irrelevant as it won't be used.
+We will use a .txt file to populate our example cover sheet, but you can also use a standard data.frame in R. It should only contain a single column. Name of the column is irrelevant as it won't be used, so we set header to FALSE.
 
 ```{r eval = FALSE}
 cover_sheet_text <- read.csv(
@@ -64,6 +64,9 @@ cover_sheet_text <- read.csv(
   sep = "\t", 
   fileEncoding = "UTF-8-BOM")
 ```
+&NewLine;
+
+![](images/cover_sheet_txt.png){ width=90% }
 
 To create simple cover sheet tab you can use create_cover_sheet function. Using optional subheadings and rows_t_bold arguments you can specify which rows should be formatted as subheadings and which ones should be as bold text.
 
@@ -81,6 +84,9 @@ To have a peak on how our spreadsheet will look like we can use following openxl
 ```{r eval = FALSE}
 openXL(wb)
 ```
+&NewLine;
+
+![](images/cover_sheet_xls_1.png){ width=120% } 
 
 The information contained in cover sheets and notes is often static, but usually you need to update some parts of it - to help automate this you can use a replace argument in the function. In this example we change release date to a given date and insert publication year into row with copyright information.
 
@@ -112,6 +118,9 @@ create_cover_sheet(
 )
 openXL(wb)
 ```
+&NewLine;
+
+![](images/cover_sheet_xls_2.png){ width=120% }
 
 ## Contents sheet
 
@@ -131,6 +140,9 @@ contents_text <- read.csv(
   check.names = FALSE)
 contents_text
 ```
+&NewLine;
+
+![](images/contents_sheet_df.png) 
 
 Optionally you can also have a third column with links. Again name of the column will be used directly in the table. It should contain text displayed for the urls in the rows in which you'd like to have links, rest of the rows should be NA. For instance:
 
@@ -138,6 +150,9 @@ Optionally you can also have a third column with links. Again name of the column
 contents_text$"Related links" <- c(NA, NA, "More about X", rep(NA, 5), "link")
 contents_text
 ```
+&NewLine;
+
+![](images/contents_sheet_df_links.png)
 
 To add hyperlinks you will also need to specify which rows of the table they are and
 urls of the websites they should direct to. Here we want to add two links in rows 3 and 9. Note that you will need that third column in the contents data frame to add the hyperlinks.
@@ -166,6 +181,9 @@ create_contents_notes(
 )
 openXL(wb)
 ```
+&NewLine;
+
+![](images/contents_sheet_xls.png){ width=120% }
 
 ## Notes sheet
 
@@ -185,6 +203,9 @@ notes_text <- read.csv(
   check.names = FALSE)
 notes_text
 ```
+&NewLine;
+
+![](images/notes_df.png)
 
 When using create_content_notes for a sheet different than contents we need to change default tab_name to the sheet name we want to use and heading to the title we want to use. We also need to set content_links argument to FALSE - otherwise it will treat the values in the first column as names linking to respective tabs of the excel document.
 
@@ -199,6 +220,9 @@ create_contents_notes(
 )
 openXL(wb)
 ```
+&NewLine;
+
+![](images/notes_xls.png){ width=120% } 
 
 ## Data table sheets
 
@@ -214,6 +238,9 @@ df <- data.frame(
 )
 df
 ```
+&NewLine;
+
+![](images/data_df.png)
 
 You can set up desired formatting styles for numeric columns. A For instance if you have columns that contain characters as well as numbers (e.g. [x]) you will get "Numbers stored as text" warning in your excel document. To avoid that, specify affected column numbers as a numeric vetor to num_char_cols argument. You can also specify column numbers that should be displayed with no docimal points, one decimal point etc. All styles will show thousands with a comma.
 
@@ -228,6 +255,9 @@ create_data_table_tab(
 )
 openXL(wb)
 ```
+&NewLine;
+
+![](images/data_xls.png){ width=50% }
 
 ## Saving your document
 
@@ -257,4 +287,13 @@ addStyle(wb,
          stack = TRUE
 )
 openXL(wb)
+```
+&NewLine;
+
+![](images/red_stacked_xls.png){ width=120% }
+
+To learn more about formatting in `openxlsx` package have a look at the vignettes. After installing the package you can find them by running:
+
+```{r eval = FALSE}
+browseVignettes("openxlsx")
 ```
