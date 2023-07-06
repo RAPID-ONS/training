@@ -18,13 +18,17 @@ knitr::opts_chunk$set(echo = FALSE)
 ```
 # About this page
 This page contains training resources for building Reproducible Analytical Pipelines. They are aimed at Government Analysts wanting to implement best practice into their work. Check out our <b>RAP training in R</b> resources on the top right of the page.
-<br>
-More materials will be added in the coming weeks: 
+<br><br>
+<b> Newly added in July '23:</b>
+
+* Spreadsheet automation in R
+<br><br>
+
+In preparation:
 
 * Git training
 * Advanced control flow in R
-* How to write a good README
-* Spreadsheet automation in R and more!
+* How to write a good README and more!
 
 # What is RAP and why you should implement it
 

@@ -88,26 +88,26 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 
 
   <!--radix_placeholder_meta_tags-->
-  <title>RAPID training: Packages and unit testing</title>
+  <title>RAPID training: Reproducible spreadsheets</title>
 
 
 
 
   <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
-  <meta property="og:title" content="RAPID training: Packages and unit testing"/>
+  <meta property="og:title" content="RAPID training: Reproducible spreadsheets"/>
   <meta property="og:type" content="article"/>
   <meta property="og:locale" content="en_US"/>
   <meta property="og:site_name" content="RAPID training"/>
 
   <!--  https://dev.twitter.com/cards/types/summary -->
   <meta property="twitter:card" content="summary"/>
-  <meta property="twitter:title" content="RAPID training: Packages and unit testing"/>
+  <meta property="twitter:title" content="RAPID training: Reproducible spreadsheets"/>
 
   <!--/radix_placeholder_meta_tags-->
   <!--radix_placeholder_rmarkdown_metadata-->
 
   <script type="text/json" id="radix-rmarkdown-metadata">
-  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","output"]}},"value":[{"type":"character","attributes":{},"value":["Packages and unit testing"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["toc","toc_depth","number_sections"]}},"value":[{"type":"logical","attributes":{},"value":[true]},{"type":"integer","attributes":{},"value":[2]},{"type":"logical","attributes":{},"value":[true]}]}]}]}
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","output"]}},"value":[{"type":"character","attributes":{},"value":["Reproducible spreadsheets"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["toc","toc_depth","number_sections"]}},"value":[{"type":"logical","attributes":{},"value":[true]},{"type":"integer","attributes":{},"value":[2]},{"type":"logical","attributes":{},"value":[true]}]}]}]}
   </script>
   <!--/radix_placeholder_rmarkdown_metadata-->
   <!--radix_placeholder_navigation_in_header-->
@@ -2072,8 +2072,6 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 
   <!--/radix_placeholder_distill-->
   <script src="site_libs/header-attrs-2.23/header-attrs.js"></script>
-  <link href="site_libs/panelset-0.2.6/panelset.css" rel="stylesheet" />
-  <script src="site_libs/panelset-0.2.6/panelset.js"></script>
   <script src="site_libs/popper-2.6.0/popper.min.js"></script>
   <link href="site_libs/tippy-6.2.7/tippy.css" rel="stylesheet" />
   <link href="site_libs/tippy-6.2.7/tippy-light-border.css" rel="stylesheet" />
@@ -2093,7 +2091,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"Packages and unit testing","authors":[]}
+{"title":"Reproducible spreadsheets","authors":[]}
 </script>
 
 <!--/radix_placeholder_front_matter-->
@@ -2132,7 +2130,7 @@ RAP training in R
 <!--/radix_placeholder_site_before_body-->
 
 <div class="d-title">
-<h1>Packages and unit testing</h1>
+<h1>Reproducible spreadsheets</h1>
 <!--radix_placeholder_categories-->
 <!--/radix_placeholder_categories-->
 
@@ -2144,671 +2142,294 @@ RAP training in R
 <nav class="l-text toc figcaption" id="TOC">
 <h3>Contents</h3>
 <ul>
-<li><a href="#what-is-a-package-and-when-do-we-need-one">What is a package and when do we need one?</a></li>
-<li><a href="#package-structure-and-setup">Package structure and setup</a>
+<li><a href="#rapid.spreadsheets">rapid.spreadsheets</a></li>
+<li><a href="#installation">Installation</a></li>
+<li><a href="#example-reference-tables">Example reference tables</a>
 <ul>
-<li><a href="#package-name">Package name</a></li>
-<li><a href="#creating-basic-structure">Creating basic structure</a></li>
-<li><a href="#quiz">Quiz</a></li>
+<li><a href="#setup">Setup</a></li>
+<li><a href="#cover-sheet">Cover sheet</a></li>
+<li><a href="#contents-sheet">Contents sheet</a></li>
+<li><a href="#notes-sheet">Notes sheet</a></li>
+<li><a href="#data-table-sheets">Data table sheets</a></li>
+<li><a href="#saving-your-document">Saving your document</a></li>
+<li><a href="#additional-formatting-options">Additional formatting options</a></li>
 </ul></li>
-<li><a href="#functions-and-installingtesting-your-package">Functions and installing/testing your package</a>
-<ul>
-<li><a href="#adding-functions-to-your-package">Adding functions to your package</a></li>
-<li><a href="#trying-out-functions-from-your-package">Trying out functions from your package</a></li>
-<li><a href="#package-exercises---building-a-package">Package exercises - building a package</a></li>
-</ul></li>
-<li><a href="#package-documentation">Package documentation</a>
-<ul>
-<li><a href="#minimum-functionality-and-installing-your-package">Minimum functionality and installing your package</a></li>
-<li><a href="#functions-documentation">Functions’ documentation</a></li>
-<li><a href="#example-roxygen-docstrings">Example roxygen docstrings</a></li>
-<li><a href="#optional-roxygen-tags-advanced-content">Optional roxygen tags (advanced content)</a></li>
-<li><a href="#produce-documentation">Produce documentation</a></li>
-<li><a href="#documentation-exercises">Documentation exercises</a></li>
-</ul></li>
-<li><a href="#unit-testing-and-quality-assurance">Unit testing and Quality Assurance</a>
-<ul>
-<li><a href="#what-are-unit-tests">What are unit tests?</a></li>
-<li><a href="#where-to-put-unit-tests-in-a-package">Where to put unit tests in a package?</a></li>
-<li><a href="#how-to-write-unit-tests-with-testthat">How to write unit tests with testthat?</a></li>
-<li><a href="#what-should-you-be-testing">What should you be testing?</a></li>
-<li><a href="#how-many-tests-for-a-function-optional">How many tests for a function? (optional)</a></li>
-<li><a href="#testing-your-package">Testing your package</a></li>
-<li><a href="#unexported-functions-optional">UnExported functions (optional)</a></li>
-<li><a href="#quality-assurance">Quality Assurance</a></li>
-<li><a href="#testing-excercises">Testing excercises</a></li>
-</ul></li>
-<li><a href="#how-to-share-your-package">How to share your package?</a></li>
-<li><a href="#additional-resources">Additional resources</a></li>
 </ul>
 </nav>
 </div>
-<p><strong>Prerequisities</strong></p>
-<p>You will need devtools and roxygen packages installed for this tutorial.</p>
+<h1 id="rapid.spreadsheets">rapid.spreadsheets</h1>
+<p><code>rapid.spreadsheets</code> is an R package that was created to help government analysts create reproducible spreadsheets. It can simplify production of data tables/ reference tables in excel files. Tables produced using the package should meet accessibility guidelines*.</p>
+<p>Unlike some other packages available <code>rapid.spreadsheets</code> includes embeding both internal (to other tabs in the workbook) and external links. You can also easily build on it and change formatting using <code>openxlsx</code> package.</p>
+<h1 id="installation">Installation</h1>
+<p>You will need to install <code>openxlsx</code> package and <code>rapid.spreadsheets</code> package.
+<code>openxlsx</code> is available on Cran, so you just need to run:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/utils/install.packages.html'>install.packages</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"devtools"</span>, <span class='st'>"roxygen"</span><span class='op'>)</span>, dependencies <span class='op'>=</span> <span class='cn'>TRUE</span>, type <span class='op'>=</span> <span class='st'>"win.binary"</span><span class='op'>)</span></span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/utils/install.packages.html'>install.packages</a></span><span class='op'>(</span><span class='st'>"openxlsx"</span><span class='op'>)</span></span></code></pre>
 </div>
 </div>
-<h1 id="what-is-a-package-and-when-do-we-need-one">What is a package and when do we need one?</h1>
-<p>To put simply a package is a collection of functions that we can load into our workspace and use. Base R contains many functions already, but loading packages extends R functionality. Some of the most popular packages used include <code>dplyr</code> for data manipulation and <code>ggplot2</code> for creating charts.</p>
-<p>Is a package only way to store and load your functions? No. Depending on the size and complexity of your project you should select one of the following options to store your functions.</p>
-<ol type="1">
-<li>Simplest option is to have functions stored in the body of your scipt, load them into the global environment (you’ll see them in the top right corner in R Studio) and use. This will only be good solution for a very small project.</li>
-<li>You can save all of your functions in a single .R script (e.g. <code>functions.R</code>) and load them in into analytical script using <code>source()</code> function e.g.:</li>
-</ol>
+<p>To install <code>rapid.spreadsheets</code> you will first need <code>devtools</code> package, that will allow you to install it directly from git:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='kw'><a href='https://rdrr.io/r/base/source.html'>source</a></span><span class='op'>(</span><span class='st'>"functions.R"</span><span class='op'>)</span></span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'>devtools</span><span class='fu'>::</span><span class='fu'><a href='https://remotes.r-lib.org/reference/install_github.html'>install_github</a></span><span class='op'>(</span><span class='st'>"RAPID-ONS/rapid.spreadsheets"</span>, dependencies <span class='op'>=</span> <span class='cn'>TRUE</span>, build_vignettes <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></span></code></pre>
 </div>
 </div>
-<ol start="3" type="1">
-<li>You can create a package that will contain all your functions. Benefits of that solution include good dependency management (using other packages, requiring specific versions etc.), simple implementation of unit tests and good documentation solutions that make it easier for other people to use your functions. Package is often the best solution for more complex analyses.</li>
-</ol>
-<h1 id="package-structure-and-setup">Package structure and setup</h1>
-<h2 id="package-name">Package name</h2>
-<p>Package name should consist of letters and numbers and be informative. You can’t use underscores in a package name, but . are allowed. Make sure that your name is unique to avoid conflicts with existing packages.</p>
-<h2 id="creating-basic-structure">Creating basic structure</h2>
-<p>Devtools <code>create()</code> function creates package folders in current directory.</p>
+<h1 id="example-reference-tables">Example reference tables</h1>
+<p>Below is and example of producing simple reference tables with Cover Sheet, Notes and a few tables.</p>
+<h2 id="setup">Setup</h2>
+<p>Start by loading in the necessary packages.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'>devtools</span><span class='fu'>::</span><span class='fu'><a href='https://devtools.r-lib.org/reference/create.html'>create</a></span><span class='op'>(</span><span class='st'>"pckgname"</span><span class='op'>)</span></span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/RAPID-ONS/rapid.spreadsheets'>rapid.spreadsheets</a></span><span class='op'>)</span></span>
+<span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://ycphs.github.io/openxlsx/index.html'>openxlsx</a></span><span class='op'>)</span></span></code></pre>
 </div>
 </div>
-<p>The structure created this way includes folder called R (for all your functions) and DESCRIPTION and NAMESPACE files.</p>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/base/list.files.html'>dir</a></span><span class='op'>(</span><span class='st'>"pckgname"</span><span class='op'>)</span></span></code></pre>
-</div>
-<pre><code>[1] &quot;DESCRIPTION&quot; &quot;NAMESPACE&quot;   &quot;R&quot;          </code></pre>
-</div>
-<p>You can view both DESCRIPTION and NAMESPACE files either in RStudio or in text editor.</p>
-<p>DESCRIPTION file can be edited manually (e.g. using notepad) and should contain:</p>
+<p>First you need to create a standard openxlsx workbook and then you can use functions from rapid.spreadsheets package to add tables with appropriate formatting.</p>
 <ul>
-<li>Title of the package</li>
-<li>Any dependencies, including versions (if needed)</li>
-<li>License</li>
-<li><a href="mailto:Authors@R" class="email">Authors@R</a> field should include details of authors, contributors, and copyright holders</li>
+<li>Note that in this tutorial we will be creating new workbooks multiple times as we will want to overwrite tabs with the same names. You will only need to create it once for one xls file.</li>
 </ul>
-<p>If you open DESCRIPTION file of your newly created package you should see:
-<img src="images/Description_1.png" alt="DECSRIPTION" /></p>
-<p>NAMESPACE file should not be edited manually, it will be updated automatically when you document your package.</p>
-<p>If you open NAMESPACE file of your newly created package you should see:
-<img src="images/Namespace_1.png" alt="NAMESPACE" />
-It will remind you that you should not edit it manually.</p>
-<p>Below is a basic structure of a package. In analytical pipeline, your package is something that stores all the functions (can store few more things as you will see later), but does not include the main pipeline itself. Your overall project structure will look as follows:</p>
-<pre><code>project/
-  pckgname/
-    DESCRIPTION
-    NAMESPACE
-    R/
-      analytical_functions.R
-      data_processing_functions.R
-      super_complex_modelling_functions.R
-
-  README.txt
-  config.yaml OR config.R
-  main.R</code></pre>
-<p>This is the basic structure, there will be few more things in the package that you will learn about in the further sections.</p>
-<h2 id="quiz">Quiz</h2>
-<div class="panelset">
-<section id="question" class="panel-name panel">
-<h3 class="panel-name">Question</h3>
-<p>What would be a good name for your new package?</p>
-<ol type="A">
-<li>
-dplyr
-</li>
-<li>
-quarterly_births
-</li>
-<li>
-qrt.birth
-</li>
-</ol>
-</section>
-<section id="see-answer" class="panel-name panel">
-<h3 class="panel-name">See Answer</h3>
-<p>What would be a good name for your new package?</p>
-<ol type="A">
-<li>
-dplyr
-</li>
-<li>
-quarterly_births
-</li>
-<li>
-<b>qrt.birth</b>
-</li>
-</ol>
-</section>
-</div>
-<h1 id="functions-and-installingtesting-your-package">Functions and installing/testing your package</h1>
-<h2 id="adding-functions-to-your-package">Adding functions to your package</h2>
-<p>Functions need to be stored in <code>/R</code> folder inside the package. You can have individual files for each function or store multiple functions in a single file. Files containing a single function should have the same name as that function. When you store couple of functions together they should be grouped with similar functions (e.g. import functions) and files should have informative names (e.g. <code>data_import.R</code>). The easiest way to add functions to a package is to create an R script and save it in the <code>project/pckgname/R</code> folder.</p>
-<p>You can simply open a new R script, name it <code>cool_functions.R</code> and save in your <code>/R</code> folder inside the package folder. You can also create new R script using:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>setwd</a></span><span class='op'>(</span><span class='st'>"pckgname"</span><span class='op'>)</span> <span class='co'># you need to be in the package folder -&gt; so first we move into the package</span></span>
-<span><span class='fu'>usethis</span><span class='fu'>::</span><span class='fu'><a href='https://usethis.r-lib.org/reference/use_r.html'>use_r</a></span><span class='op'>(</span><span class='st'>"cool_functions"</span><span class='op'>)</span>    <span class='co'># creates and opens R/cool_functions.R</span></span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>wb</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/openxlsx/man/createWorkbook.html'>createWorkbook</a></span><span class='op'>(</span><span class='op'>)</span></span></code></pre>
 </div>
 </div>
-<p>*Note that using <code>setwd()</code> in a chunk only works within that chunk. So your wd outside the chunk stays the same - and other chunks are going to use the global working directory instead.</p>
-<p>You can paste in the following function or create your own.</p>
+<h2 id="cover-sheet">Cover sheet</h2>
+<p>Let’s start with cover sheet as this is often the first tab in data tables.</p>
+<p>We will use a .txt file to populate our example cover sheet, but you can also use a standard data.frame in R. It should only contain a single column. Name of the column is irrelevant as it won’t be used, so we set header to FALSE.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>add_3</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='op'>{</span></span>
-<span>  <span class='va'>x</span> <span class='op'>+</span> <span class='fl'>3</span></span>
-<span><span class='op'>}</span></span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>cover_sheet_text</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/utils/read.table.html'>read.csv</a></span><span class='op'>(</span></span>
+<span>  <span class='st'>"cover_sheet.txt"</span>,</span>
+<span>  header <span class='op'>=</span> <span class='cn'>FALSE</span>,</span>
+<span>  sep <span class='op'>=</span> <span class='st'>"\t"</span>, </span>
+<span>  fileEncoding <span class='op'>=</span> <span class='st'>"UTF-8-BOM"</span><span class='op'>)</span></span></code></pre>
 </div>
 </div>
-<h2 id="trying-out-functions-from-your-package">Trying out functions from your package</h2>
-<p>Now that we have something in our package, let’s try installing it. To do so you need to be in your project directory (e.g. “D:/project/”) if you aren’t use <code>setwd("D:/project/")</code> in R console to change your working directory.</p>
-<p>To install your package:</p>
+<p>
+</p>
+<p><img src="images/cover_sheet_txt.png" style="width:90.0%" /></p>
+<p>To create simple cover sheet tab you can use create_cover_sheet function. Using optional subheadings and rows_t_bold arguments you can specify which rows should be formatted as subheadings and which ones should be as bold text.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'>devtools</span><span class='fu'>::</span><span class='fu'><a href='https://devtools.r-lib.org/reference/install.html'>install</a></span><span class='op'>(</span><span class='st'>"pckgname"</span><span class='op'>)</span></span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/pkg/rapid.spreadsheets/man/create_cover_sheet.html'>create_cover_sheet</a></span><span class='op'>(</span></span>
+<span>  wb <span class='op'>=</span> <span class='va'>wb</span>,</span>
+<span>  text_df <span class='op'>=</span> <span class='va'>cover_sheet_text</span>,</span>
+<span>  subheadings <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>5</span>, <span class='fl'>9</span>, <span class='fl'>16</span>, <span class='fl'>21</span>, <span class='fl'>30</span><span class='op'>)</span>, <span class='co'># rows with subheadings</span></span>
+<span>  rows_to_bold <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span><span class='op'>:</span><span class='fl'>4</span><span class='op'>)</span> <span class='co'># rows to apply bold font</span></span>
+<span><span class='op'>)</span></span></code></pre>
 </div>
 </div>
-<p>Once the package is installed, library it in to use its functions (as with any package!).</p>
+<p>To have a peak on how our spreadsheet will look like we can use following openxlsx function:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'>pckgname</span><span class='op'>)</span></span>
-<span><span class='fu'>add_3</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>)</span></span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/pkg/openxlsx/man/openXL.html'>openXL</a></span><span class='op'>(</span><span class='va'>wb</span><span class='op'>)</span></span></code></pre>
 </div>
-<pre><code>Error in add_3(1): could not find function &quot;add_3&quot;</code></pre>
 </div>
-<p>Annoyingly this does not work!</p>
-<p>We will need to add few more steps for it to work, but in the meantime we can use a different function to allow us try out our functions at the development stage.</p>
+<p>
+</p>
+<p><img src="images/cover_sheet_xls_1.png" style="width:120.0%" /></p>
+<p>The information contained in cover sheets and notes is often static, but usually you need to update some parts of it - to help automate this you can use a replace argument in the function. In this example we change release date to a given date and insert publication year into row with copyright information.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'>devtools</span><span class='fu'>::</span><span class='fu'><a href='https://devtools.r-lib.org/reference/load_all.html'>load_all</a></span><span class='op'>(</span><span class='st'>"pckgname"</span><span class='op'>)</span></span>
-<span><span class='fu'>add_3</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>)</span></span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>replacements</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span></span>
+<span>  replace <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"!release_date!"</span>, <span class='st'>"!copyright!"</span><span class='op'>)</span>,</span>
+<span>  with <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>" 5 September 2022"</span>, <span class='st'>"2022"</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
 </div>
-<pre><code>[1] 4</code></pre>
 </div>
-<p>Worked as a charm! Using load_all is the fastest way to try out the functionality of your new functions, so you’re likely to be using it often while building your package.</p>
-<p>Ok, but what do you need to do for it to work properly? You’ll have to add proper documentation to your functions.</p>
-<h2 id="package-exercises---building-a-package">Package exercises - building a package</h2>
-<p>These were designed for small group/paired coding, but you should ba able to complete these on your own based on the information from above sections.</p>
-<div class="panelset">
-<section id="exercises" class="panel-name panel">
-<h3 class="panel-name">Exercises</h3>
+<p>You can also easily add links to your cover sheet by creating a data.frame that contains rows and links column. Rows should indicate which row in the cover sheet data frame contains the corresponding link. Website urls need to be stored as characters. When you include email address simply add “mailto:” in front of email address.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'># 1. Create your own package ----</span></span>
-<span><span class='co'># Create your own package and inspect the directory created in win explorer or</span></span>
-<span><span class='co'># in R "files" window on the bottom right. </span></span>
-<span></span>
-<span></span>
-<span><span class='co'># 2. Add an .R script to the R folder of the package, that will store your </span></span>
-<span><span class='co'># functions. You can do it manually or using usethis package.</span></span>
-<span></span>
-<span></span>
-<span><span class='co'># 3. Add a simple function to your package.</span></span>
-<span></span>
-<span></span>
-<span><span class='co'># 4. Install and library in your package and try calling the function.</span></span>
-<span></span>
-<span></span>
-<span><span class='co'># 5. Use appropriate devtools:: function (which one?) to load the package and</span></span>
-<span><span class='co'># try calling your function.</span></span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>cover_sheet_links</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span></span>
+<span>  rows <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>15</span>, <span class='fl'>18</span><span class='op'>)</span>,</span>
+<span>  links <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"https://github.com/RAPID-ONS"</span>, <span class='st'>"mailto:email@email.uk"</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
 </div>
 </div>
-</section>
-<section id="solutions" class="panel-name panel">
-<h3 class="panel-name">Solutions</h3>
+<p>Now you can create cover sheet with replacements and links using create_cover_sheet function.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'># 1. Create your own package ----</span></span>
-<span><span class='co'># Create your own package and inspect the directory created in win explorer or</span></span>
-<span><span class='co'># in R "files" window on the bottom right. </span></span>
-<span><span class='fu'>devtools</span><span class='fu'>::</span><span class='fu'><a href='https://devtools.r-lib.org/reference/create.html'>create</a></span><span class='op'>(</span><span class='st'>"my.awesome.package"</span><span class='op'>)</span></span>
-<span></span>
-<span><span class='co'># 2. Add an .R script to the R folder of the package, that will store your </span></span>
-<span><span class='co'># functions. You can do it manually or using usethis package.</span></span>
-<span><span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>setwd</a></span><span class='op'>(</span><span class='st'>"my.awesome.package"</span><span class='op'>)</span> </span>
-<span><span class='fu'>usethis</span><span class='fu'>::</span><span class='fu'><a href='https://usethis.r-lib.org/reference/use_r.html'>use_r</a></span><span class='op'>(</span><span class='st'>"my_functions"</span><span class='op'>)</span> </span>
-<span></span>
-<span><span class='co'># 3. Add a simple function to your package. </span></span>
-<span><span class='va'>add_3</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='op'>{</span></span>
-<span>  <span class='va'>x</span> <span class='op'>+</span> <span class='fl'>3</span></span>
-<span><span class='op'>}</span></span>
-<span></span>
-<span><span class='co'># You can simply copy/paste the above into my_functions script OR run:</span></span>
-<span><span class='fu'><a href='https://rdrr.io/r/base/dump.html'>dump</a></span><span class='op'>(</span><span class='st'>"add_3"</span>, file <span class='op'>=</span> <span class='st'>"my.awesome.package/R/my_functions.R"</span><span class='op'>)</span></span>
-<span></span>
-<span><span class='co'># 4. Install and library in your package and try calling the function.</span></span>
-<span><span class='co'># make sure to remove add_3 from global environment if you can see it there (Environment tab in R Studio)</span></span>
-<span><span class='fu'>devtools</span><span class='fu'>::</span><span class='fu'><a href='https://devtools.r-lib.org/reference/install.html'>install</a></span><span class='op'>(</span><span class='st'>"my.awesome.package"</span><span class='op'>)</span></span>
-<span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'>my.awesome.package</span><span class='op'>)</span></span>
-<span></span>
-<span><span class='fu'>add_3</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>)</span></span>
-<span><span class='co'># this should give you an error!</span></span>
-<span></span>
-<span><span class='co'># 5. Use appropriate devtools:: function (which one?) to load the package and</span></span>
-<span><span class='co'># try calling your function.</span></span>
-<span><span class='fu'>devtools</span><span class='fu'>::</span><span class='fu'><a href='https://devtools.r-lib.org/reference/load_all.html'>load_all</a></span><span class='op'>(</span><span class='st'>"my.awesome.package"</span><span class='op'>)</span></span>
-<span></span>
-<span><span class='fu'>add_3</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>)</span></span>
-<span><span class='co'># this should work!</span></span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>wb</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/openxlsx/man/createWorkbook.html'>createWorkbook</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span><span class='fu'><a href='https://rdrr.io/pkg/rapid.spreadsheets/man/create_cover_sheet.html'>create_cover_sheet</a></span><span class='op'>(</span></span>
+<span>  wb <span class='op'>=</span> <span class='va'>wb</span>,</span>
+<span>  text_df <span class='op'>=</span> <span class='va'>cover_sheet_text</span>,</span>
+<span>  subheadings <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>5</span>, <span class='fl'>9</span>, <span class='fl'>16</span>, <span class='fl'>21</span>, <span class='fl'>30</span><span class='op'>)</span>,</span>
+<span>  rows_to_bold <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span><span class='op'>:</span><span class='fl'>4</span><span class='op'>)</span>,</span>
+<span>  hyperlinks <span class='op'>=</span> <span class='va'>cover_sheet_links</span>,</span>
+<span>  replacements <span class='op'>=</span> <span class='va'>replacements</span></span>
+<span><span class='op'>)</span></span>
+<span><span class='fu'><a href='https://rdrr.io/pkg/openxlsx/man/openXL.html'>openXL</a></span><span class='op'>(</span><span class='va'>wb</span><span class='op'>)</span></span></code></pre>
 </div>
 </div>
-</section>
-</div>
-<h1 id="package-documentation">Package documentation</h1>
-<p>Individual functions in a package need their own documentation. You should also include some documentation for functions even for smaller projects, but for packages they need to follow a specific format. For R packages roxygen allows us to build clean documentation. In Python these “comments” (function documentation) are called docstrings.</p>
-<p>The roxygen headers are included in the same script as the function code. You use roxygen comments <code>#'</code> to identify a line as part of the roxygen header.</p>
-<h2 id="minimum-functionality-and-installing-your-package">Minimum functionality and installing your package</h2>
-<p>As a bare minimum your functions need an <code>@export</code> tag to work. Try adding the following line above your function in the <code>cool_functions.R</code> script:</p>
+<p>
+</p>
+<p><img src="images/cover_sheet_xls_2.png" style="width:120.0%" /></p>
+<h2 id="contents-sheet">Contents sheet</h2>
+<p>Contents sheet contains a table linking to all the other tabs in the excel documents in one column and describing waht they are in the second column. It can also have a third column with links.</p>
+<p>Our example content .txt file has to columns. You can also create a data frame with two columns instead of using a .txt file. This time column names are important as we will use them in the table.</p>
+<p>As a minimum your contents data.frame should contain two columns and first column should contain the names of the worksheets in your workbook.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'>#' @export</span></span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>contents_text</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/utils/read.table.html'>read.csv</a></span><span class='op'>(</span></span>
+<span>  <span class='st'>"contents_table.txt"</span>,</span>
+<span>  header <span class='op'>=</span> <span class='cn'>TRUE</span>,</span>
+<span>  sep <span class='op'>=</span> <span class='st'>"\t"</span>,</span>
+<span>  quote <span class='op'>=</span> <span class='st'>""</span>,</span>
+<span>  fileEncoding <span class='op'>=</span> <span class='st'>"UTF-8-BOM"</span>,</span>
+<span>  check.names <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></span>
+<span><span class='va'>contents_text</span></span></code></pre>
 </div>
 </div>
-<p>For the package to work you need to create documentation with <code>devtools::document()</code> and then install your package using <code>devtools::install()</code>. Note that without the export tag <code>devtools::document()</code> the package would not export any functions, so you still wouldn’t be able to use them.</p>
+<p>
+</p>
+<p><img src="images/contents_sheet_df.png" /></p>
+<p>Optionally you can also have a third column with links. Again name of the column will be used directly in the table. It should contain text displayed for the urls in the rows in which you’d like to have links, rest of the rows should be NA. For instance:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'>devtools</span><span class='fu'>::</span><span class='fu'><a href='https://devtools.r-lib.org/reference/document.html'>document</a></span><span class='op'>(</span><span class='st'>"pckgname"</span><span class='op'>)</span></span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>contents_text</span><span class='op'>$</span><span class='st'>"Related links"</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='cn'>NA</span>, <span class='cn'>NA</span>, <span class='st'>"More about X"</span>, <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='cn'>NA</span>, <span class='fl'>5</span><span class='op'>)</span>, <span class='st'>"link"</span><span class='op'>)</span></span>
+<span><span class='va'>contents_text</span></span></code></pre>
 </div>
-<pre><code>i Updating pckgname documentation
-i Loading pckgname
-Writing &#39;NAMESPACE&#39;</code></pre>
 </div>
-<p>You should see the message “Writing NAMESPACE”.</p>
-<p>If you open the NAMESPACE file after documenting you package you should see:
-<img src="images/Namespace_2.png" alt="NAMESPACE_updated" /></p>
-<p>First line has not changed, but now there is a new line telling the package to export <code>add_3()</code> function. All the functions you want users to be able to use need to be exported and appear in the NAMESPACE.</p>
-<p>Now, when you install your package you can library it in and use it’s functions.</p>
+<p>
+</p>
+<p><img src="images/contents_sheet_df_links.png" /></p>
+<p>To add hyperlinks you will also need to specify which rows of the table they are and
+urls of the websites they should direct to. Here we want to add two links in rows 3 and 9. Note that you will need that third column in the contents data frame to add the hyperlinks.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'>pckgname</span><span class='op'>)</span></span>
-<span><span class='fu'>add_3</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>)</span></span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>hyperlinks</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span></span>
+<span>  rows <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>3</span>, <span class='fl'>9</span><span class='op'>)</span>,</span>
+<span>  links <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"https://rapid-ons.github.io/training"</span>,</span>
+<span>            <span class='st'>"https://github.com/RAPID-ONS/rapid.spreadsheets"</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
 </div>
-<pre><code>[1] 4</code></pre>
 </div>
-<h2 id="functions-documentation">Functions’ documentation</h2>
-<p>The first three lines of the header have special meaning and you don’t need to use tags to identify them. The first three lines are title, description and details. Since you don’t use any tags to identify the first three lines, it is necessary that you separate them by a new line. For example:</p>
+<p>We can also add additional subtitles to our contents sheet if we like to. To do so, create a character vector where each element will be changed into additional row of text and places under the sheet title.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'>#' Title of the function</span></span>
-<span><span class='co'>#'</span></span>
-<span><span class='co'>#' Description of what function does</span></span>
-<span><span class='co'>#'</span></span>
-<span><span class='co'>#' Details</span></span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>subtitles_vector</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"sub one"</span>, <span class='st'>"sub two"</span>, <span class='st'>"sub three"</span><span class='op'>)</span></span></code></pre>
 </div>
 </div>
-<p>One of the most important aspects of a function to document are the arguments. With roxygen you specify them with the <code>@param</code> tag. You follow the tag with the argument name and then any details the user needs to know. If there is a lot of information that you need to provide about an argument you might want to consider putting this in the details section instead.</p>
+<p>To create contents worksheet we use create_content_notes function. Note only wb and df are required arguments, other are optional.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'>#' @param x Description of the x argument</span></span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/pkg/rapid.spreadsheets/man/create_contents_notes.html'>create_contents_notes</a></span><span class='op'>(</span></span>
+<span>  wb <span class='op'>=</span> <span class='va'>wb</span>,</span>
+<span>  df <span class='op'>=</span> <span class='va'>contents_text</span>,</span>
+<span>  additional_text <span class='op'>=</span> <span class='va'>subtitles_vector</span>,</span>
+<span>  hyperlinks <span class='op'>=</span> <span class='va'>hyperlinks</span></span>
+<span><span class='op'>)</span></span>
+<span><span class='fu'><a href='https://rdrr.io/pkg/openxlsx/man/openXL.html'>openXL</a></span><span class='op'>(</span><span class='va'>wb</span><span class='op'>)</span></span></code></pre>
 </div>
 </div>
-<p>Return header will the users what to expect as an output of the function.</p>
+<p>
+</p>
+<p><img src="images/contents_sheet_xls.png" style="width:120.0%" /></p>
+<h2 id="notes-sheet">Notes sheet</h2>
+<p>Most datasets are accompanied by a set of information providing users with details necessary to interpret the data such as information on data sources and/or methods. These are often brought together in a notes table.</p>
+<p>Notes table can be produced using create_content_notes function, and similarly to contents data.frame it can have two or three columns.</p>
+<p>Our example notes table has two columns, but you can add more and hyperlinks in the same way as for contents table.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'>#' @return Description of the output</span></span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>notes_text</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/utils/read.table.html'>read.csv</a></span><span class='op'>(</span></span>
+<span>  <span class='st'>"notes_table.txt"</span>,</span>
+<span>  header <span class='op'>=</span> <span class='cn'>TRUE</span>,</span>
+<span>  sep <span class='op'>=</span> <span class='st'>"\t"</span>,</span>
+<span>  quote <span class='op'>=</span> <span class='st'>""</span>,</span>
+<span>  fileEncoding <span class='op'>=</span> <span class='st'>"UTF-8-BOM"</span>,</span>
+<span>  check.names <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></span>
+<span><span class='va'>notes_text</span></span></code></pre>
 </div>
 </div>
-<p>Only exported functions will be loaded and directly accessible to users when they load a package, so make sure to add the export tags.</p>
+<p>
+</p>
+<p><img src="images/notes_df.png" /></p>
+<p>When using create_content_notes for a sheet different than contents we need to change default tab_name to the sheet name we want to use and heading to the title we want to use. We also need to set content_links argument to FALSE - otherwise it will treat the values in the first column as names linking to respective tabs of the excel document.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'>#' @export</span></span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/pkg/rapid.spreadsheets/man/create_contents_notes.html'>create_contents_notes</a></span><span class='op'>(</span></span>
+<span>  wb <span class='op'>=</span> <span class='va'>wb</span>,</span>
+<span>  df <span class='op'>=</span> <span class='va'>notes_text</span>,</span>
+<span>  tab_name <span class='op'>=</span> <span class='st'>"Notes"</span>,</span>
+<span>  heading <span class='op'>=</span> <span class='st'>"Notes"</span>,</span>
+<span>  contents_links <span class='op'>=</span> <span class='cn'>FALSE</span>,</span>
+<span>  additional_text <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Important text on notes"</span>, <span class='st'>"Different important text"</span><span class='op'>)</span></span>
+<span><span class='op'>)</span></span>
+<span><span class='fu'><a href='https://rdrr.io/pkg/openxlsx/man/openXL.html'>openXL</a></span><span class='op'>(</span><span class='va'>wb</span><span class='op'>)</span></span></code></pre>
 </div>
 </div>
-<h2 id="example-roxygen-docstrings">Example roxygen docstrings</h2>
-<p>This is minimal documentation that each function should have:
-* title
-* description
-* params
-* return
-* export tag (if exported)</p>
+<p>
+</p>
+<p><img src="images/notes_xls.png" style="width:120.0%" /></p>
+<h2 id="data-table-sheets">Data table sheets</h2>
+<p>For sheets containing actual data tables we can use standard data.frames with all the data we want to publish. The function will use the column names in the data.frame directly - if you want to ensure that spaces are preserved you need to set check.names argument to FALSE when creating/adding colummns to your data.frame.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'>#' Add three</span></span>
-<span><span class='co'>#' </span></span>
-<span><span class='co'>#' Computes sum of given number and 3</span></span>
-<span><span class='co'>#' </span></span>
-<span><span class='co'>#' @param x Numeric vector</span></span>
-<span><span class='co'>#' </span></span>
-<span><span class='co'>#' @return Numeric vector with values increased by 3</span></span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span></span>
+<span>  Sex <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='st'>"males"</span>, <span class='fl'>4</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='st'>"females"</span>, <span class='fl'>4</span><span class='op'>)</span><span class='op'>)</span>,</span>
+<span>  <span class='st'>"Age group"</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='st'>"10 to 14"</span>, <span class='fl'>8</span><span class='op'>)</span>,</span>
+<span>  Deaths <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>as.character</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='fl'>6.25</span>, <span class='fl'>7.75</span>, <span class='fl'>0.25</span><span class='op'>)</span>, <span class='fl'>2222.22</span><span class='op'>)</span><span class='op'>)</span>,</span>
+<span>  Rate <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>6</span>, <span class='fl'>1000</span>, <span class='st'>"[x]"</span><span class='op'>)</span>,</span>
+<span>  check.names <span class='op'>=</span> <span class='cn'>FALSE</span> <span class='co'># use this to retain spaces in column names</span></span>
+<span><span class='op'>)</span></span>
+<span><span class='va'>df</span></span></code></pre>
 </div>
 </div>
-<p>Another tag that you’ll likely use often is <code>@import</code> tag, which will attach other packages that your functions use and make sure they are installed when your package is installed.</p>
+<p>
+</p>
+<p><img src="images/data_df.png" /></p>
+<p>You can set up desired formatting styles for numeric columns. A For instance if you have columns that contain characters as well as numbers (e.g. [x]) you will get “Numbers stored as text” warning in your excel document. To avoid that, specify affected column numbers as a numeric vetor to num_char_cols argument. You can also specify column numbers that should be displayed with no docimal points, one decimal point etc. All styles will show thousands with a comma.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'>#' @import purrr</span></span>
-<span><span class='co'>#' @import dplyr</span></span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/pkg/rapid.spreadsheets/man/create_data_table_tab.html'>create_data_table_tab</a></span><span class='op'>(</span></span>
+<span>  wb <span class='op'>=</span> <span class='va'>wb</span>,</span>
+<span>  df <span class='op'>=</span> <span class='va'>df</span>,</span>
+<span>  tab_name <span class='op'>=</span> <span class='st'>"Table_1"</span>,</span>
+<span>  num_char_cols <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>3</span>, <span class='fl'>4</span><span class='op'>)</span>,</span>
+<span>  no_decimal <span class='op'>=</span> <span class='fl'>4</span>,</span>
+<span>  two_decimal <span class='op'>=</span> <span class='fl'>3</span></span>
+<span><span class='op'>)</span></span>
+<span><span class='fu'><a href='https://rdrr.io/pkg/openxlsx/man/openXL.html'>openXL</a></span><span class='op'>(</span><span class='va'>wb</span><span class='op'>)</span></span></code></pre>
 </div>
 </div>
-<h2 id="optional-roxygen-tags-advanced-content">Optional roxygen tags (advanced content)</h2>
-<p>You can also include examples in roxygen header</p>
+<p>
+</p>
+<p><img src="images/data_xls.png" style="width:50.0%" /></p>
+<h2 id="saving-your-document">Saving your document</h2>
+<p>To save the file use saveWorkbook function from openxlsx package.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'>#' @example</span></span>
-<span><span class='co'>#' \dontrun{</span></span>
-<span><span class='co'>#'   mean(5)</span></span>
-<span><span class='co'>#'}</span></span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/pkg/openxlsx/man/saveWorkbook.html'>saveWorkbook</a></span><span class='op'>(</span><span class='va'>wb</span>, <span class='st'>"filename.xlsx"</span><span class='op'>)</span></span></code></pre>
 </div>
 </div>
-<p>When you write documentation you may want to format the text to look like code, link to other functions or, particularly for return objects, format as a bulleted list. You can do this using special formatting:</p>
-<p>For code you use:
-<code>\code{text to format}</code></p>
-<p>To link to other functions you use:
-<code>\link[packageName]{functionName}</code><br />
-Note the package name is only required if the function is not in your package.</p>
-<p>To include an unordered list you use:
-<code>\itemize{}</code><br />
-Inside the brackets you mark new items using:
-<code>\item</code>
-followed by the item text.</p>
-<p>For instance:</p>
+<h2 id="additional-formatting-options">Additional formatting options</h2>
+<p>Check help pages for each function to see additional options. For instance:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'>#' @return This function returns a \code{data.frame} including columns:</span></span>
-<span><span class='co'>#' \itemize{</span></span>
-<span><span class='co'>#'  \item colname</span></span>
-<span><span class='co'>#'  \item colname2</span></span>
-<span><span class='co'>#' }</span></span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='op'>?</span><span class='va'>create_cover_sheet</span></span></code></pre>
 </div>
 </div>
-<p>You can also add author:</p>
+<p>You can easily add additional styles to specific cells using openxlsx package and setting stack argument as TRUE. For instance:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'>#' @author My Name &lt;myemail@example.com&gt;</span></span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>red_bold</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/openxlsx/man/createStyle.html'>createStyle</a></span><span class='op'>(</span>fontColour <span class='op'>=</span> <span class='st'>"#ff0000"</span>, textDecoration <span class='op'>=</span> <span class='st'>"Bold"</span><span class='op'>)</span></span>
+<span><span class='fu'><a href='https://rdrr.io/pkg/openxlsx/man/addStyle.html'>addStyle</a></span><span class='op'>(</span><span class='va'>wb</span>, </span>
+<span>         sheet <span class='op'>=</span> <span class='st'>"Contents"</span>,</span>
+<span>         style <span class='op'>=</span> <span class='va'>red_bold</span>,</span>
+<span>         rows <span class='op'>=</span> <span class='fl'>2</span>,</span>
+<span>         cols <span class='op'>=</span> <span class='fl'>1</span>,</span>
+<span>         stack <span class='op'>=</span> <span class='cn'>TRUE</span></span>
+<span><span class='op'>)</span></span>
+<span><span class='fu'><a href='https://rdrr.io/pkg/openxlsx/man/openXL.html'>openXL</a></span><span class='op'>(</span><span class='va'>wb</span><span class='op'>)</span></span></code></pre>
 </div>
 </div>
-<p>or link to other functions:</p>
+<p>
+</p>
+<p><img src="images/red_stacked_xls.png" style="width:120.0%" /></p>
+<p>To learn more about formatting in <code>openxlsx</code> package have a look at the vignettes. After installing the package you can find them by running:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'>#' @seealso \code{\link[packagename]{functioname}}</span></span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/utils/browseVignettes.html'>browseVignettes</a></span><span class='op'>(</span><span class='st'>"openxlsx"</span><span class='op'>)</span></span></code></pre>
 </div>
 </div>
-<p>In addition to the individual functions you can also document the whole package.</p>
-<p>When you document a package you can use all of the same tags as for functions but the problem that you have is that there is no R code to document. Instead you put the keyword <code>_PACKAGE</code> underneath your package header.</p>
-<p>The script should be saved in R directory in file with package name, e.g. <code>pckgname.R</code></p>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'>#' Title</span></span>
-<span><span class='co'>#'</span></span>
-<span><span class='co'>#' Description</span></span>
-<span><span class='co'>#'</span></span>
-<span><span class='co'>#' @docType package</span></span>
-<span><span class='co'>#' @name pckgname</span></span>
-<span><span class='st'>"_PACKAGE"</span></span></code></pre>
-</div>
-</div>
-<h2 id="produce-documentation">Produce documentation</h2>
-<p>Once you created roxygen headers you can create documentation for your package.</p>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'># Generate package documentation</span></span>
-<span><span class='fu'>devtools</span><span class='fu'>::</span><span class='fu'><a href='https://devtools.r-lib.org/reference/document.html'>document</a></span><span class='op'>(</span><span class='st'>"pckgname"</span><span class='op'>)</span></span>
-<span></span>
-<span><span class='co'># Examine the contents of the man directory</span></span>
-<span><span class='fu'><a href='https://rdrr.io/r/base/list.files.html'>dir</a></span><span class='op'>(</span><span class='st'>"pckgname/man"</span><span class='op'>)</span></span>
-<span></span>
-<span><span class='co'># View the documentation for the package and it's function</span></span>
-<span><span class='fu'><a href='https://rdrr.io/r/utils/help.html'>help</a></span><span class='op'>(</span><span class='st'>"pckgname"</span><span class='op'>)</span></span>
-<span></span>
-<span><span class='co'># Update the package loaded in your workspace</span></span>
-<span><span class='fu'>devtools</span><span class='fu'>::</span><span class='fu'><a href='https://devtools.r-lib.org/reference/load_all.html'>load_all</a></span><span class='op'>(</span><span class='st'>"pckgnmme"</span><span class='op'>)</span></span></code></pre>
-</div>
-</div>
-<p>Using roxygen comments will help you build code documentation when you run
-<code>devtools::document()</code> function and will update NAMESPACE file, but not the
-DESCRIPTION file. You can update the description file manually. For instance, roxygen won’t update the Dependencies or Imports in the DESCRIPTION file.</p>
-<h2 id="documentation-exercises">Documentation exercises</h2>
-<div class="panelset">
-<section id="exercises-1" class="panel-name panel">
-<h3 class="panel-name">Exercises</h3>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'># 6. Add roxygen comments to your .R script, above the function definition. </span></span>
-<span><span class='co'># Then document and update the package loaded into your environment with load_all.</span></span>
-<span></span>
-<span><span class='fu'>devtools</span><span class='fu'>::</span><span class='fu'><a href='https://devtools.r-lib.org/reference/document.html'>document</a></span><span class='op'>(</span><span class='st'>""</span><span class='op'>)</span></span>
-<span><span class='fu'>devtools</span><span class='fu'>::</span><span class='fu'><a href='https://devtools.r-lib.org/reference/load_all.html'>load_all</a></span><span class='op'>(</span><span class='st'>""</span><span class='op'>)</span></span>
-<span><span class='co'># Now see what happens if you try finding help on your function.</span></span>
-<span></span>
-<span><span class='op'>?</span><span class='va'>your_function_name</span></span>
-<span></span>
-<span><span class='co'># 7. Add one of the functions from the previous session to your package and </span></span>
-<span><span class='co'># create roxygen documentation for it.</span></span></code></pre>
-</div>
-</div>
-</section>
-<section id="example-solutions" class="panel-name panel">
-<h3 class="panel-name">Example solutions</h3>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'># 6. Add roxygen comments to your .R script, above the function definition. </span></span>
-<span><span class='co'># Then document and update the package loaded into your environment with load_all.</span></span>
-<span></span>
-<span><span class='co'>#' Add three</span></span>
-<span><span class='co'>#'</span></span>
-<span><span class='co'>#' @param x numeric vector</span></span>
-<span><span class='co'>#'</span></span>
-<span><span class='co'>#' @return numeric vetor with values increased by 3</span></span>
-<span><span class='co'>#' @export</span></span>
-<span></span>
-<span><span class='va'>add_3</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='op'>{</span></span>
-<span>  <span class='va'>x</span> <span class='op'>+</span> <span class='fl'>3</span></span>
-<span><span class='op'>}</span></span>
-<span></span>
-<span><span class='fu'>devtools</span><span class='fu'>::</span><span class='fu'><a href='https://devtools.r-lib.org/reference/document.html'>document</a></span><span class='op'>(</span><span class='st'>"my.awesome.package"</span><span class='op'>)</span></span>
-<span><span class='fu'>devtools</span><span class='fu'>::</span><span class='fu'><a href='https://devtools.r-lib.org/reference/load_all.html'>load_all</a></span><span class='op'>(</span><span class='st'>"my.awesome.package"</span><span class='op'>)</span></span>
-<span><span class='co'># Now see what happens if you try finding help on your function.</span></span>
-<span></span>
-<span><span class='op'>?</span><span class='va'>add_3</span></span>
-<span></span>
-<span><span class='co'># 7. Add one of the functions from the previous session to your package and </span></span>
-<span><span class='co'># create roxygen documentation for it.</span></span></code></pre>
-</div>
-</div>
-</section>
-</div>
-<h1 id="unit-testing-and-quality-assurance">Unit testing and Quality Assurance</h1>
-<h2 id="what-are-unit-tests">What are unit tests?</h2>
-<p>Unit tests check whether functions do what is expected of them. No more no less. Ideally, you would like a 100% of test coverage, which means that every functions has tests that check for every eventuality. More realistically 60-70% test coverage is good.</p>
-<p>To create unit tests, you’ll produce dummy data and run your function using this data to check if it produces expected output. Not as difficult as it sounds is it?</p>
-<h2 id="where-to-put-unit-tests-in-a-package">Where to put unit tests in a package?</h2>
-<p>Setting up folder for unit tests</p>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'>usethis</span><span class='fu'>::</span><span class='fu'><a href='https://usethis.r-lib.org/reference/use_testthat.html'>use_testthat</a></span><span class='op'>(</span><span class='op'>)</span> <span class='co'># your wd should be in the package</span></span></code></pre>
-</div>
-</div>
-<p>You could also create these folders manually - let’s have a look how it should look like.</p>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/base/list.files.html'>dir</a></span><span class='op'>(</span><span class='st'>"pckgname"</span><span class='op'>)</span></span></code></pre>
-</div>
-<pre><code>[1] &quot;DESCRIPTION&quot; &quot;man&quot;         &quot;NAMESPACE&quot;   &quot;R&quot;          
-[5] &quot;tests&quot;      </code></pre>
-</div>
-<p>You can see a folder called tests - let’s see what’s inside.</p>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/base/list.files.html'>dir</a></span><span class='op'>(</span><span class='st'>"pckgname/tests"</span><span class='op'>)</span></span></code></pre>
-</div>
-<pre><code>[1] &quot;testthat.R&quot;</code></pre>
-</div>
-<p>You should see a folder called <code>testthat</code> - this is where you will need t save scripts with unit tests. The <code>testthat.R</code> script ensures the tests run as expected within package structure (e.g. with various devtools functions), so you should not edit that one.</p>
-<h2 id="how-to-write-unit-tests-with-testthat">How to write unit tests with testthat?</h2>
-<p>For each function you’ll need a separate .R file named <code>test-function_name.R</code>. Inside you create test data and output that function should produce for the test data you create within the test script. Then you compare the expected output (that is hardcoded) with output of the function.</p>
-<p>You can create testing scripts manually - just as describe above or for function called “function_name” you can use:</p>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'>usethis</span><span class='fu'>::</span><span class='fu'><a href='https://usethis.r-lib.org/reference/use_r.html'>use_test</a></span><span class='op'>(</span><span class='st'>"function_name"</span><span class='op'>)</span> <span class='co'># creates and opens tests/testthat/test-function_name.R</span></span></code></pre>
-</div>
-</div>
-<p>If your functions are grouped in an R script together e.g. <code>pckgname/R/data_processing.R</code> your test files should be named the same as the function files, e.g.:</p>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'>usethis</span><span class='fu'>::</span><span class='fu'><a href='https://usethis.r-lib.org/reference/use_r.html'>use_test</a></span><span class='op'>(</span><span class='st'>"data_processing"</span><span class='op'>)</span> <span class='co'># creates and opens tests/testthat/test-data_processing.R</span></span></code></pre>
-</div>
-</div>
-<p>You can use <code>expect_equal()</code>, <code>expect_equivalent()</code> and <code>expect_identical()</code> in order to test whether the output of a function is as expected. These three functions all have slightly different functionality:</p>
-<ul>
-<li><code>testthat::expect_identical()</code> checks that the values, attributes, and type of both objects are the same.</li>
-<li><code>testthat::expect_equal()</code> checks that the values, and attributes of both objects are the same. You can adjust how strict <code>testthat::expect_equal()</code> is by adjusting the tolerance parameter.</li>
-<li><code>testthat::expect_equivalent()</code> checks that the values, of both objects are the same.</li>
-</ul>
-<p>See example of what test script should contain:</p>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>test_data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>3</span><span class='op'>)</span></span>
-<span><span class='va'>expected_output</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>5</span>, <span class='fl'>6</span><span class='op'>)</span></span>
-<span><span class='va'>function_output</span> <span class='op'>&lt;-</span> <span class='fu'>add_3</span><span class='op'>(</span><span class='va'>test_data</span><span class='op'>)</span></span>
-<span></span>
-<span></span>
-<span><span class='fu'>testthat</span><span class='fu'>::</span><span class='fu'><a href='https://testthat.r-lib.org/reference/test_that.html'>test_that</a></span><span class='op'>(</span><span class='st'>"Checking expected outcome matches outcome for add_3 function"</span>, <span class='op'>{</span></span>
-<span>  <span class='fu'>testthat</span><span class='fu'>::</span><span class='fu'><a href='https://testthat.r-lib.org/reference/equality-expectations.html'>expect_identical</a></span><span class='op'>(</span><span class='va'>function_output</span>, <span class='va'>expected_output</span><span class='op'>)</span></span>
-<span><span class='op'>}</span><span class='op'>)</span></span></code></pre>
-</div>
-</div>
-<h2 id="what-should-you-be-testing">What should you be testing?</h2>
-<p>Everything that is crucial for the function to work. It is not possible to test for every possibility, but checking how function will handle various combination of arguments, extra columns or different types of values (e.g. 0, NaNs, empty cells) can be useful. You can also check if function will throw an error or a warning when it shoud:</p>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'>testthat</span><span class='fu'>::</span><span class='fu'><a href='https://testthat.r-lib.org/reference/expect_error.html'>expect_error</a></span><span class='op'>(</span><span class='fl'>1</span> <span class='op'>/</span> <span class='st'>"a"</span><span class='op'>)</span></span>
-<span></span>
-<span><span class='fu'>testthat</span><span class='fu'>::</span><span class='fu'><a href='https://testthat.r-lib.org/reference/expect_error.html'>expect_warning</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
-</div>
-</div>
-<p>Other tests can involve testing whether output is of specific size or class. Functions that will check for these aspects are:</p>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'>testthat</span><span class='fu'>::</span><span class='fu'><a href='https://testthat.r-lib.org/reference/expect_length.html'>expect_length</a></span><span class='op'>(</span><span class='op'>)</span></span>
-<span><span class='fu'>testthat</span><span class='fu'>::</span><span class='fu'><a href='https://testthat.r-lib.org/reference/inheritance-expectations.html'>expect_s3_class</a></span><span class='op'>(</span><span class='op'>)</span></span>
-<span><span class='fu'>testthat</span><span class='fu'>::</span><span class='fu'><a href='https://testthat.r-lib.org/reference/inheritance-expectations.html'>expect_s4_class</a></span><span class='op'>(</span><span class='op'>)</span></span>
-<span><span class='fu'>testthat</span><span class='fu'>::</span><span class='fu'><a href='https://testthat.r-lib.org/reference/inheritance-expectations.html'>expect_type</a></span><span class='op'>(</span><span class='op'>)</span></span></code></pre>
-</div>
-</div>
-<h2 id="how-many-tests-for-a-function-optional">How many tests for a function? (optional)</h2>
-<p>Each function needs to have a single file for unit tests, but there can be multiple unit tests inside. For instance, if your function includes conditional statements, you should tests all of the conditions (e.g. TRUE/FALSE).</p>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>set_y_if_x</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>y</span>, <span class='va'>x</span> <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>{</span></span>
-<span>  <span class='kw'>if</span> <span class='op'>(</span><span class='va'>x</span> <span class='op'>==</span> <span class='cn'>TRUE</span><span class='op'>)</span> <span class='op'>{</span></span>
-<span>    <span class='va'>y</span> <span class='op'>&lt;-</span> <span class='va'>y</span> <span class='op'>+</span> <span class='fl'>1</span></span>
-<span>  <span class='op'>}</span></span>
-<span>  <span class='va'>y</span></span>
-<span><span class='op'>}</span></span>
-<span></span>
-<span></span>
-<span><span class='fu'>testthat</span><span class='fu'>::</span><span class='fu'><a href='https://testthat.r-lib.org/reference/test_that.html'>test_that</a></span><span class='op'>(</span><span class='st'>"Checking expected outcome when x is TRUE"</span>, <span class='op'>{</span></span>
-<span>  <span class='va'>test_y</span> <span class='op'>&lt;-</span> <span class='fl'>1</span></span>
-<span>  <span class='va'>expected_output</span> <span class='op'>&lt;-</span> <span class='fl'>2</span></span>
-<span>  <span class='va'>function_output</span> <span class='op'>&lt;-</span> <span class='fu'>set_y_if_x</span><span class='op'>(</span><span class='va'>test_y</span>, x <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></span>
-<span>  <span class='fu'>testthat</span><span class='fu'>::</span><span class='fu'><a href='https://testthat.r-lib.org/reference/equality-expectations.html'>expect_identical</a></span><span class='op'>(</span><span class='va'>function_output</span>, <span class='va'>expected_output</span><span class='op'>)</span></span>
-<span><span class='op'>}</span><span class='op'>)</span></span></code></pre>
-</div>
-<pre><code>Test passed </code></pre>
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'>testthat</span><span class='fu'>::</span><span class='fu'><a href='https://testthat.r-lib.org/reference/test_that.html'>test_that</a></span><span class='op'>(</span><span class='st'>"Checking expected outcome when x is FALSE"</span>, <span class='op'>{</span></span>
-<span>  <span class='va'>test_y</span> <span class='op'>&lt;-</span> <span class='fl'>1</span></span>
-<span>  <span class='va'>expected_output</span> <span class='op'>&lt;-</span> <span class='fl'>1</span></span>
-<span>  <span class='va'>function_output</span> <span class='op'>&lt;-</span> <span class='fu'>set_y_if_x</span><span class='op'>(</span><span class='va'>test_y</span>, x <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></span>
-<span>  <span class='fu'>testthat</span><span class='fu'>::</span><span class='fu'><a href='https://testthat.r-lib.org/reference/equality-expectations.html'>expect_identical</a></span><span class='op'>(</span><span class='va'>function_output</span>, <span class='va'>expected_output</span><span class='op'>)</span></span>
-<span><span class='op'>}</span><span class='op'>)</span></span></code></pre>
-</div>
-<pre><code>Test passed </code></pre>
-</div>
-<p>You can also have multiple <code>expect</code> functions inside one <code>test_that</code> statement. This could be useful when checking multiple properties of the output. For instance:</p>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>change_col_to_factor</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>df</span>, <span class='va'>col_name</span><span class='op'>)</span> <span class='op'>{</span></span>
-<span>  <span class='va'>df</span><span class='op'>[</span>, <span class='va'>col_name</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>as.factor</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>[</span>, <span class='va'>col_name</span><span class='op'>]</span><span class='op'>)</span></span>
-<span>  <span class='va'>df</span></span>
-<span><span class='op'>}</span></span>
-<span></span>
-<span><span class='fu'>testthat</span><span class='fu'>::</span><span class='fu'><a href='https://testthat.r-lib.org/reference/test_that.html'>test_that</a></span><span class='op'>(</span><span class='st'>"Checking data frame column types are as expected"</span>, <span class='op'>{</span></span>
-<span>  <span class='va'>test_df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span></span>
-<span>    a <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span>, </span>
-<span>    b <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"a"</span>, <span class='st'>"b"</span>, <span class='st'>"c"</span><span class='op'>)</span>, </span>
-<span>    c <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"A"</span>, <span class='st'>"A"</span>, <span class='st'>"B"</span><span class='op'>)</span></span>
-<span>  <span class='op'>)</span></span>
-<span>  <span class='va'>function_output</span> <span class='op'>&lt;-</span> <span class='fu'>change_col_to_factor</span><span class='op'>(</span><span class='va'>test_df</span>, col_name <span class='op'>=</span> <span class='st'>"c"</span><span class='op'>)</span></span>
-<span>  </span>
-<span>  <span class='fu'>testthat</span><span class='fu'>::</span><span class='fu'><a href='https://testthat.r-lib.org/reference/inheritance-expectations.html'>expect_type</a></span><span class='op'>(</span><span class='va'>function_output</span><span class='op'>[</span>, <span class='st'>"a"</span><span class='op'>]</span>, <span class='st'>"integer"</span><span class='op'>)</span></span>
-<span>  <span class='fu'>testthat</span><span class='fu'>::</span><span class='fu'><a href='https://testthat.r-lib.org/reference/inheritance-expectations.html'>expect_type</a></span><span class='op'>(</span><span class='va'>function_output</span><span class='op'>[</span>, <span class='st'>"b"</span><span class='op'>]</span>, <span class='st'>"character"</span><span class='op'>)</span></span>
-<span>  <span class='fu'>testthat</span><span class='fu'>::</span><span class='fu'><a href='https://testthat.r-lib.org/reference/inheritance-expectations.html'>expect_s3_class</a></span><span class='op'>(</span><span class='va'>function_output</span><span class='op'>[</span>, <span class='st'>"c"</span><span class='op'>]</span>, <span class='st'>"factor"</span><span class='op'>)</span></span>
-<span><span class='op'>}</span><span class='op'>)</span></span></code></pre>
-</div>
-<pre><code>Test passed </code></pre>
-</div>
-<h2 id="testing-your-package">Testing your package</h2>
-<p>It is good to run unit tests on the package whenever you change functionality. There is a simple way to do it:</p>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'>devtools</span><span class='fu'>::</span><span class='fu'><a href='https://devtools.r-lib.org/reference/test.html'>test</a></span><span class='op'>(</span><span class='st'>"pckgname"</span><span class='op'>)</span></span></code></pre>
-</div>
-</div>
-<h2 id="unexported-functions-optional">UnExported functions (optional)</h2>
-<p>Testing non exported functions:</p>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'>testthat</span><span class='fu'>::</span><span class='fu'><a href='https://testthat.r-lib.org/reference/equality-expectations.html'>expect_equal</a></span><span class='op'>(</span><span class='fu'>pkgname</span><span class='fu'>:::</span><span class='fu'>function_name</span><span class='op'>(</span><span class='va'>input</span><span class='op'>)</span>, <span class='va'>expected_output</span><span class='op'>)</span></span></code></pre>
-</div>
-</div>
-<p>Only exported functions will be loaded and directly accessible to users when they load a package.</p>
-<p>However it is possible to access non exported functions of a package:</p>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'>pckgname</span><span class='fu'>:::</span><span class='fu'>nonExpfun</span><span class='op'>(</span><span class='va'>arg1</span><span class='op'>)</span></span></code></pre>
-</div>
-</div>
-<h2 id="quality-assurance">Quality Assurance</h2>
-<p>Complex pipelines should contain unit tests that cover most functions. However, you still should have your code peer reviewed and quality assured by another analyst.</p>
-<h2 id="testing-excercises">Testing excercises</h2>
-<div class="panelset">
-<section id="exercises-2" class="panel-name panel">
-<h3 class="panel-name">Exercises</h3>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'># 8. Create unit tests for both functions in your package.</span></span>
-<span></span>
-<span></span>
-<span><span class='co'># 9. Run unit tests for the package.</span></span></code></pre>
-</div>
-</div>
-</section>
-<section id="example-solutions-1" class="panel-name panel">
-<h3 class="panel-name">Example solutions</h3>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'># 8. Create unit tests for both functions in your package.</span></span>
-<span><span class='fu'>usethis</span><span class='fu'>::</span><span class='fu'><a href='https://usethis.r-lib.org/reference/use_testthat.html'>use_testthat</a></span><span class='op'>(</span><span class='op'>)</span> <span class='co'># create folder for tests in your package</span></span>
-<span><span class='fu'>usethis</span><span class='fu'>::</span><span class='fu'><a href='https://usethis.r-lib.org/reference/use_r.html'>use_test</a></span><span class='op'>(</span><span class='st'>"add_3"</span><span class='op'>)</span> <span class='co'># this can be also created manually</span></span>
-<span></span>
-<span><span class='co'># copy the below into my.awesome.package/tests/testthat/test-add_3.R</span></span>
-<span><span class='fu'>testthat</span><span class='fu'>::</span><span class='fu'><a href='https://testthat.r-lib.org/reference/testthat-package.html'>testthat</a></span><span class='op'>(</span><span class='st'>"Function adds 3 to a vector"</span>, <span class='op'>{</span></span>
-<span>  <span class='va'>output</span> <span class='op'>&lt;-</span> <span class='fu'>add_3</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>)</span></span>
-<span>  <span class='va'>expected_output</span> <span class='op'>&lt;-</span> <span class='fl'>4</span></span>
-<span>  <span class='fu'>testthat</span><span class='fu'>::</span><span class='fu'><a href='https://testthat.r-lib.org/reference/equality-expectations.html'>expect_equal</a></span><span class='op'>(</span><span class='va'>output</span>, <span class='va'>expected_output</span><span class='op'>)</span></span>
-<span><span class='op'>}</span><span class='op'>)</span></span>
-<span></span>
-<span></span>
-<span><span class='co'># 9. Run unit tests for the package.</span></span>
-<span><span class='fu'>devtools</span><span class='fu'>::</span><span class='fu'><a href='https://devtools.r-lib.org/reference/test.html'>test</a></span><span class='op'>(</span><span class='st'>"my.awesome.package"</span><span class='op'>)</span></span></code></pre>
-</div>
-</div>
-</section>
-</div>
-<h1 id="how-to-share-your-package">How to share your package?</h1>
-<p>Upload the package folder on git, then people can simmply clone it and run <code>devtools::install()</code>.
-You can also add it on cran, but we won’t cover that here - see more advanced resources below.</p>
-<h1 id="additional-resources">Additional resources</h1>
-<p>For more information see:</p>
-<ul>
-<li><a href="https://r-pkgs.org/">Packaging your code in R</a> - book</li>
-<li><a href="https://learninghub.ons.gov.uk/course/view.php?id=1165">Packages in R and Python</a> - course on LearningHub</li>
-<li><a href="https://learninghub.ons.gov.uk/course/view.php?id=539">Introduction to Unit Testing</a> - course on LearningHub</li>
-</ul>
-<p>Note that LearningHub resources are only available for colleagues from ONS and other government departments.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
