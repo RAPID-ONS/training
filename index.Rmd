@@ -17,7 +17,7 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ```
 # About this page
-This page contains training resources for building Reproducible Analytical Pipelines. They are aimed at Government Analysts wanting to implement best practice into their work. Check out our <b>RAP training in R</b> resources on the top right of the page.
+This page contains training resources for building Reproducible Analytical Pipelines. They are aimed at Government Analysts wanting to implement best practice into their work. Check out our <b>RAP training in R</b> resources on the top right of the page.<br> R code shown here follows [tidyverse style guide](https://style.tidyverse.org/). If your organisation recommends using [google style](https://google.github.io/styleguide/Rguide.html) there will be some differences, notably in function naming and use of explicit `return()`. Whichever coding style you choose to follow, make sure to use it consistently within a project.
 <br><br>
 <b> Newly added in July '23:</b>
 
