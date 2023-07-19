@@ -20,7 +20,7 @@ navbar:
         href: projects.html        
       - text: "Packages and unit tests"
         href: packages.html
-      - text: "Reproducible spreasheets"
+      - text: "Reproducible spreadsheets"
         href: rapid_spreadsheets.html
       - text: "Glossary"
         href: glossary.html
